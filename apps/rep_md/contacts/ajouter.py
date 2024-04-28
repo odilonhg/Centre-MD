@@ -69,7 +69,19 @@ def ajouter ():
             
         case "4":
             if num == "":
-                num = input ("\nRenseignez le numéro de téléphone du contact : ")
+                verif_num = False
+                while verif_num == False:
+                    
+                    num = input ("\nRenseignez le numéro de téléphone du contact (\"ANNULER\" pour annuler) : ")
+                    
+                    if num.isdigit (): verif_num = True
+                    elif num == "ANNULER":
+                        num = ""
+                        verif_num = True
+                    else:
+                        os.system ("cls")
+                        print ("Ce n'est pas un numéro de téléphone, veuillez réessayer")
+                        
                 os.system ("cls")
                 return ajouter()
             else:
@@ -125,7 +137,7 @@ def fin():
     
     os.system ("cls")
     print (f"Le contact {nom} {prenom} a été crée !\n")
-    logging.info(f"    AJOUTER CONTACTS: {nom} {prenom}\n")
+    logging.info(f"    AJOUTER CONTACT: {nom} {prenom}\n")
     
     nom = ""
     prenom = ""

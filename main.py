@@ -1,4 +1,4 @@
-from outils import lancer_mp3, couper_mp3, ecriture_pickle, lecture_pickle
+from outils import lancer_mp3, couper_mp3, ecriture_pickle, lecture_pickle, lecture_fichier
 
 import logging
 import os
@@ -10,58 +10,71 @@ import random
 f_log = "data_log.txt"
 f_usr = "data_usr"
 
-usr_infos = [False, False, False]
-lgc_infos = [False, False, False, False, False]
-
 logging.basicConfig(filename = f_log, level = logging.INFO, format = "%(asctime)s %(message)s", datefmt = "%d/%m/%Y %H:%M:%S")
-
+date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 if os.path.exists (f_usr) == False:
-    verif_nom = False
+    lgc_infos = [False, False, False, False, False]
     
     print ("Bienvenue dans le Centre MD !\n")
     
+    verif_nom = False
     while verif_nom == False:
         
         usr_nom = input ("Veuillez saisir votre prénom : ")
         
         os.system ("cls")
-        choice_nom = input (f"Vous confirmer vouloir vous appelez \"{usr_nom}\" : ").lower ()
+        choix_nom = input (f"Vous confirmer vouloir vous appelez \"{usr_nom}\" : ").lower ()
         
-        if choice_nom == "oui":
-            verif_nom = True
+        if choix_nom == "oui": verif_nom = True
         else: os.system ("cls")
-        
-    os.system ("cls")
-    print ("Voulez-vous une ambiance sonore ? (désactivable par la suite)\n")
-    choix_son = input ("Choix : ").lower ()
     
-    if choix_son == "oui":
-        usr_son = True
-        lancer_mp3 ("#audio\musique_fond.mp3")
-    else: usr_son = False
+    os.system ("cls")
+    verif_son = False
+    while verif_son == False:
+        
+        choix_son = input ("Confirmez vouloir une ambiance sonore (désactivable par la suite) : ").lower ()
+        
+        if choix_son == "oui":
+            verif_son = True
+            usr_son = True
+            lancer_mp3 ("#audio\musique_fond.mp3")
+        elif choix_son == "non":
+            verif_son = True
+            usr_son = False
+        else:
+            os.system ("cls")
+            print ("Tu dois répondre \"oui\" ou \"non\"\n")
     
     os.system ("cls")
     print ("Enfin, voulez-vous mettre en place un mot de passe ? (modifiable / désactivable par la suite)\n")
-    choix_mdp = input ("Choix : ").lower ()
+    choix_mdp = input ("Enfin, vous confirmez vouloir mettre en place un mot de passe ? (modifiable / désactivable par la suite) : ").lower ()
     
-    if choix_mdp == "oui":
-        verif_mdp = False
-        while verif_mdp == False:
-            os.system ("cls")
-            usr_mdp = input ("Saisir votre mot de passe : ")
-            os.system ("cls")
-            print (f"Votre mot de passe requis à l'ouverture du logiciel sera \"{usr_mdp}\", vous confirmez ?\n")
-            choix_mdp_2 = input ("Choix : ").lower ()
+    verif_mdp1 = False
+    while verif_mdp1 == False:
         
-            if choix_mdp_2 == "oui":
-                usr_infos = [usr_nom, usr_son, usr_mdp]
-                usr = [usr_infos, lgc_infos]
-                verif_mdp = True
+        if choix_mdp == "oui":
+            verif_mdp1 = True
+            verif_mdp2 = False
+            while verif_mdp2 == False:
+                os.system ("cls")
+                usr_mdp = input ("Saisir votre mot de passe : ")
+                os.system ("cls")
+                print (f"Votre mot de passe requis à l'ouverture du logiciel sera \"{usr_mdp}\", vous confirmez ?\n")
+                choix_mdp_2 = input ("Choix : ").lower ()
+            
+                if choix_mdp_2 == "oui": verif_mdp2 = True
+        
+        elif choix_mdp == "non":
+            verif_mdp1 = True
+            usr_mdp = False
+        
+        else:
+            os.system ("cls")
+            print ("Tu dois répondre \"oui\" ou \"non\"\n")
     
-    else:
-        usr_infos = [usr_nom, usr_son, False]
-        usr = [usr_infos, lgc_infos]
+    usr_infos = [usr_nom, usr_son, usr_mdp]
+    usr = [usr_infos, lgc_infos]
     
     ecriture_pickle (usr, f_usr)
     
@@ -75,43 +88,37 @@ else:
     logging.info ("OUVERTURE: Centre MD\n")
     
     usr = lecture_pickle (f_usr)
-    usr_nom = usr[0][0]
-    usr_son = usr[0][1]
     
     if usr[0][2] != False:
+        
         verif_mdp = False
-        usr_mdp = usr[0][2]
         while verif_mdp == False:
             test_mdp = input ("Entrer votre mot de passe : ")
             os.system ("cls")
             
-            if test_mdp != usr_mdp:
+            if test_mdp != usr[0][2]:
                 print ("Mot de passe incorrect !\n")
                 time.sleep(3)
             else: verif_mdp = True
-    
-    lgc_infos = usr[1]
-    
-    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+        
     mess_slt = [
-        f"Bonjour {usr_nom}\n! Horloge : {date}.",
-        f"Salut {usr_nom} !\nHorloge : {date}.",
-        f"Holà {usr_nom} !\nHorloge : {date}.",
-        f"Coucou {usr_nom} !\nHorloge : {date}.",
-        f"Hello {usr_nom} !\nHorloge : {date}.",
-        f"Salutations {usr_nom} !\nHorloge : {date}.",
-        f"Hey {usr_nom} !\nHorloge : {date}.",
-        f"Wesh {usr_nom} !\nT'as trouvé mon message secret, mais ne le dis à personne !",
-        f"Hey hey {usr_nom}, savais-tu que MD c'était pour MaximeDylan (les 2 créateurs de la Team) ?\nHorloge : {date}.",
-        f"Bien le bonjour {usr_nom}, j'espère que tu vas bien !\nHorloge : {date}",
-        f"Hé {usr_nom}, comment tu vas ?\nHorloge : {date}",
+        f"Bonjour {usr[0][0]} !\n Horloge : {date}.",
+        f"Salut {usr[0][0]} !\nHorloge : {date}.",
+        f"Holà {usr[0][0]} !\nHorloge : {date}.",
+        f"Coucou {usr[0][0]} !\nHorloge : {date}.",
+        f"Hello {usr[0][0]} !\nHorloge : {date}.",
+        f"Salutations {usr[0][0]} !\nHorloge : {date}.",
+        f"Hey {usr[0][0]} !\nHorloge : {date}.",
+        f"Wesh {usr[0][0]} !\nT'as trouvé mon message secret, mais ne le dis à personne !",
+        f"Bien le bonjour {usr[0][0]}, j'espère que tu vas bien !\nHorloge : {date}",
+        f"Hé {usr[0][0]}, comment tu vas ?\nHorloge : {date}",
+        f"Savais-tu que cette version est sortie le 28 avril 2024 ?\nHorloge : {date}" # A MODIFIER A CHAQUE MAJ
     ]
     
     if usr[0][1] == True:
         lancer_mp3 ("#audio\musique_fond.mp3")
     
-    print (mess_slt [random.randint(1, len (mess_slt) - 1)] + "\n")
+    print (mess_slt [random.randint(0, len (mess_slt) - 1)] + "\n")
     
 
 def choix ():
@@ -143,10 +150,6 @@ def choix ():
                 logging.info ("  FERMETURE: Rep MD\n")
                 os.system ("cls")
                 return choix ()
-            
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
         
         case "2":
             if usr[1][1] == True:
@@ -158,10 +161,6 @@ def choix ():
                 os.system ("cls")
                 return choix ()
             
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
-            
         case "3":
             if usr[1][2] == True:
                 os.system ("cls")
@@ -171,10 +170,6 @@ def choix ():
                 logging.info ("  FERMETURE: Taches MD\n")
                 os.system ("cls")
                 return choix ()
-            
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
         
         case "4":
             if usr[1][3] == True:
@@ -185,10 +180,6 @@ def choix ():
                 logging.info ("  FERMETURE: MDP MD\n")
                 os.system ("cls")
                 return choix ()
-            
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
         
         case "13":
             if usr[1][4] == True:
@@ -199,23 +190,18 @@ def choix ():
                 logging.info ("  FERMETURE: FS MD\n")
                 os.system ("cls")
                 return choix ()
-            
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
         
-        case "5": # Entre dans les Options
+        case "5":
             os.system ("cls")
             logging.info ("  OUVERTURE: Options\n")
             options ()
             logging.info ("  FERMETURE: Options\n")
             os.system ("cls")
             return choix ()
-        
-        case _: # Affiche un message d'erreur si l'utilisateur rentre autre chose
-            os.system ("cls")
-            print ("Choix impossible...\n")
-            return choix ()
+    
+    os.system ("cls")
+    print ("Choix impossible...\n")
+    return choix ()
 
 def options ():
     
@@ -226,11 +212,13 @@ def options ():
     if usr[0][1] == True: print (" 1. Couper la musique")
     else: print (" 1. Lancer la musique")
     
-    print (" 2. Installer des applis")
-    print (" 3. Désinstaller des applis")
+    if False in usr[1]: print (" 2. Installer des applis")
+    if True in usr[1]: print (" 3. Désinstaller des applis")
     
-    if usr[0][2] != False: print (" 4. Modifier / Supprimer le mot de passe\n")
-    else: print (" 4. Mettre en place un mot de passe\n")
+    if usr[0][2] != False: print (" 4. Supprimer le mot de passe")
+    else: print (" 4. Mettre en place un mot de passe")
+    
+    print (" 5. Affichage des logs\n")
     
     choice = input ("Choix : ")
     
@@ -268,10 +256,16 @@ def options ():
             return options ()
         
         case "4":
-            os.system ("cls")
             gestion_mdp ()
             return options ()
         
+        case "5":
+            logging.info ("    AFFICHAGE DES LOGS (cc)\n")
+            contenu_logs = lecture_fichier (f_log)
+            os.system ("cls")
+            print (f"{contenu_logs}")
+            return options ()
+            
         case _:
             os.system ("cls")
             print ("Choix impossible...\n")
@@ -282,14 +276,13 @@ def install_apps ():
     print ("  · Installer une Application MD ·\n")
     
     print (" 0. Retour")
-    if usr[1][0] == False: print (" 1. Rep MD (version 1.0)")
+    if usr[1][0] == False: print (" 1. Rep MD (version 1.1)")
     if usr[1][1] == False: print (" 2. Jeux MD (version 1.0)")
     if usr[1][2] == False: print (" 3. Tâches MD (version 1.0)")
     if usr[1][3] == False: print (" 4. MDP MD (version 1.0)")
     if usr[1][4] == False: print (" 5. Fonctions Spéciales (version 1.0)")
-    print ()
     
-    choice = input ("Choix : ")
+    choice = input ("\nChoix : ")
     
     match choice:
         
@@ -354,6 +347,7 @@ def uninstall_apps ():
             print ("Supprimer les données du logiciel ?\n")
             choice_rep = input  ("Choix : ").lower ()
             if choice_rep == "oui":
+                from apps.rep_md.main import f_rep
                 if os.path.exists (f_rep): os.remove (f_rep)
             ecriture_pickle (usr, f_usr)
             os.system ("cls")
@@ -371,6 +365,7 @@ def uninstall_apps ():
             print ("Supprimer les données du logiciel ?\n")
             choice_gdt = input  ("Choix : ").lower ()
             if choice_gdt == "oui":
+                from apps.taches_md.main import f_gdt
                 if os.path.exists (f_gdt): os.remove (f_gdt)
             ecriture_pickle (usr, f_usr)
             os.system ("cls")
@@ -394,26 +389,40 @@ def uninstall_apps ():
             return uninstall_apps ()
 
 def gestion_mdp ():
-    usr_mdp = usr[0][2]
-    if usr_mdp != False:
+    if usr[0][2] == False:
+        verif_mdp = False
         while verif_mdp == False:
+            
             os.system ("cls")
-            usr_mdp = input ("Saisir votre mot de passe : ")
+            usr_mdp = input ("Saisir votre mot de passe (\"ANNULER\" pour annuler): ")
+            
+            if usr_mdp == "ANNULER":
+                os.system ("cls")
+                print ("Action annulée !\n")
+                return
+            
             os.system ("cls")
             print (f"Votre mot de passe requis à l'ouverture du logiciel sera \"{usr_mdp}\", vous confirmez ?\n")
             choix_mdp_2 = input ("Choix : ").lower ()
         
             if choix_mdp_2 == "oui":
-                usr_infos = [usr_nom, usr_son, usr_mdp]
-                usr = [usr_infos, lgc_infos]
+                new_usr = [[usr[0][0], usr[0][1], usr_mdp], usr[1]]
+                ecriture_pickle (new_usr, f_usr)
                 verif_mdp = True
                 os.system ("cls")
                 print ("Mot de passe crée !\n")
     
     else:
-        usr_infos = [usr_nom, usr_son, False]
-        usr = [usr_infos, lgc_infos]
         os.system ("cls")
-        print ("Mot de passe supprimé !\n")
+        test_mdp = input ("Saisir votre mot de passe : ")
+        
+        if test_mdp == usr[0][2]:
+            new_usr = [[usr[0][0], usr[0][1], False], usr[1]]
+            ecriture_pickle (new_usr, f_usr)
+            os.system ("cls")
+            print ("Mot de passe supprimé !\n")
+        else:
+            os.system ("cls")
+            print ("Mot de passe incorrect !\n")
 
 choix ()

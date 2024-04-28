@@ -77,3 +77,7 @@ def ecriture_csv(liste, fichier, delimiter = ";"):
         for cle in range(len(liste)):
             ligne = ";".join(liste[cle].values()) + "\n"
             csvfile.write (ligne)
+
+def lecture_fichier (fichier):
+    with open (fichier, "r") as f:
+        return f.read()
