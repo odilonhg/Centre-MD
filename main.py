@@ -112,7 +112,7 @@ else:
         f"Wesh {usr[0][0]} !\nT'as trouvé mon message secret, mais ne le dis à personne !",
         f"Bien le bonjour {usr[0][0]}, j'espère que tu vas bien !\nHorloge : {date}",
         f"Hé {usr[0][0]}, comment tu vas ?\nHorloge : {date}",
-        f"Savais-tu que cette version est sortie le 28 avril 2024 ?\nHorloge : {date}" # A MODIFIER A CHAQUE MAJ
+        f"Savais-tu que cette version est sortie le 30 avril 2024 ?\nHorloge : {date}" # A MODIFIER A CHAQUE MAJ
     ]
     
     if usr[0][1] == True:
@@ -122,7 +122,7 @@ else:
     
 
 def choix ():
-    
+    global usr
     print (" --- Centre MD ---\n")
     
     print ("  0. Arrêter")
@@ -164,10 +164,10 @@ def choix ():
         case "3":
             if usr[1][2] == True:
                 os.system ("cls")
-                from apps.taches_md.main import taches_md
-                logging.info ("  OUVERTURE: Taches MD\n")
-                taches_md ()
-                logging.info ("  FERMETURE: Taches MD\n")
+                logging.info ("  OUVERTURE: GDT MD\n")
+                from apps.gdt_md.main import gdt_md
+                gdt_md ()
+                logging.info ("  FERMETURE: GDT MD\n")
                 os.system ("cls")
                 return choix ()
         
@@ -204,8 +204,9 @@ def choix ():
     return choix ()
 
 def options ():
-    
+    global usr
     print ("   · Options ·\n")
+    print ("Version du CENTRE MD : 1.0.2\n")
     
     print (" 0. Retour")
     
@@ -272,13 +273,13 @@ def options ():
             return options ()
 
 def install_apps ():
-    
+    global usr
     print ("  · Installer une Application MD ·\n")
     
     print (" 0. Retour")
-    if usr[1][0] == False: print (" 1. Rep MD (version 1.1)")
+    if usr[1][0] == False: print (" 1. Rep MD (version 1.2)")
     if usr[1][1] == False: print (" 2. Jeux MD (version 1.0)")
-    if usr[1][2] == False: print (" 3. Tâches MD (version 1.0)")
+    if usr[1][2] == False: print (" 3. GDT MD (version 1.1)")
     if usr[1][3] == False: print (" 4. MDP MD (version 1.0)")
     if usr[1][4] == False: print (" 5. Fonctions Spéciales (version 1.0)")
     
@@ -324,7 +325,7 @@ def install_apps ():
             return install_apps ()
 
 def uninstall_apps ():
-    
+    global usr
     print ("  · Désinstaller une Application MD ·\n")
     
     print (" 0. Retour")
@@ -389,25 +390,25 @@ def uninstall_apps ():
             return uninstall_apps ()
 
 def gestion_mdp ():
+    global usr
+    
     if usr[0][2] == False:
         verif_mdp = False
         while verif_mdp == False:
             
             os.system ("cls")
-            usr_mdp = input ("Saisir votre mot de passe (\"ANNULER\" pour annuler): ")
+            usr[0][2] = input ("Saisir votre mot de passe (\"ANNULER\" pour annuler): ")
             
-            if usr_mdp == "ANNULER":
+            if usr[0][2] == "ANNULER":
                 os.system ("cls")
                 print ("Action annulée !\n")
                 return
             
             os.system ("cls")
-            print (f"Votre mot de passe requis à l'ouverture du logiciel sera \"{usr_mdp}\", vous confirmez ?\n")
-            choix_mdp_2 = input ("Choix : ").lower ()
+            choix_mdp_2 = input (f"Vous confirmez que le mot de passe requis à l'ouverture du logiciel sera \"{usr[0][2]}\" : ").lower ()
         
             if choix_mdp_2 == "oui":
-                new_usr = [[usr[0][0], usr[0][1], usr_mdp], usr[1]]
-                ecriture_pickle (new_usr, f_usr)
+                ecriture_pickle (usr, f_usr)
                 verif_mdp = True
                 os.system ("cls")
                 print ("Mot de passe crée !\n")
@@ -417,8 +418,8 @@ def gestion_mdp ():
         test_mdp = input ("Saisir votre mot de passe : ")
         
         if test_mdp == usr[0][2]:
-            new_usr = [[usr[0][0], usr[0][1], False], usr[1]]
-            ecriture_pickle (new_usr, f_usr)
+            usr[0][2] = False
+            ecriture_pickle (usr, f_usr)
             os.system ("cls")
             print ("Mot de passe supprimé !\n")
         else:

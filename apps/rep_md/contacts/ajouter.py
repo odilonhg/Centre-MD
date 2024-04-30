@@ -73,8 +73,10 @@ def ajouter ():
                 while verif_num == False:
                     
                     num = input ("\nRenseignez le numéro de téléphone du contact (\"ANNULER\" pour annuler) : ")
-                    
-                    if num.isdigit (): verif_num = True
+                    if len(num) == 9:
+                        if num.isdigit (): verif_num = True
+                    elif len(num) == 10:
+                        if num.isdigit (): verif_num = True
                     elif num == "ANNULER":
                         num = ""
                         verif_num = True
