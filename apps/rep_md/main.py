@@ -2,14 +2,7 @@ from outils import lecture_csv, ecriture_csv
 import logging
 import os
 
-ancien_f_rep = "data_rep_md.csv"
 f_rep = "data_rep.csv" # NE PAS MODIFIER LE NOM DE LA VARIABLE (liée à ttes les autres fonctions)
-
-if os.path.exists (ancien_f_rep) == True: # PROTECTION POUR LES POSSESSEURS DE LA V0.2 (déplacement des données vers le nouveau fichier)
-    liste = lecture_csv (ancien_f_rep)
-    ecriture_csv (liste, f_rep)
-    os.remove (ancien_f_rep)
-    logging.info (f"  DEPLACEMENT DES DONNEES DU Rep MD POUR LA MAJ : {ancien_f_rep} -> {f_rep}\n")
 
 def rep_md ():
      
@@ -18,7 +11,8 @@ def rep_md ():
     print (" 0. Retour")
     print (" 1. Contacts")
     print (" 2. Favoris")
-    print (" 3. Groupes\n")
+    print (" 3. Groupes")
+    print (" 4. Anniversaires (NOUVEAU !)\n")
     
     choice = input ("Choix : ")
     
@@ -44,6 +38,13 @@ def rep_md ():
             from apps.rep_md.groupes.main import groupes
             os.system ("cls")
             groupes ()
+            os.system ("cls")
+            return rep_md ()
+        
+        case "4":
+            from apps.rep_md.anniversaires.main import anniversaires
+            os.system ("cls")
+            anniversaires ()
             os.system ("cls")
             return rep_md ()
         

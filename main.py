@@ -47,7 +47,6 @@ if os.path.exists (f_usr) == False:
             print ("Tu dois répondre \"oui\" ou \"non\"\n")
     
     os.system ("cls")
-    print ("Enfin, voulez-vous mettre en place un mot de passe ? (modifiable / désactivable par la suite)\n")
     choix_mdp = input ("Enfin, vous confirmez vouloir mettre en place un mot de passe ? (modifiable / désactivable par la suite) : ").lower ()
     
     verif_mdp1 = False
@@ -112,7 +111,7 @@ else:
         f"Wesh {usr[0][0]} !\nT'as trouvé mon message secret, mais ne le dis à personne !",
         f"Bien le bonjour {usr[0][0]}, j'espère que tu vas bien !\nHorloge : {date}",
         f"Hé {usr[0][0]}, comment tu vas ?\nHorloge : {date}",
-        f"Savais-tu que cette version est sortie le 30 avril 2024 ?\nHorloge : {date}" # A MODIFIER A CHAQUE MAJ
+        f"Date de publication : 2 Mai 2024\nHorloge : {date}" # A MODIFIER
     ]
     
     if usr[0][1] == True:
@@ -206,7 +205,7 @@ def choix ():
 def options ():
     global usr
     print ("   · Options ·\n")
-    print ("Version du CENTRE MD : 1.0.2\n")
+    print ("Version 1.1\n") # A MODIFIER
     
     print (" 0. Retour")
     
@@ -264,7 +263,7 @@ def options ():
             logging.info ("    AFFICHAGE DES LOGS (cc)\n")
             contenu_logs = lecture_fichier (f_log)
             os.system ("cls")
-            print (f"{contenu_logs}")
+            print (contenu_logs.rstrip ("\n") + "\n")
             return options ()
             
         case _:
@@ -277,7 +276,7 @@ def install_apps ():
     print ("  · Installer une Application MD ·\n")
     
     print (" 0. Retour")
-    if usr[1][0] == False: print (" 1. Rep MD (version 1.2)")
+    if usr[1][0] == False: print (" 1. Rep MD (version 2.0)")
     if usr[1][1] == False: print (" 2. Jeux MD (version 1.0)")
     if usr[1][2] == False: print (" 3. GDT MD (version 1.1)")
     if usr[1][3] == False: print (" 4. MDP MD (version 1.0)")

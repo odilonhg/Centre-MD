@@ -10,7 +10,7 @@ def jeux_md ():
     print (" 2. Pendu")
     print (" 3. Puissance 4")
     print (" 4. Morpion")
-    print (" 5. Mots Mêlés (NOUVEAU)\n")
+    print (" 5. Mots Mêlés\n")
     
     choice = input ("Choix : ")
     

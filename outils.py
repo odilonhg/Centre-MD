@@ -1,41 +1,27 @@
-from mutagen.mp3 import MP3
 import pickle
 import sys
 import os
 import random
-import subprocess
 import csv
 
-def duree_musique (musique):
-    audio = MP3(musique)
-    duree_sec = int(audio.info.length)
-    return duree_sec
+sortie_console = sys.stdout # Sauvegarde dans une variable la destination "console" des messages
+sys.stdout = open (os.devnull, 'w') # Définie la destination des futures messages (ils ne s'afficheront pas dans la console)
+import pygame
+sys.stdout = sortie_console # Redéfinie la destination des futures messages sur la console
 
-def lancer_mp3 (chemin_musique):
-    
-    original_stdout = sys.stdout # Sauvegarde dans une variable la destination "console" des messages
-    sys.stdout = open(os.devnull, 'w') # Définie la destination des futures messages (ils ne s'afficheront pas dans la console)
-    import pygame
+def charger_musique (musique): # Charge la musique pour éviter les rechargement multiples
     pygame.init ()
-    soundtrack = chemin_musique
-    pygame.mixer.music.load (soundtrack)
-    duree = duree_musique (chemin_musique)
-    pygame.mixer.music.play (start = random.randint(1, duree - 60)) # Définie où débutera la musique
-    sys.stdout = original_stdout # Redéfinie la destination des futures messages sur la console
+    pygame.mixer.init ()
+    pygame.mixer.music.load (musique)
 
-def couper_mp3 (chemin_musique):
-    
-    original_stdout = sys.stdout # Sauvegarde dans une variable la destination "console" des messages
-    sys.stdout = open(os.devnull, 'w') # Définie la destination des futures messages (ils ne s'afficheront pas dans la console)
-    import pygame
-    pygame.init()
-    soundtrack = chemin_musique
-    pygame.mixer.music.load(soundtrack)
-    pygame.mixer.music.stop()
-    sys.stdout = original_stdout # Redéfinie la destination des futures messages sur la console
+def duree_musique (musique): return pygame.mixer.Sound (musique).get_length()
 
-import os
-import subprocess
+def lancer_mp3 (musique):
+    charger_musique("#audio\musique_fond.mp3")
+    duree = int (duree_musique (musique))
+    pygame.mixer.music.play (start = random.randint (1, duree)) # Définie où débutera la musique
+
+def couper_mp3 (musique): pygame.mixer.music.stop()
 
 def lecture_pickle (fichier): # Permet de lire un fichier en utilisant le module pickle
     
@@ -81,3 +67,5 @@ def ecriture_csv(liste, fichier, delimiter = ";"):
 def lecture_fichier (fichier):
     with open (fichier, "r") as f:
         return f.read()
+
+pygame.quit()
