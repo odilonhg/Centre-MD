@@ -88,7 +88,7 @@ Lisez la liste des [contributeurs](https://github.com/odilonhg/Centre-MD/contrib
 
 ## License
 
-Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE.md](LICENSE.md) pour plus d'informations
+Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE) pour plus d'informations
 
 ## Contributing
 
