@@ -18,7 +18,8 @@ def duree_musique (musique): return pygame.mixer.Sound (musique).get_length()
 
 def lancer_mp3 (musique):
     charger_musique(musique)
-    pygame.mixer.music.play () # Définie où débutera la musique
+    duree = int (duree_musique (musique))
+    pygame.mixer.music.play (start = random.randint (1, duree)) # Définie où débutera la musique
 
 def couper_mp3 (musique): pygame.mixer.music.stop()
 

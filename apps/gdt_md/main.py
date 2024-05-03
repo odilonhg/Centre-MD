@@ -1,7 +1,6 @@
 import pickle
 import random
 import datetime
-import shutil
 import os
 
 from outils import lecture_pickle, ecriture_pickle
