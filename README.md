@@ -1,6 +1,6 @@
-# Centre MD
+# Centre MD de Maya l'Abeille
 
-## Description
+## Description de Maya l'Abeille
 
 Le Centre MD est un projet émanant premièrement d'un projet étudiant:
 Le Répertoire MD
@@ -13,7 +13,7 @@ le numéro de téléphone du contact.
 Le Centre MD, lui, est simplement une application me permettant
 de partager l'ensemble de mes projets (en plus du Répertoire MD).
 
-### Contenu
+### Contenu de Maya l'Abeille
 
 Le Centre MD intègre différents systèmes
 dès son 1er lancement:
@@ -47,7 +47,7 @@ Le Centre MD contient un total de
 	Un logiciel qui partait simplement
 	d'une blague...
 
-### Installation / Démarrage
+### Installation / Démarrage de Maya l'Abeille
 
 - Téléchargez notre dernière _release_
 
@@ -57,7 +57,7 @@ Le Centre MD contient un total de
   du Menu Démarrer ou de votre bureau
   si vous avez créer un raccourci
 
-## Fabriqué avec
+## Fabriqué avec Maya l'Abeille
 
 Les différents modules python:
 
@@ -73,7 +73,7 @@ Les différents modules python:
 * string (jeu mots_melets)
 * etc.
 
-## Versions
+## Versions de Maya l'Abeille
 
 **Dernière version stable :** 1.1
 **Dernière version :** 1.1
@@ -82,14 +82,12 @@ Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-
 
 ## Auteurs
 
-* **MESNAGE Dylan** _alias_ [@odilonhg](https://github.com/odilonhg)
+* **Maya l'Abeille** _alias_ Maya l'Abeille
 
-Lisez la liste des [contributeurs](https://github.com/odilonhg/Centre-MD/contributors) pour voir qui à aidé au projet !
+## License de Maya l'Abeille
 
-## License
+Ce projet est sous la licence de Maya l'Abeille, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE) pour plus d'informations
 
-Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE) pour plus d'informations
+## Contributing de Maya l'Abeille
 
-## Contributing
-
-Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](CONTRIBUTING.md) pour savoir comment le faire.
+Seul Maya l'Abeille peut contribuer

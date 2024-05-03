@@ -1,0 +1,57 @@
+        Version 1.1.maya, Mai 2024
+
+Licence du Logiciel Open Source "Centre MD"
+Droit d'Auteur 2024 Team MD. Tous droits réservés.
+
+Ce logiciel est distribué sous licence libre et ouverte.
+Vous êtes libre de copier, modifier, distribuer et exécuter
+ce logiciel à des fins personnelles, commerciales ou de
+recherche, sous réserve des conditions suivantes :
+
+      DISTRIBUTION DU CODE SOURCE :
+Toute distribution du code source ou de toute
+modification doit inclure cette licence et
+conserver les mentions de droit d'auteur ci-dessus.
+
+              GARANTIE :
+Ce logiciel est fourni "tel quel",
+sans garantie d'aucune sorte,
+expresse ou implicite, y compris,
+mais sans s'y limiter, les garanties de qualité marchande,
+d'adéquation à un usage particulier et de non-violation.
+En aucun cas les auteurs ou les détenteurs des droits
+d'auteur ne peuvent être tenus responsables de tout dommage
+résultant de l'utilisation de ce logiciel.
+
+        LIBERTE D'UTILISATION :
+Vous êtes libre d'utiliser ce logiciel à des fins
+personnelles ou commerciales, sans aucune restriction.
+
+           MODIFICATIONS :
+Vous êtes autorisés à modifier ce logiciel
+et à distribuer ces modifications,
+à condition que les modifications soient clairement
+indiquées comme telles et que cette licence
+soit incluse avec les modifications.
+
+           DISTRIBUTION :
+Vous ne pouvez pas exiger de contrepartie
+financière pour la distribution de ce logiciel
+ou de ses modifications.
+Toutefois, vous pouvez facturer des frais
+raisonnables pour le support, la distribution
+ou la fourniture du logiciel.
+
+En utilisant, copiant, distribuant ou modifiant ce logiciel,
+vous acceptez d'être lié par les termes et conditions
+de cette licence.
+Si vous n'acceptez pas ces termes et conditions,
+vous n'êtes pas autorisé à utiliser, copier,
+distribuer ou modifier ce logiciel.
+
+Pour toute question concernant cette licence,
+veuillez contacter la Team MD à l'adresse suivante :
+      hg.team.md@gmail.com.
+
+La Team MD se réserve le droit de modifier cette licence
+à tout moment, avec ou sans préavis.
