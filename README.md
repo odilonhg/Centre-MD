@@ -27,23 +27,28 @@ Le Centre MD contient un total de
 5 applications entièrement fonctionnelles:
 
 - Le Répertoire MD (Rep MD):
+
 	Un répertoire de contacts
 
 - Le Centre de Jeux MD (Jeux MD):
+
 	Un répertoire de l'ensemble
 	des jeux que j'ai conçu
 
 - Le Gestionnaire de Tâches MD (GDT MD):
+
 	Un logiciel permettant de suivre
 	ses tâches, il intègre également
 	un système de datation des tâches
 
 - Le Créateur de Mot De Passe MD (MDP MD):
+
 	Un simple créateur de mot de passe
 	utilisant l'aléatoire pour créer
 	ces mots de passe
 
 - La Fonction Spéciale MD (FS MD):
+
 	Un logiciel qui partait simplement
 	d'une blague...
 
@@ -71,12 +76,12 @@ Les différents modules python:
 * csv (gestion des fichiers .csv)
 * pickle (gestion de fichiers)
 * string (jeu mots_melets)
+* PySide2 (pour l'interface graphique du MDP MD)
 * etc.
 
 ## Versions
 
-**Dernière version stable :** 1.1.1
-**Dernière version :** 1.1.1
+**Dernière version :** 1.1.2
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 

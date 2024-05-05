@@ -12,6 +12,18 @@ num = ""
 email = ""
 liste = []
 
+nbr = {
+    "1": "01",
+    "2": "02",
+    "3": "03",
+    "4": "04",
+    "5": "05",
+    "6": "06",
+    "7": "07",
+    "8": "08",
+    "9": "09"
+}
+
 def ajouter ():
     global nom, prenom, jour, mois, annee, num, email, liste
     liste = lecture_csv (f_rep)
@@ -56,10 +68,42 @@ def ajouter ():
                 return ajouter()
         
         case "3":
-            if jour == "":
-                jour = input ("\nRenseigner le jour de naissance du contact (de 1 à 31) : ")
-                mois = input ("\nRenseigner le mois de naissance du contact (de 1 à 12) : ")
-                annee = input ("\nRenseigner votre année de naissance : ")
+            if jour == "" or mois == "" or annee == "":
+                
+                if jour == "":
+                    jour = input ("\nRenseigner le jour de naissance du contact (de 1 à 31) : ")
+                    if int (jour) > 31 or int (jour) < 1:
+                        os.system ("cls")
+                        print ("Valeur impossible...\n")
+                        jour = ""
+                        return ajouter ()
+                    
+                    for nbrV1, nbrV2 in nbr.items ():
+                        if jour == nbrV1:
+                            jour = nbrV2
+                            break
+                
+                if mois == "":
+                    mois = input ("\nRenseigner le mois de naissance du contact (de 1 à 12) : ")
+                    if int (mois) > 12 or int (mois) < 1:
+                        os.system ("cls")
+                        print ("Valeur impossible...\n")
+                        mois = ""
+                        return ajouter ()
+                    
+                    for nbrV1, nbrV2 in nbr.items ():
+                        if mois == nbrV1:
+                            mois = nbrV2
+                            break
+                    
+                if annee == "":
+                    annee = input ("\nRenseigner votre année de naissance : ")
+                    if int (annee) > 2100 or int (annee) < 1900:
+                        os.system ("cls")
+                        print ("Valeur impossible...\n")
+                        annee = ""
+                        return ajouter ()
+                
                 os.system ("cls")
                 return ajouter()
             else:
@@ -121,7 +165,7 @@ def fin():
         nom = input ("Nom obligatoire !\n\nRenseignez le nom de famille du contact ici : ").upper()
         return fin()
     if prenom == "":
-        prenom = input ('\nPrénom obligatoire !\n\nRenseignez le prénom du contact ici : ').capitalize()
+        prenom = input ('Prénom obligatoire !\n\nRenseignez le prénom du contact ici : ').capitalize()
         return fin()
     
     choice = input ("Voulez-vous que ce contact soit en favori ? ").upper()

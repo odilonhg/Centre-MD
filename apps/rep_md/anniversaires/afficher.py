@@ -43,13 +43,13 @@ def afficher ():
                 date_anniv_str = f"{annee}-{mois}-{jour}"
                 date_anniv = datetime.datetime(datetime.datetime.now().year, int(mois), int(jour)).date()
                 aujourdhui = datetime.date.today()
-                if aujourdhui > date_anniv:
-                    date_anniv = datetime.datetime(datetime.datetime.now().year + 1, int(mois), int(jour)).date()
+                if aujourdhui > date_anniv: date_anniv = datetime.datetime(datetime.datetime.now().year + 1, int(mois), int(jour)).date()
                 tps_restant = date_anniv - aujourdhui
                 
                 print (f"\n |   {nom} {prenom}")
                 print (f" |   Date: {jour} {mois_lettres}")
-                print (f" |   Tps Restant: {tps_restant.days} jours")
+                if tps_restant.days == 0: print (" |   C'est son Anniversaire !")
+                else: print (f" |   Anniversaire dans {tps_restant.days} jours")
                 
         print ()
         return

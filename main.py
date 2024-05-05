@@ -73,7 +73,9 @@ if os.path.exists (f_usr) == False:
             os.system ("cls")
             print ("Tu dois répondre \"oui\" ou \"non\"\n")
     
-    usr_infos = [usr_nom, usr_son, usr_mdp]
+    usr_nbr = 1
+    
+    usr_infos = [usr_nom, usr_son, usr_mdp, usr_nbr]
     usr = [usr_infos, lgc_infos]
     
     ecriture_pickle (usr, f_usr)
@@ -84,10 +86,22 @@ if os.path.exists (f_usr) == False:
 
 
 else:
-    
-    logging.info ("OUVERTURE: Centre MD\n")
-    
     usr = lecture_pickle (f_usr)
+    
+    if usr[0][2] != usr[0][-1]: usr[0][3] += 1
+    else:
+        usr_nom = usr[0][0]
+        usr_son = usr[0][1]
+        usr_mdp = usr[0][2]
+        usr_nbr = 1
+        
+        usr_infos = [usr_nom, usr_son, usr_mdp, usr_nbr]
+        lgc_infos = usr[1]
+        usr = [usr_infos, lgc_infos]
+    
+    ecriture_pickle (usr, f_usr)
+    
+    logging.info (f"OUVERTURE: Centre MD (pour la {usr[0][3]}ème fois)\n")
     
     if usr[0][2] != False:
         
@@ -102,10 +116,10 @@ else:
             else: verif_mdp = True
         
     mess_slt = [
-        f"Bonjour {usr[0][0]} !\n Horloge : {date}.",
+        f"Bonjour {usr[0][0]} !\nN'oublies pas de regarder si tu as des anniversaires prochainement !\nHorloge : {date}.",
         f"Salut {usr[0][0]} !\nHorloge : {date}.",
-        f"Holà {usr[0][0]} !\nHorloge : {date}.",
-        f"Coucou {usr[0][0]} !\nHorloge : {date}.",
+        f"Holà {usr[0][0]} !\nAs-tu pensé à jouer à nos jeux ?\nHorloge : {date}.",
+        f"Coucou {usr[0][0]} !\nSavais-tu que c'était la {usr[0][3]} fois que tu lançais le Centre MD !\nHorloge : {date}.",
         f"Hello {usr[0][0]} !\nHorloge : {date}.",
         f"Salutations {usr[0][0]} !\nHorloge : {date}.",
         f"Hey {usr[0][0]} !\nHorloge : {date}.",
@@ -117,6 +131,7 @@ else:
     
     if usr[0][1] == True:
         lancer_mp3 ("#audio\musique_fond.mp3")
+    
     
     print (mess_slt [random.randint(0, len (mess_slt) - 1)] + "\n")
     
@@ -206,7 +221,7 @@ def choix ():
 def options ():
     global usr
     print ("   · Options ·\n")
-    print ("Version 1.1.1\n") # A MODIFIER
+    print ("Version 1.1.2\n") # A MODIFIER
     
     print (" 0. Retour")
     
