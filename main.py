@@ -126,7 +126,7 @@ else:
         f"Wesh {usr[0][0]} !\nT'as trouvé mon message secret, mais ne le dis à personne !",
         f"Bien le bonjour {usr[0][0]}, j'espère que tu vas bien !\nHorloge : {date}",
         f"Hé {usr[0][0]}, comment tu vas ?\nHorloge : {date}",
-        f"Date de publication : 3 Mai 2024\nHorloge : {date}" # A MODIFIER
+        f"Date de publication : 5 Mai 2024\nHorloge : {date}" # A MODIFIER
     ]
     
     if usr[0][1] == True:
