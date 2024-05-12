@@ -1,7 +1,7 @@
 from outils import lecture_csv, ecriture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
+from os import system
 
 num = 1
 nom = ""
@@ -15,7 +15,7 @@ def ajouter ():
     while num in num_existant:
         num += 1
     
-    print ("   · Ajouter un Groupe ·\n")
+    print ("   · Ajouter: Groupes ·\n")
     
     print (" 0. Retour")
     print (" 1. Le nom du groupe")
@@ -28,22 +28,23 @@ def ajouter ():
     match choice:
         
         case "0":
-            os.system ("cls")
-            return ""
+            system ("cls")
+            return
         
         case "1":
             if nom == "":
-                os.system ("cls")
+                system ("cls")
                 nom = input ("Renseigner le nom du groupe : ")
-                logging.info (f"    AJOUTER GROUPE: {nom}\n")
-                os.system ("cls")
+                info (f"    AJOUTER GROUPES: {nom}\n")
+                system ("cls")
                 return ajouter()
             else:
-                os.system ("cls")
+                system ("cls")
+                print ("Nom du groupe déjà renseigné !\n")
                 return ajouter ()
         
         case "2":
-            os.system ("cls")
+            system ("cls")
             contact = input ("Saisir le nom ou le prénom du contact à ajouter au groupe : ").upper ()
             
             for contacts in liste:
@@ -57,20 +58,20 @@ def ajouter ():
                         nbr_mbr += 1
                         contacts["groupe"] += str (num)
                         ecriture_csv (liste, f_rep)
-                        logging.info (f"    AJOUTER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
-                        os.system ("cls")
+                        info (f"    AJOUTER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
+                        system ("cls")
                         print (f"Le contact {nom_c} {prenom_c.capitalize ()} a été ajouté au groupe {nom}\n")
                         return ajouter ()
             
-            os.system ("cls")
+            system ("cls")
             print ("Aucun contact trouvé !\n")
             return ajouter ()
         
         case "3":
-            os.system ("cls")
+            system ("cls")
             if nom == "":
                 nom = input ("Saisir le nom du groupe : ")
-                os.system ("cls")
+                system ("cls")
             
             g_new = {"nom": "", "prenom": "", "date": "", "num": "", "email": "", "favori": "", "groupe": "", "nom_groupe": nom, "num_groupe": str (num), "mbr_groupe": str (nbr_mbr)}
             liste.append (g_new)
@@ -79,9 +80,9 @@ def ajouter ():
             print (f"Le groupe {nom} a été crée !\n")
             nom = ""
             nbr_mbr = 0
-            return ""
+            return
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return ajouter ()

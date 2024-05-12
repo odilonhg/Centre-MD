@@ -1,6 +1,4 @@
-from outils import lecture_csv, ecriture_csv
-import logging
-import os
+from os import system
 
 f_rep = "data_rep.csv" # NE PAS MODIFIER LE NOM DE LA VARIABLE (liée à ttes les autres fonctions)
 
@@ -12,7 +10,7 @@ def rep_md ():
     print (" 1. Contacts")
     print (" 2. Favoris")
     print (" 3. Groupes")
-    print (" 4. Anniversaires (NOUVEAU !)\n")
+    print (" 4. Annivs\n")
     
     choice = input ("Choix : ")
     
@@ -22,33 +20,33 @@ def rep_md ():
         
         case "1":
             from apps.rep_md.contacts.main import contacts
-            os.system ("cls")
+            system ("cls")
             contacts ()
-            os.system ("cls")
+            system ("cls")
             return rep_md ()
         
         case "2":
             from apps.rep_md.favoris.main import favoris
-            os.system ("cls")
+            system ("cls")
             favoris ()
-            os.system ("cls")
+            system ("cls")
             return rep_md ()
         
         case "3":
             from apps.rep_md.groupes.main import groupes
-            os.system ("cls")
+            system ("cls")
             groupes ()
-            os.system ("cls")
+            system ("cls")
             return rep_md ()
         
         case "4":
             from apps.rep_md.anniversaires.main import anniversaires
-            os.system ("cls")
+            system ("cls")
             anniversaires ()
-            os.system ("cls")
+            system ("cls")
             return rep_md ()
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return rep_md ()

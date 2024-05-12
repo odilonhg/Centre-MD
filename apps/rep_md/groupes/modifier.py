@@ -1,7 +1,7 @@
 from outils import lecture_csv, ecriture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
+from os import system
 
 def modifier ():
     liste = lecture_csv (f_rep)
@@ -17,11 +17,11 @@ def modifier ():
     
     match choice:
         
-        case "0": return ""
+        case "0": return
         
         case "1":
-            os.system ("cls")
-            nom_groupe = input ("Saisir le nom ou le numéro du groupe à trouver : ").upper ()
+            system ("cls")
+            nom_groupe = input ("Renseigner le nom ou le numéro du groupe à trouver : ").upper ()
             
             for groupe in liste:
                 if nom_groupe == groupe["nom_groupe"].upper () or nom_groupe == groupe["num_groupe"]:
@@ -42,14 +42,14 @@ def modifier ():
                             print (f" |")
                             print (f" |    {membre_nom} {membre_prenom}")
                     
-                    contact = input ("\nSaisir le nom ou le prénom du contact à ajouter au groupe : ").upper ()
+                    contact = input ("\nRenseigner le nom ou le prénom du contact à ajouter au groupe : ").upper ()
                     
                     for contacts in liste:
                         nom_c = contacts["nom"]
                         prenom_c = contacts["prenom"].upper ()
                         
                         if contact == nom_c or contact == prenom_c:
-                            os.system ("cls")
+                            system ("cls")
                             print (f"Ajouter {nom_c} {prenom_c.capitalize ()} au groupe ?\n")
                             choice_contact = input ("Choix : ").lower ()
                                 
@@ -61,18 +61,18 @@ def modifier ():
                                 groupe["mbr_groupe"] = nbr_mbr
                                 contacts["groupe"] += str (num)
                                 ecriture_csv (liste, f_rep)
-                                logging.info (f"    AJOUTER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
-                                os.system ("cls")
+                                info (f"    AJOUTER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
+                                system ("cls")
                                 print (f"Le contact {nom_c} {prenom_c.capitalize()} a été ajouté au groupe {nom} !\n")
                                 return modifier ()
             
-            os.system ("cls")
+            system ("cls")
             print ("Aucun groupe trouvé !\n")
             return modifier ()
         
         case "2":
-            os.system ("cls")
-            nom_groupe = input ("Saisir le nom ou le numéro du groupe à trouver : ").upper ()
+            system ("cls")
+            nom_groupe = input ("Renseigner le nom ou le numéro du groupe à trouver : ").upper ()
             
             for groupe in liste:
                 if nom_groupe == groupe["nom_groupe"].upper () or nom_groupe == groupe["num_groupe"]:
@@ -93,14 +93,14 @@ def modifier ():
                             print (f" |")
                             print (f" |    {membre_nom} {membre_prenom}")
                     
-                    contact = input ("\nSaisir le nom ou le prénom du contact à supprimer du groupe : ").upper ()
+                    contact = input ("\nRenseigner le nom ou le prénom du contact à supprimer du groupe : ").upper ()
                     
                     for contacts in liste:
                         nom_c = contacts["nom"]
                         prenom_c = contacts["prenom"].upper ()
                         
                         if contact == nom_c or contact == prenom_c:
-                            os.system ("cls")
+                            system ("cls")
                             print (f"Supprimer {nom_c} {prenom_c.capitalize ()} du groupe ?\n")
                             choice_contact = input ("Choix : ").lower ()
                                 
@@ -112,18 +112,22 @@ def modifier ():
                                 groupe["mbr_groupe"] = nbr_mbr
                                 contacts["groupe"] = contacts["groupe"].replace (num, "")
                                 ecriture_csv (liste, f_rep)
-                                logging.info (f"    SUPPRIMER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
-                                os.system ("cls")
+                                info (f"    SUPPRIMER CONTACT DANS {nom}: {nom_c} {prenom_c.capitalize ()}\n")
+                                system ("cls")
                                 print (f"Le contact {nom_c} {prenom_c.capitalize()} a été supprimé du groupe {nom} !\n")
                                 return modifier ()
             
-            os.system ("cls")
+                    system ("cls")
+                    print ("Aucun contact trouvé !\n")
+                    return modifier ()
+            
+            system ("cls")
             print ("Aucun groupe trouvé !\n")
             return modifier ()
         
         case "3":
-            os.system ("cls")
-            nom_groupe = input ("Saisir le nom ou le numéro du groupe à trouver : ").upper ()
+            system ("cls")
+            nom_groupe = input ("Renseigner le nom ou le numéro du groupe à trouver : ").upper ()
             
             for groupe in liste:
                 if nom_groupe == groupe["nom_groupe"].upper () or nom_groupe == groupe["num_groupe"]:
@@ -131,23 +135,23 @@ def modifier ():
                     num = groupe["num_groupe"]
                     nbr_mbr = groupe["mbr_groupe"]
                     
-                    os.system ("cls")
-                    choice2 = input (f"Modifier {nom} : ").lower ()
+                    system ("cls")
+                    choice2 = input (f"Vous confirmez modifier le groupe \"{nom}\" : ").lower ()
                     
                     if choice2 == "oui":
-                        contact = input (f"\nSaisir le nouveau nom du groupe : ")
+                        contact = input (f"\nRenseigner le nouveau nom du groupe : ")
                         groupe["nom_groupe"] = contact
-                        os.system ("cls")
+                        system ("cls")
                         print (f"Le groupe {nom} a été modifié !\n")
-                        logging.info (f"    MODIFIER GROUPE: {nom} -> {contact}\n")
+                        info (f"    MODIFIER GROUPE: {nom} -> {contact}\n")
                         ecriture_csv (liste, f_rep)
                         return modifier ()
             
-            os.system ("cls")
+            system ("cls")
             print ("Aucun groupe trouvé !\n")
-            return ""
+            return
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return modifier ()

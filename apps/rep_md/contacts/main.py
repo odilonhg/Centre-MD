@@ -1,4 +1,4 @@
-import os
+from os import system
 
 def contacts ():
     
@@ -19,35 +19,35 @@ def contacts ():
         
         case "1":
             from apps.rep_md.contacts.ajouter import ajouter
-            os.system ("cls")
+            system ("cls")
             ajouter ()
             return contacts ()
         
         case "2":
             from apps.rep_md.contacts.rechercher import rechercher
-            os.system ("cls")
+            system ("cls")
             rechercher ()
             return contacts ()
         
         case "3":
             from apps.rep_md.contacts.afficher import afficher
-            os.system ("cls")
+            system ("cls")
             afficher ()
             return contacts ()
         
         case "4":
             from apps.rep_md.contacts.modifier import modifier
-            os.system ("cls")
+            system ("cls")
             modifier ()
             return contacts ()
         
         case "5":
             from apps.rep_md.contacts.supprimer import supprimer
-            os.system ("cls")
+            system ("cls")
             supprimer ()
             return contacts ()
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return contacts ()

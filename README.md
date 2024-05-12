@@ -81,7 +81,7 @@ Les différents modules python:
 
 ## Versions
 
-**Dernière version :** 1.1.2
+**Dernière version :** 1.2.0
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 

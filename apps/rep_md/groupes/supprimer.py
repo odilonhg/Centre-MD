@@ -1,10 +1,12 @@
 from outils import lecture_csv, ecriture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
+from os import system
 
 def supprimer ():
     liste = lecture_csv (f_rep)
+    
+    print ("   · Supprimer: Groupes ·\n")
     nom_groupe = input ("Saisir le nom ou le numéro du groupe à supprimer : ").upper ()
     
     for groupe in liste:
@@ -29,7 +31,7 @@ def supprimer ():
                 choice = input (f"\nSupprimer {nom} : ").upper ()
                 if choice == "OUI":
                     
-                    os.system ("cls")
+                    system ("cls")
                     
                     for membre in liste:
                         membre["groupe"] = membre["groupe"].replace (num, "")
@@ -39,9 +41,9 @@ def supprimer ():
                             del liste[i]
                             ecriture_csv (liste, f_rep)
                             print (f"Le groupe {nom} à été supprimé !\n")
-                            logging.info (f"    SUPPRIMER GROUPE: {nom}\n")
-                            return ""
+                            info (f"    SUPPRIMER GROUPE: {nom}\n")
+                            return
     
-    os.system ("cls")
+    system ("cls")
     print ("Aucun groupe trouvé !\n")
-    return ""
+    return

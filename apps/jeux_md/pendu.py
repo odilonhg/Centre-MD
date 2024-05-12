@@ -1,7 +1,7 @@
 from outils import lecture_csv
 from apps.rep_md.main import f_rep
-import random
-import os
+from random import choice
+from os import system
 
 choice2 = "NONE"
 mot = "NONE"
@@ -23,20 +23,18 @@ def pendu():
     print (" 4. Les Instruments de Musique")
     print (" 5. Autres...\n")
     
-    
-    
     choice2 = input ("Choix : ")
     
     match choice2:
         
         case "0":
-            os.system ("cls")
-            return ""
+            system ("cls")
+            return
         
         case "1" | "2" | "3" | "4" | "5": return le_pendu_lancement()
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return pendu ()
     
@@ -53,7 +51,7 @@ def affichage_mot(mot, lettres_trouvees):
     return affichage
 
 def le_pendu_lancement():
-    os.system ("cls")
+    system ("cls")
     prenoms_contacts_liste = []
     dico = lecture_csv (f_rep)
     
@@ -67,74 +65,74 @@ def le_pendu_lancement():
     tentatives_max = 6
     tentatives = 0
     
-    if choice2 == '1':
-        mot = random.choice (prenoms_liste)
+    if choice2 == "1":
+        mot = choice (prenoms_liste)
     
-    elif choice2 == '2':
-        mot = random.choice (prenoms_contacts_liste)
+    elif choice2 == "2":
+        mot = choice (prenoms_contacts_liste)
     
-    elif choice2 == '3':
-        mot = random.choice (NSI_liste)
+    elif choice2 == "3":
+        mot = choice (NSI_liste)
     
-    elif choice2 == '4':
-        mot = random.choice (instruments_liste)
+    elif choice2 == "4":
+        mot = choice (instruments_liste)
     
-    elif choice2 == '5':
-        mot = random.choice (mots_liste)
+    elif choice2 == "5":
+        mot = choice (mots_liste)
     
     while tentatives_max >= 0:
         
         affichage = affichage_mot (mot, lettres_trouvees)
         print (f"Mot : {affichage}\n")
         
-        choice = input ("Saisir une lettre : ")
+        choice_str = input ("Saisir une lettre : ")
         
-        if len (choice) == 1 and choice.isalpha() == True:
+        if len (choice_str) == 1 and choice_str.isalpha() == True:
             
-            if choice in lettres_trouvees:
-                os.system ("cls")
+            if choice_str in lettres_trouvees:
+                system ("cls")
                 print ("Tu as déjà trouvé cette lettre, essayes encore !\n")
             
-            elif choice.upper() in mot.upper():
-                os.system ("cls")
+            elif choice_str.upper() in mot.upper():
+                system ("cls")
                 print (f"Bien joué, tu as trouvé la lettre \"{choice}\" !\n")
-                lettres_trouvees.append(choice)
+                lettres_trouvees.append(choice_str)
             
             else:
                 tentatives_max -= 1
                 tentatives += 1
-                os.system ("cls")
+                system ("cls")
                 print (f"Cette lettre n\'est pas dans le mot... Plus que {tentatives_max} tentatives !\n")
         
         else:
-            os.system ("cls")
+            system ("cls")
             print ("Tu n'as pas tappé une lettre, essaies encore !")
         
         if set(mot.lower()) == set(lettres_trouvees):
             
             if choice2 == "1" or choice2 == "2":
-                os.system ("cls")
+                system ("cls")
                 print (f"Félicitations, tu as trouvé le prénom \"{mot}\" en seulement {tentatives_max} tentatives ({tentatives} tentatives échouées !\n")
             elif choice2 == '5' or choice2 == '3' or choice2 == '4':
-                os.system ("cls")
+                system ("cls")
                 print (f"Félicitations, tu as trouvé le mot \"{mot}\" en seulement {tentatives_max} tentatives ({tentatives} tentatives échouées !\n")
             
-            return ""
+            return
         
         if tentatives_max == 0:
             if choice2 == "1" or choice2 == "2":
-                os.system ("cls")
-                print (f'Dommage... Tu n\'as pas trouvé le prénom "{mot}"...\n')
+                system ("cls")
+                print (f"Dommage... Tu n'as pas trouvé le prénom \"{mot}\"...\n")
             
             elif choice2 == '3':
-                print (f'Dommage... Tu n\'as pas trouvé le mot "{mot}"... (t\'es même pas un vrai nerd bouuuu)\n')
+                print (f"Dommage... Tu n'as pas trouvé le mot \"{mot}\"... (t\'es même pas un vrai nerd bouuuu)\n")
             
             elif choice2 == '5':
-                os.system ("cls")
-                print (f'\nDommage... Tu n\'as pas trouvé le mot "{mot}"...\n')
+                system ("cls")
+                print (f"\nDommage... Tu n'as pas trouvé le mot \"{mot}\"...\n")
             
             elif choice2 == '4':
-                os.system ("cls")
-                print (f'\nDommage... Tu n\'as pas trouvé l\'instrument choisi ({mot})...\n')
+                system ("cls")
+                print (f"\nDommage... Tu n'as pas trouvé l'instrument choisi ({mot})...\n")
             
-            return ""
+            return

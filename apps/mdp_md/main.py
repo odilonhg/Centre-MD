@@ -1,8 +1,8 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from random import choice
-import sys
+from sys import argv
 
-app = QtWidgets.QApplication(sys.argv)
+app = QtWidgets.QApplication (argv)
 
 def genererMDP (tailleMDP = 12, minuscules = True, majuscules = True, chiffres = True, symboles = True):
     caracteres = ""

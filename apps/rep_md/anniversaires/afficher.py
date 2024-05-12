@@ -1,8 +1,8 @@
 from outils import lecture_csv
 from apps.rep_md.main import f_rep
 from apps.gdt_md.main import tps_tache
-import datetime
-import logging
+from logging import info
+from datetime import datetime, date
 
 def str_mois (mois):
     dico_mois = {
@@ -26,9 +26,9 @@ def str_mois (mois):
 
 def afficher ():
     liste = lecture_csv (f_rep)
-    logging.info (f"    AFFICHER ANNIVERSAIRES\n")
+    info (f"    AFFICHER ANNIVERSAIRES\n")
     
-    print ("   · Afficher les Anniversaires ·")
+    print ("   · Afficher: Anniversaires ·")
     
     if len (liste) >= 1:
         
@@ -41,9 +41,9 @@ def afficher ():
                 mois_str = str (mois)
                 mois_lettres = str_mois (mois_str)
                 date_anniv_str = f"{annee}-{mois}-{jour}"
-                date_anniv = datetime.datetime(datetime.datetime.now().year, int(mois), int(jour)).date()
-                aujourdhui = datetime.date.today()
-                if aujourdhui > date_anniv: date_anniv = datetime.datetime(datetime.datetime.now().year + 1, int(mois), int(jour)).date()
+                date_anniv = datetime(datetime.now().year, int(mois), int(jour)).date()
+                aujourdhui = date.today()
+                if aujourdhui > date_anniv: date_anniv = datetime(datetime.now().year + 1, int(mois), int(jour)).date()
                 tps_restant = date_anniv - aujourdhui
                 
                 print (f"\n |   {nom} {prenom}")

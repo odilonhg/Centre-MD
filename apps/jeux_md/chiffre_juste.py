@@ -1,5 +1,5 @@
-from random import *
-import os
+from random import randint
+from os import system
 
 def chiffre_juste():
     nombre_a_trouver = randint (0, 100)
@@ -10,17 +10,17 @@ def chiffre_juste():
     while mon_nombre != nombre_a_trouver:
         
         if mon_nombre < nombre_a_trouver:
-            os.system ("cls")
+            system ("cls")
             print ("Trop petit !")
         
         elif mon_nombre > nombre_a_trouver:
-            os.system ("cls")
+            system ("cls")
             print ("Trop grand !")
         
         tentatives +=1
         
         mon_nombre = int (input ("\nSaisir un autre nombre : ") )
     
-    os.system ("cls")
+    system ("cls")
     print (f"Bien joué, tu as trouvé mon nombre ({nombre_a_trouver}) en {tentatives} tentatives !\n")
-    return ""
+    return

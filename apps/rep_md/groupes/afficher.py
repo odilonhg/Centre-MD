@@ -1,11 +1,10 @@
 from outils import lecture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
 
 def afficher ():
-    logging.info (f"    AFFICHER GROUPES\n")
-    print ("   · Afficher les Groupes ·")
+    info (f"    AFFICHER GROUPES\n")
+    print ("   · Afficher: Groupes ·")
     liste = lecture_csv (f_rep)
     
     for groupe in liste:
@@ -38,4 +37,4 @@ def afficher ():
                         print (f" |    {membre_email}")
     
     print ()
-    return ""
+    return

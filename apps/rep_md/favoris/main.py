@@ -1,4 +1,4 @@
-import os
+from os import system
 
 def favoris ():
     
@@ -19,29 +19,29 @@ def favoris ():
         
         case "1":
             from apps.rep_md.favoris.ajouter import ajouter
-            os.system ("cls")
+            system ("cls")
             ajouter ()
             return favoris ()
         
         case "2":
             from apps.rep_md.favoris.rechercher import rechercher
-            os.system ("cls")
+            system ("cls")
             rechercher ()
             return favoris ()
         
         case "3":
             from apps.rep_md.favoris.afficher import afficher
-            os.system ("cls")
+            system ("cls")
             afficher ()
             return favoris ()
         
         case "4":
             from apps.rep_md.favoris.supprimer import supprimer
-            os.system ("cls")
+            system ("cls")
             supprimer ()
             return favoris ()
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return favoris ()

@@ -1,5 +1,5 @@
-import os
-import logging
+from logging import info
+from os import system
 
 def afficher_plateau(plateau):
     for ligne in plateau:
@@ -26,15 +26,16 @@ def verifier_victoire(plateau, joueur):
     return False
 
 def morpion():
-    logging.info("    OUVERTURE JEU: Morpion\n")
+    info("    OUVERTURE JEU: Morpion\n")
 
     plateau = [[" "]*3 for _ in range(3)]
-    joueurs = ['X', 'O']
+    joueurs = ["X", "O"]
     noms_joueurs = []
 
     for i in range(2):
-        nom = input(f"Nom du joueur {i+1}: ").capitalize()
+        nom = input(f"Nom du joueur {i+1}: ")
         noms_joueurs.append(nom)
+        system ("cls")
 
     tour = 0
 
@@ -51,26 +52,28 @@ def morpion():
                 print()
                 if plateau[ligne][colonne] == " ":
                     plateau[ligne][colonne] = joueur_actuel
+                    system ("cls")
                     break
                 else:
-                    print("Cette case est déjà occupée !")
+                    system ("cls")
+                    print("Cette case est déjà occupée !\n")
             except (ValueError, IndexError):
-                print("Veuillez entrer des coordonnées valides !")
+                system ("cls")
+                print("Veuillez entrer des coordonnées valides !\n")
+                break
 
         if verifier_victoire(plateau, joueur_actuel):
             afficher_plateau(plateau)
-            os.system ("cls")
+            system ("cls")
             print(f"Le joueur {noms_joueurs[tour % 2]} a gagné !\n")
-            logging.info(f"    VICTOIRE DU JOUEUR \"{noms_joueurs[tour % 2]}\" !\n")
-            logging.info("    FERMETURE JEU: Morpion\n")
+            info(f"    VICTOIRE DU JOUEUR \"{noms_joueurs[tour % 2]}\" !\n                        FERMETURE JEU: Morpion\n")
             break
 
         if all(all(cell != " " for cell in ligne) for ligne in plateau):
             afficher_plateau(plateau)
-            os.system ("cls")
+            system ("cls")
             print("Match nul !\n")
-            logging.info("    MATCH NUL !\n")
-            logging.info("    FERMETURE JEU: Morpion\n")
+            info("    MATCH NUL !\n                        FERMETURE JEU: Morpion\n")
             break
 
         tour += 1

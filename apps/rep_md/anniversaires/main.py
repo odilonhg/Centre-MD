@@ -1,11 +1,11 @@
-import os
+from os import system
 
 def anniversaires ():
     
     print ("   · Anniversaires ·\n")
     
     print (" 0. Retour")
-    print (" 1. Ajouter (en cours de création...")
+    print (" 1. Ajouter (en cours de création...)")
     print (" 2. Afficher\n")
     
     choice = input ("Choix : ")
@@ -14,13 +14,18 @@ def anniversaires ():
         
         case "0": return
         
+        case "1":
+            system ("cls")
+            print ("Option prochainement disponible...\n")
+            return anniversaires ()
+        
         case "2":
             from apps.rep_md.anniversaires.afficher import afficher
-            os.system ("cls")
+            system ("cls")
             afficher ()
             return anniversaires ()
         
         case _:
-            os.system ("cls")
+            system ("cls")
             print ("Choix impossible...\n")
             return anniversaires ()

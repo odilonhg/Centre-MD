@@ -1,13 +1,13 @@
 from outils import lecture_csv, ecriture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
+from os import system
 
 def ajouter ():
     liste = lecture_csv (f_rep)
     choice = "non"
     
-    print ("   · Ajouter un Favori ·\n")
+    print ("   · Ajouter: Favoris ·\n")
     
     contact = input (" Renseigner une information sur le contact à ajouter aux favoris: ").lower()
     
@@ -22,23 +22,23 @@ def ajouter ():
         if date_naissance != "":
             jour, mois, annee = date_naissance.split('.')
             if contact == nom or contact == prenom or contact == date_naissance or contact == jour or contact == mois or contact == annee or contact == num or contact == email or contact == favori:
-                os.system ("cls")
+                system ("cls")
                 print (f"Ajouter {nom.upper ()} {prenom.capitalize ()} aux favoris ?\n")
                 choice = input ("Choix : ").lower ()
         else:
             if contact == nom or contact == prenom or contact == date_naissance or contact == num or contact == email or contact == favori:
-                os.system ("cls")
+                system ("cls")
                 print (f"Ajouter {nom.upper ()} {prenom.capitalize ()} aux favoris ?\n")
                 choice = input ("Choix : ").lower ()
         
         if choice == "oui":
             liste[i]["favori"] = "True"
             ecriture_csv (liste, f_rep)
-            os.system ("cls")
+            system ("cls")
             print (f"Le contact {nom.upper ()} {prenom.capitalize ()} a été ajouté aux favoris\n")
-            logging.info (f"    AJOUTER FAVORIS: {nom.upper ()} {prenom.capitalize ()}\n")
-            return ""
+            info (f"    AJOUTER FAVORIS: {nom.upper ()} {prenom.capitalize ()}\n")
+            return
     
-    os.system ("cls")
+    system ("cls")
     print ("Aucun contact trouvé !\n")
-    return ""
+    return

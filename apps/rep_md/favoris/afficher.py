@@ -1,33 +1,85 @@
 from outils import lecture_csv
 from apps.rep_md.main import f_rep
-import logging
-import os
+from logging import info
 
 def afficher ():
     liste = lecture_csv (f_rep)
-    logging.info (f"    AFFICHER FAVORIS\n")
+    contact_trouve = 0
+    contact_trouve_affichage = ""
+    info (f"    AFFICHER FAVORIS\n")
     
-    print ("   · Afficher les Favoris ·")
-    
-    if len (liste) >= 1:
+    for i in range (len (liste)):
+        nom = liste[i]["nom"].lower ()
+        prenom = liste[i]["prenom"].lower ()
+        date_naissance = liste[i]["date"]
+        num = liste[i]["num"]
+        email = liste[i]["email"].lower ()
+        favori = liste[i]["favori"]
         
-        for i in range (len (liste)):
-            nom = liste[i]["nom"]
-            prenom = liste[i]["prenom"]
-            date_naissance = liste[i]["date"]
-            num = liste[i]["num"]
-            email = liste[i]["email"].lower ()
-            favori = liste[i]["favori"]
-            
-            if favori == "True":
-                print (f"\n |   {nom} {prenom}")
-            
-                if date_naissance != "": print (f" |   {date_naissance}")
-                if num != "": print (f" |   {num}")
-                if email != "": print (f" |   {email}")
+        if favori == "True":
+            if nom != "" and prenom != "":
+                if date_naissance != "":
+                    jour, mois, annee = date_naissance.split('.')
+                
+                    contact_trouve += 1
+                    if date_naissance != "" and num != "" and email != "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {date_naissance}"
+                            f"\n |   {num}"
+                            f"\n |   {email}\n")
+                    elif date_naissance != "" and num == "" and email == "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {date_naissance}\n")
+                    elif date_naissance != "" and num != "" and email == "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {date_naissance}"
+                            f"\n |   {num}\n")
+                    elif date_naissance != "" and num == "" and email != "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {date_naissance}"
+                            f"\n |   {email}\n")
+                    elif date_naissance == "" and num != "" and email != "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {num}"
+                            f"\n |   {email}\n")
+                    elif date_naissance == "" and num == "" and email != "":
+                        contact_trouve_affichage.append (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {email}\n")
+                    elif date_naissance == "" and num != "" and email == "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {num}\n")
+                    else: contact_trouve_affichage += (f"\n |   {nom.upper ()} {prenom.capitalize ()}\n")
+                        
+                
+                else:
+                    contact_trouve += 1
+                    if num != "" and email != "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {num}"
+                            f"\n |   {email}\n")
+                    elif num != "" and email == "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {num}\n")
+                    elif num == "" and email != "":
+                        contact_trouve_affichage += (
+                            f"\n |   {nom.upper ()} {prenom.capitalize ()}"
+                            f"\n |   {email}\n")
+                    else: contact_trouve_affichage += (f"\n |   {nom.upper ()} {prenom.capitalize ()}\n")
         
-        print ()
-        return ""
+    if contact_trouve != 0:
+        print ("   · Afficher: Favoris ·")
+        print (contact_trouve_affichage)
+        return
     
-    print ("Aucun contact trouvé !\n")
-    return ""
+    else:
+        print ("Aucun favori existant !\n")
+        return
