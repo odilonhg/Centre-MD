@@ -23,13 +23,13 @@ Le Centre MD contient un total de
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases)
+- Accéder au site de NumWorks [ici](https://my.numworks.com/python)
 
-- Lancez le fichier une fois téléchargé
+- Cliquez sur "Mes scripts"
 
-- Executez ensuite le Centre MD à partir
-  du Menu Démarrer ou de votre bureau
-  si vous avez créer un raccourci
+- Faites un "Nouveau script"
+- Copiez le code accesible [ici](https://github.com/odilonhg/Centre-MD/blob/numworks/centre_md.py) dans l'emplacement dédié sur le site
+- Envoyez le programme vers votre calculatrice !
 
 ## Fabriqué avec
 
@@ -38,7 +38,7 @@ AUCUN MODULES UTILISES POUR LE MOMENT
 
 ## Versions
 
-**Dernière version :** n0.1
+**Dernière version :** n0.1 (Version BETA)
 
 ## Auteurs
 
