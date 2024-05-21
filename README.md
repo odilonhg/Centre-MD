@@ -1,60 +1,29 @@
-# Centre MD
+# Centre MD vNumWorks
 
 ## Description
 
-Le Centre MD est un projet émanant premièrement d'un projet étudiant:
-Le Répertoire MD
+Le Centre MD vNumWorks est une variante du Centre MD
 
-Il s'agissait initialement d'un répertoire de contacts,
-gérant la création de contacts, de favoris et pouvant contenir
-différentes informations tel que la date de naissance ou encore
-le numéro de téléphone du contact.
+Il s'agit d'une version capable de tourner sur la calculatrice
+NumWorks tout en proposant un maximum de fonctionnalités
+du Centre MD originel.
 
-Le Centre MD, lui, est simplement une application me permettant
-de partager l'ensemble de mes projets (en plus du Répertoire MD).
+Pour plus d'infos sur le Centre MD, cliquer [ici](https://github.com/odilonhg/Centre-MD/tree/main) !
 
 ### Contenu
-
-Le Centre MD intègre différents systèmes
-dès son 1er lancement:
-
-* Musique
-* Mot de passe
-* Logs
-* etc.
 
 Le Centre MD contient un total de
 5 applications entièrement fonctionnelles:
 
 - Le Répertoire MD (Rep MD):
-
-	Un répertoire de contacts
-
+- Le Gestionnaire de Tâches MD (Manager MD):
+- Le Créateur de Mot De Passe MD (Pass MD):
 - Le Centre de Jeux MD (Jeux MD):
-
-	Un répertoire de l'ensemble
-	des jeux que j'ai conçu
-
-- Le Gestionnaire de Tâches MD (GDT MD):
-
-	Un logiciel permettant de suivre
-	ses tâches, il intègre également
-	un système de datation des tâches
-
-- Le Créateur de Mot De Passe MD (MDP MD):
-
-	Un simple créateur de mot de passe
-	utilisant l'aléatoire pour créer
-	ces mots de passe
-
-- La Fonction Spéciale MD (FS MD):
-
-	Un logiciel qui partait simplement
-	d'une blague...
+- La Fonction Spéciale MD (Fonctions MD):
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_
+- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases)
 
 - Lancez le fichier une fois téléchargé
 
@@ -64,37 +33,17 @@ Le Centre MD contient un total de
 
 ## Fabriqué avec
 
-Les différents modules python:
-
-* os (effacement de la console)
-* sys (extinction du logiciel)
-* logging (sauvegarde les logs du logiciel)
-* pygame (gestion de la musique)
-* datetime (gestion du temps)
-* time (gestion du temps)
-* random (gestion de l'aléatoire)
-* csv (gestion des fichiers .csv)
-* pickle (gestion de fichiers)
-* string (jeu mots_melets)
-* PySide2 (pour l'interface graphique du MDP MD)
-* etc.
+AUCUN MODULES UTILISES POUR LE MOMENT
+(NumWorks n'autorise que très peu de modules)
 
 ## Versions
 
-**Dernière version :** 1.2.0
-
-Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
+**Dernière version :** n0.1
 
 ## Auteurs
 
 * **MESNAGE Dylan** _alias_ [@odilonhg](https://github.com/odilonhg)
 
-Lisez la liste des [contributeurs](https://github.com/odilonhg/Centre-MD/contributors) pour voir qui à aidé au projet !
-
 ## License
 
 Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE.txt) pour plus d'informations
-
-## Contributing
-
-Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](CONTRIBUTING.md) pour savoir comment le faire.
