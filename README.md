@@ -95,7 +95,6 @@ Les différents modules python:
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 
-## Auteurs
 
 * **MESNAGE Dylan** _alias_ [@odilonhg](https://github.com/odilonhg)
 
