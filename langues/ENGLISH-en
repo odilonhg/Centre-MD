@@ -1,0 +1,16 @@
+yes;no;You must answer "yes" or "no";Choice : ;help;Good morning;Good afternoon;Good night;Enter your password : ;Wrong password !;Impossible choice...;Action canceled...;
+Welcome;OPENING;CLOSING;CHANGE;INSTALLATION;REMOVAL;DISPLAY;UPDATE DONE;MD Center;Options;Music;Logs;
+MD Rep;CREATE;SEARCH;DISPLAY;MODIFY;DELETE;Contacts;Favorites;Groups;
+MD Manager;
+MD Pass;
+MD Games;
+MD Functions;
+Welcome;I will help you to configure your MD Center !; Enter your name here : ; You confirm you want to be call; You can set up music that will play with the MD Center!; Do you want to set it up? (you must have a music in MP3 format); Finally, do you want to set up a password ?; Enter the password : ; You confirm you want the password;CONFIGURATION COMPLETE !; If you need some help, type "help" !;
+MD Center;Stop;Go Back;
+Options;Stop the music;Play the music;Change the music;Manage apps;Delete the password;Set up the password;Show the logs;Show user information;RESET the MD Center;WARNING, THIS ACTION IS IRREVERSIBLE!;RESET COMPLETE!;Press Enter to exit;Manage the apps;INSTALL;UNINSTALL;
+MD Rep (FRENCH ONLY);
+MD Manager (FRENCH ONLY);
+MD Pass (FRENCH ONLY);
+MD Games (FRENCH ONLY);
+MD Functions (FRENCH ONLY);
+Here is the MD Center, this is where you manage the different applications!;To choose an app, type the number indicated in front of it.;Here, you are in the Options menu, where you will find various options to modify the behavior of the MD Center.;Type one of the available numbers to access the service it offers!;Here you are in the Application Management Center!;Choose whether you want to install or uninstall an app by typing its number.;WARNING, DELETE DATA RELATED TO THE SERVICE IF UNINSTALLING!!

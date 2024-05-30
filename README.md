@@ -26,39 +26,43 @@ dès son 1er lancement:
 Le Centre MD contient un total de
 5 applications entièrement fonctionnelles:
 
-- Le Répertoire MD (Rep MD):
+- Rep MD:
 
-	Un répertoire de contacts
+	Un répertoire de contacts,
+	contenant un système de groupes
+	et de favoris.
 
-- Le Centre de Jeux MD (Jeux MD):
-
-	Un répertoire de l'ensemble
-	des jeux que j'ai conçu
-
-- Le Gestionnaire de Tâches MD (GDT MD):
+- Manager MD:
 
 	Un logiciel permettant de suivre
 	ses tâches, il intègre également
-	un système de datation des tâches
+	un système de datation des tâches.
 
-- Le Créateur de Mot De Passe MD (MDP MD):
+- Pass MD:
 
 	Un simple créateur de mot de passe
 	utilisant l'aléatoire pour créer
-	ces mots de passe
+	ces mots de passe.
+	Il permet aussi de les copier
+	dans le presse papier.
 
-- La Fonction Spéciale MD (FS MD):
+- Jeux MD:
+
+	Un répertoire de l'ensemble
+	des jeux que j'ai conçu.
+
+- Fonctions MD:
 
 	Un logiciel qui partait simplement
 	d'une blague...
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_
+- Téléchargez notre dernière _release_ ([ici](https://github.com/odilonhg/Centre-MD/releases/download/v1.2.0/CentreMD_v2.0.0b_Installer.exe))
 
 - Lancez le fichier une fois téléchargé
 
-- Executez ensuite le Centre MD à partir
+- Exécutez ensuite le Centre MD à partir
   du Menu Démarrer ou de votre bureau
   si vous avez créer un raccourci
 
@@ -66,22 +70,30 @@ Le Centre MD contient un total de
 
 Les différents modules python:
 
-* os (effacement de la console)
-* sys (extinction du logiciel)
-* logging (sauvegarde les logs du logiciel)
-* pygame (gestion de la musique)
-* datetime (gestion du temps)
-* time (gestion du temps)
-* random (gestion de l'aléatoire)
-* csv (gestion des fichiers .csv)
-* pickle (gestion de fichiers)
-* string (jeu mots_melets)
-* PySide2 (pour l'interface graphique du MDP MD)
+* os
+* logging
+* sys
+* pygame
+* datetime
+* time
+* random
+* csv
+* pickle
+* string
+* PySide2
+* shutil
+* threading
+* json
+* thinker
+* cryptography
 * etc.
 
 ## Versions
 
-**Dernière version :** 1.2.0
+**Dernière version :** [2.0.0b (BETA)]
+(https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0b)
+**Dernière version stable :** [1.2.0]
+(https://github.com/odilonhg/Centre-MD/releases/tag/v1.2.0)
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 
@@ -94,7 +106,3 @@ Lisez la liste des [contributeurs](https://github.com/odilonhg/Centre-MD/contrib
 ## License
 
 Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE.txt) pour plus d'informations
-
-## Contributing
-
-Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](CONTRIBUTING.md) pour savoir comment le faire.
