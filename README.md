@@ -90,10 +90,8 @@ Les différents modules python:
 
 ## Versions
 
-**Dernière version :** [2.0.0b (BETA)]
-(https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0b)
-**Dernière version stable :** [1.2.0]
-(https://github.com/odilonhg/Centre-MD/releases/tag/v1.2.0)
+**Dernière version :** [2.0.0b (BETA)](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0b)
+**Dernière version stable :** [1.2.0](https://github.com/odilonhg/Centre-MD/releases/tag/v1.2.0)
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 
