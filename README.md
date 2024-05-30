@@ -58,7 +58,8 @@ Le Centre MD contient un total de
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_ ([ici](https://github.com/odilonhg/Centre-MD/releases/download/v1.2.0/CentreMD_v2.0.0b_Installer.exe))
+- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v2.0.0b/CentreMD_v2.0.0b_Installer.exe)
+ATTENTION, c'est une BETA !
 
 - Lancez le fichier une fois téléchargé
 
