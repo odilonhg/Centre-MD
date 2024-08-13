@@ -1,0 +1,504 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Choix"
+msgstr "\nChoice : "
+
+msgid "oui"
+msgstr "yes"
+
+msgid "non"
+msgstr "no"
+
+msgid "OUI"
+msgstr "YES"
+
+msgid "NON"
+msgstr "NO"
+
+msgid "aide"
+msgstr "help"
+
+msgid "Tu dois répondre oui ou non"
+msgstr " You must answer \"yes\" or \"no\"\n"
+
+msgid "Bienvenue !"
+msgstr "  · Welcome ! ·\n"
+
+msgid "Je vais t'aider à configurer ton Centre MD !"
+msgstr "I will help you to configure your MD Center !"
+
+msgid "Entre ton nom ici: "
+msgstr " Enter your name here : "
+
+msgid "Tu confirmes vouloir t'appeler"
+msgstr " You confirm you want to be call "
+
+msgid "Bienvenue nom"
+msgstr "  · Welcome "
+
+msgid "_Bienvenue nom_"
+msgstr " · Welcome "
+
+msgid "Tu peux mettre en place une musique qui se lancera avec le Centre MD !"
+msgstr " You can set up music that will play with the MD Center!"
+
+msgid "Veux tu la mettre en place ?"
+msgstr " Do you want to set it up ? (you must have a music in MP3 format)"
+
+msgid "Sélectionnez un fichier MP3"
+msgstr "Select a MP3 file"
+
+msgid "Fichiers MP3"
+msgstr "MP3 Files"
+
+msgid "Enfin, veux-tu mettre en place un mot de passe ?"
+msgstr " Finally, do you want to set up a password ?"
+
+msgid "Entre le mot de passe"
+msgstr " Enter the password : "
+
+msgid "Tu confirmes vouloir comme mot de passe"
+msgstr " You confirm you want the password "
+
+msgid "CONFIGURATION TERMINEE !"
+msgstr "  · CONFIGURATION COMPLETE ! ·\n"
+
+msgid "Si tu as besoin d'aide, tape aide !"
+msgstr " If you need help,\n Try \"help\" !"
+
+msgid "_MISE A JOUR DU CENTRE MD_"
+msgstr "UPDATE OF MD CENTER "
+
+msgid "Mot de passe incorrect"
+msgstr " Password incorrect !\n"
+
+msgid "Bonjour nom"
+msgstr " Good morning "
+
+msgid "Bonsoir nom"
+msgstr " Good afternoon "
+
+msgid "Bonne nuit nom"
+msgstr " Good night "
+
+msgid "_Mot de passe_"
+msgstr "Password\n"
+
+msgid "_INSTALLER_"
+msgstr "INSTALL : "
+
+msgid "_DESINSTALLER_"
+msgstr "UNINSTALL : "
+
+msgid "_OUVERTURE_"
+msgstr "OPENING : "
+
+msgid "_FERMETURE_"
+msgstr "CLOSING : "
+
+msgid "_CHANGEMENT MUSIQUE_"
+msgstr "CHANGE OF THE MUSIC : "
+
+msgid "_CHANGEMENT LANGUE_"
+msgstr "CHANGE OF THE LANGUAGE : "
+
+msgid "_AJOUTER CONTACTS_"
+msgstr "    ADD CONTACT : "
+
+msgid "_AJOUTER GROUPES_"
+msgstr "    ADD GROUP : "
+
+msgid "_AJOUTER CONTACT DANS GROUPE_"
+msgstr "    ADD CONTACT IN GROUP : "
+
+msgid "_SUPPRIMER CONTACT DANS GROUPE_"
+msgstr "    DELETE CONTACT IN GROUP : "
+
+msgid "_AFFICHAGE_"
+msgstr "DISPLAY : "
+
+msgid "_Centre MD_"
+msgstr "MD Center"
+
+msgid "-Centre MD-"
+msgstr " -- MD Center --\n"
+
+msgid "Arrêter"
+msgstr " 0. Stop"
+
+msgid "Retour"
+msgstr " 0. Back"
+
+msgid "Rep MD"
+msgstr " 1. MD Rep"
+
+msgid "-Rep MD-"
+msgstr "  · MD Rep ·\n"
+
+msgid "_Rep MD_"
+msgstr "MD Rep"
+
+msgid "Manager MD"
+msgstr " 2. MD Manager (french only)"
+
+msgid "-Manager MD-"
+msgstr "  · MD Manager ·\n"
+
+msgid "_Manager MD_"
+msgstr "MD Manager"
+
+msgid "Pass MD"
+msgstr " 3. MD Pass (french only)"
+
+msgid "-Pass MD-"
+msgstr "  · MD Pass ·\n"
+
+msgid "_Pass MD_"
+msgstr "MD Pass"
+
+msgid "Jeux MD"
+msgstr " 4. MD Games (french only)"
+
+msgid "-Jeux MD-"
+msgstr "  · MD Games ·\n"
+
+msgid "_Jeux MD_"
+msgstr "MD Games"
+
+msgid "Options"
+msgstr "\n 5. Options"
+
+msgid "-Options-"
+msgstr "  · MD Options ·\n"
+
+msgid "_Options_"
+msgstr "MD Options"
+
+msgid "Fonctions MD"
+msgstr "\n 13. MD Functions (french only)"
+
+msgid "-Fonctions MD-"
+msgstr "  · MD Functions ·\n"
+
+msgid "_Fonctions MD_"
+msgstr "MD Functions"
+
+msgid "aide_centre_md"
+msgstr " Here is the MD Center, this is where you manage the different applications !\n To choose an app, type the number indicated in front of it.\n"
+
+msgid "Choix impossible"
+msgstr "Impossible choice...\n"
+
+msgid "Changer la langue"
+msgstr " 1. Change the language"
+
+msgid "Couper la musique"
+msgstr " 2. Stop the Music"
+
+msgid "Lancer la musique"
+msgstr " 2. Start the Music"
+
+msgid "Changer de musique"
+msgstr " 3. Change the Music"
+
+msgid "Gérer les applis"
+msgstr " 4. Manage Apps"
+
+msgid "-Gérer les applis-"
+msgstr "  · Manage Apps ·\n"
+
+msgid "Supprimer le mdp"
+msgstr " 5. Delete the password"
+
+msgid "Mettre en place le mdp"
+msgstr " 5. Set up a password"
+
+msgid "Afficher les logs"
+msgstr " 6. Show the logs"
+
+msgid "Afficher les infos usr"
+msgstr " 7. Show the User Information"
+
+msgid "Réinitialiser le Centre MD"
+msgstr " 8. RESET the MD Center"
+
+msgid "_Musique_"
+msgstr "Music"
+
+msgid "_Logs_"
+msgstr "Logs"
+
+msgid "_Infos User_"
+msgstr "User Informations"
+
+msgid "ATTENTION, CETTE ACTION EST IRREVERSIBLE !"
+msgstr "WARNING, THIS ACTION IS IRREVERSIBLE !\nDo you always want to continue ?"
+
+msgid "Appuis sur Entrée pour quitter"
+msgstr "\n Press Enter to exit !"
+
+msgid "Action annulée"
+msgstr "Action canceled...\n"
+
+msgid "aide_options"
+msgstr " Here, you are in the Options menu, where you will find various options to modify the behavior of the MD Center.\n Type one of the available numbers to access the service it offers !"
+
+msgid "aide_gestion_apps"
+msgstr " Here you are in the Application Management menu!\n Choose whether you want to install or uninstall an app by typing its number.\n WARNING, DELETE DATA RELATED TO THE SERVICE IF UNINSTALLING !!\n"
+
+msgid "Mot de passe supprimé"
+msgstr " Password delete !\n"
+
+msgid "Mot de passe crée"
+msgstr "Your password (DONT FORGET IT) : "
+
+msgid "Ajouter"
+msgstr " 1. Add..."
+
+msgid "Rechercher"
+msgstr " 2. Search..."
+
+msgid "Afficher"
+msgstr " 3. Show..."
+
+msgid "Modifier"
+msgstr " 4. Modify..."
+
+msgid "Supprimer"
+msgstr " 5. Delete..."
+
+msgid "aide_rep_md"
+msgstr " Here you are in the MD Repertory !\n In this place, you can create some contacts and groups.\n To start, select an option by using numbers !\n"
+
+msgid "Contacts"
+msgstr " 1. Contacts"
+
+msgid "Groupes"
+msgstr " 2. Groups"
+
+msgid "-AJOUTER : Contacts-"
+msgstr "   · Add : Contacts ·\n"
+
+msgid "-OBLIGATOIRE-"
+msgstr "\n   · OBLIGATORY ·\n"
+
+msgid "NOM"
+msgstr " 1. Family Name"
+
+msgid "PRENOM"
+msgstr " 2. First Name"
+
+msgid "-FACULTATIF-"
+msgstr "   · OPTIONAL ·\n"
+
+msgid "DATE DE NAISSANCE"
+msgstr " 3. Birth Date"
+
+msgid "NUMERO DE TELEPHONE"
+msgstr " 4. Phone Number"
+
+msgid "ADRESSE EMAIL"
+msgstr " 5. Email-Address"
+
+msgid "FIN CONTACT"
+msgstr " 6. Finalize contact"
+
+msgid "SAISIR NOM"
+msgstr "Enter contact's family name : "
+
+msgid "Nom de famille ajouté"
+msgstr "The family name has been successfully added !\n"
+
+msgid "Nom déjà ajouté"
+msgstr "The family name has already been added !\n"
+
+msgid "SAISIR PRENOM"
+msgstr "Enter contact's first name : "
+
+msgid "Prénom ajouté"
+msgstr "The first name has been successfully added !\n"
+
+msgid "Prénom déjà ajouté"
+msgstr "The first name has already been added !\n"
+
+msgid "SAISIR JOUR"
+msgstr "Enter day of birth of "
+
+msgid "Jour ajouté"
+msgstr "The birth day has been successfully added !\n"
+
+msgid "SAISIR MOIS"
+msgstr "Enter month of birth of "
+
+msgid "Mois ajouté"
+msgstr "The birth month has been successfully added !\n"
+
+msgid "SAISIR ANNEE"
+msgstr "Enter year of birth of "
+
+msgid "Année ajoutée"
+msgstr "The birth year has been successfully added !\n"
+
+msgid "Date de naissance déjà ajoutée"
+msgstr "The birth date has already been added !\n"
+
+msgid "SAISIR NUM"
+msgstr "Enter phone number of "
+
+msgid "Numéro de téléphone ajouté"
+msgstr "The phone number has been successfully added !\n"
+
+msgid "Numéro de téléphone déjà ajouté"
+msgstr "The phone number has already been added !\n"
+
+msgid "SAISIR EMAIL"
+msgstr "Enter email address of "
+
+msgid "Adresse email ajoutée"
+msgstr "The email has been successfully added !\n"
+
+msgid "Adresse email déjà ajoutée"
+msgstr "The email has already been added !\n"
+
+msgid "Valeur impossible"
+msgstr "Impossible value !\n"
+
+msgid "Le contact"
+msgstr "The contact "
+
+msgid "a été crée (contact)"
+msgstr " has been successfully added to the contact list !\n"
+
+msgid "-AJOUTER : Groupes-"
+msgstr "   · Add : Groups ·\n"
+
+msgid "NOM GROUPES"
+msgstr " 1. Group's Name"
+
+msgid "MEMBRES GROUPES"
+msgstr " 2. Group's Members"
+
+msgid "FIN GROUPES"
+msgstr " 3. Finalize Group"
+
+msgid "Saisir nom groupe"
+msgstr "Enter group's name : "
+
+msgid "Nom groupe ajouté"
+msgstr "The group's name has been added successfully !\n"
+
+msgid "Saisir le nom ou le prénom du contact à ajouter au groupe"
+msgstr "Enter contact's family name or first name to add it to the group : "
+
+msgid "_Ajouter_"
+msgstr "Add"
+
+msgid "_Supprimer_"
+msgstr "Delete"
+
+msgid "a été ajouté au groupe"
+msgstr " has been successfully added to the group "
+
+msgid "a été supprimé du groupe"
+msgstr " has been successfully deleted to the group "
+
+msgid "Aucun contact trouvé"
+msgstr "No contact found !"
+
+msgid "Le groupe"
+msgstr "Group "
+
+msgid "a été crée (groupe)"
+msgstr " has been successfully added to the group list !\n"
+
+msgid "Mettre"
+msgstr "Set "
+
+msgid "en favori : "
+msgstr " as a favorite contact : "
+
+msgid "est maintenant en favori !"
+msgstr " has been successfully added to the favorite list !\n"
+
+msgid "-RECHERCHER : Contacts-"
+msgstr "   · Search : Contacts ·\n"
+
+msgid "Renseigner une information sur le contact à trouver"
+msgstr " Type an information about the contact you search : "
+
+msgid "_RECHERCHER CONTACTS_"
+msgstr "    SEARCH CONTACT : "
+
+msgid "-CONTACTS TROUVES-"
+msgstr "   · Contacts found ·"
+
+msgid "Aucun contact trouvé"
+msgstr "No contact found !\n"
+
+msgid "-RECHERCHER : Groupes-"
+msgstr "   · Search : Groups ·\n"
+
+msgid "_RECHERCHER CONTACTS_"
+msgstr "    SEARCH GROUP : "
+
+msgid "Membres"
+msgstr "Members"
+
+msgid "Renseigner une information sur le groupe à trouver"
+msgstr " Type an information about the group you search : "
+
+msgid "-GROUPES TROUVES-"
+msgstr "   · Groups found ·"
+
+msgid "Aucun groupe trouvé"
+msgstr "No group found !\n"
+
+msgid "-AFFICHER : Contacts-"
+msgstr "   · Show : Contacts ·"
+
+msgid "-AFFICHER : Groupes-"
+msgstr "   · Show : Groups ·"
+
+msgid "_AFFICHER CONTACTS_"
+msgstr "    SHOW CONTACTS"
+
+msgid "Aucun contact existant"
+msgstr "No contacts !\n"
+
+msgid "Aucun groupe existant"
+msgstr "No groups !\n"
+
+msgid "-MODIFIER : Contacts-"
+msgstr "   · Modify : Contacts ·\n"
+
+msgid "Renseigner le nom ou le prénom du contact à modifier"
+msgstr " Type first name or family name of the contact you want to modify : "
+
+msgid "_Modifier_"
+msgstr "Modify"
+
+msgid "_MODIFIER CONTACTS_"
+msgstr "    MODIFY CONTACT : "
+
+msgid "a été modifié"
+msgstr " has been successfully modified !\n"
+
+msgid "-MODIFIER : Groupes-"
+msgstr "   · Modify : Groups ·\n"
+
+msgid "Renseigner le nom du groupe à modifier"
+msgstr " Type the name of the group you want to modify : "
+
+msgid "_MODIFIER GROUPES_"
+msgstr "    MODIFY GROUP : "
+
+msgid "Ajouter un membre"
+msgstr " 1. Add a member"
+
+msgid "Supprimer un membre"
+msgstr " 2. Delete a member"
+
+msgid "Modifier le nom du groupe"
+msgstr " 3. Modify the name of the group"

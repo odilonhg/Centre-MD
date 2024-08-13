@@ -2,7 +2,7 @@ from datetime import datetime, time
 from os import system
 from outils import Autres
 
-f_gdt = "data_gdt"
+F_gdt = "data_gdt"
 l_taches = []
 
 def tps_tache (date):
@@ -76,11 +76,11 @@ def supprimer (l_taches):
     for i in range (len (l_taches)):
         if l_taches[i]["etat"] == True:
             new_liste.append (l_taches[i])
-    ecriture_pickle (new_liste, f_gdt)
+    ecriture_pickle (new_liste, F_gdt)
 
 def manager_md ():
     global l_taches
-    try: l_taches = Autres.lecture_pickle (f_gdt)
+    try: l_taches = Autres.lecture_pickle (F_gdt)
     
     finally:
         print ("   · Manager MD ·\n")
@@ -106,7 +106,7 @@ def manager_md ():
                 date_maxi = datetime.strptime (date_maxi_str, "%Y-%m-%d").date ()
                 system ("cls")
                 ajouter (description, date_maxi, l_taches)
-                Autres.ecriture_pickle (l_taches, f_gdt)
+                Autres.ecriture_pickle (l_taches, F_gdt)
                 return manager_md ()
             
             case "2":
@@ -128,7 +128,7 @@ def manager_md ():
                 description = input ("\nSaisir le nom de la tâche terminée : ")
                 system ("cls")
                 finir (description, l_taches)
-                Autres.ecriture_pickle (l_taches, f_gdt)
+                Autres.ecriture_pickle (l_taches, F_gdt)
                 return manager_md ()
             
             case "5":

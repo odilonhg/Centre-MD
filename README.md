@@ -58,8 +58,7 @@ Le Centre MD contient un total de
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v2.0.0b/CentreMD_v2.0.0b_Installer.exe)
-ATTENTION, c'est une BETA !
+- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v1.2.0/CentreMD_v1.2.0_Installer.exe)
 
 - Lancez le fichier une fois téléchargé
 
@@ -90,7 +89,7 @@ Les différents modules python:
 * etc.
 
 ## Versions
-**Dernière version :** [2.0.0b (BETA)](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0b)
+**Dernière version :** [2.0.0b2 (BETA)](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0b2)
 
 **Dernière version stable :** [1.2.0](https://github.com/odilonhg/Centre-MD/releases/tag/v1.2.0)
 

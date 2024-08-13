@@ -1,202 +1,187 @@
-from outils import Outils, Depart, Options, Autres
-import datetime
-import time
-import sys
-import logging
+import outils
 import os
+import logging
+import datetime
+import gettext
+import time
 
-f_log = "data_log.txt"
-f_old_usr = "data_usr"
-f_usr = "data_usr.csv"
-f_cle = "data_cle"
+F_log= "data_log.txt"
+F_old_usr= "data_usr"
+F_usr= "data_usr.csv"
+F_cle= "data_cle"
 
-usr_version = "2.0.0b"
+usr_version= "2.0.0"
 
-logging.basicConfig (filename = f_log, level = logging.INFO, format = "%(asctime)s %(message)s", datefmt = "%d/%m/%Y %H:%M:%S") # INITIALISE LES LOGS
-gestionnaire_log = logging.getLogger().handlers[0] # UTILE POUR ARRETER LE FONCTIONNEMENT DES LOGS
-date = datetime.datetime.now() # DEFINIT LA DATE
+logging.basicConfig (filename= F_log, level= logging.INFO, format= "%(asctime)s %(message)s", datefmt= "%d/%m/%Y %H:%M:%S") # INITIALISE LES LOGS
+gestionnaire_log= logging.getLogger().handlers[0] # UTILE POUR ARRETER LE FONCTIONNEMENT DES LOGS
+date= datetime.datetime.now() # DEFINIT LA DATE
 
 os.system ("cls")
-if not os.path.exists (f_usr) and not os.path.exists (f_old_usr):
+if not os.path.exists (F_usr) and not os.path.exists (F_old_usr):
     # CREATION CLE ENCRYPTAGE
-    cle = Outils.Cle.ecriture_cle (f_cle)
+    cle = outils.Cle.ecriture_cle (F_cle)
     
     # CHOIX DE LA LANGUE
-    f_langue, usr_langue = Depart.choix_langue ()
-    liste_langue = Outils.lecture_langue (f_langue)
+    usr_langue= outils.Langues.choix_langue ()
+    outils.Langues.modifier_langue (usr_langue)
     os.system ("cls")
     
-    print (f"   · {liste_langue[7][0]} ! ·\n")
+    print (_("Bienvenue !"))
     time.sleep (3)
-    print (liste_langue[7][1])
+    print (_("Je vais t'aider à configurer ton Centre MD !"))
     time.sleep (5)
     os.system ("cls")
     
     # CHOIX DU NOM
-    usr_nom = Depart.choix_nom (liste_langue)
+    usr_nom = outils.choix_nom ()
     os.system ("cls")
     
     # CHOIX DU SON
-    f_son, usr_son = Depart.choix_son (liste_langue, usr_nom)
+    F_son, usr_son = outils.choix_son (usr_nom)
     os.system ("cls")
-    
+    1
     # CHOIX DU MDP
-    usr_mdp = Depart.choix_mdp (liste_langue, usr_nom)
+    usr_mdp = outils.choix_mdp (usr_nom)
     os.system ("cls")
     
-    # DEFINITION DU NBR DE FOIS QUE LE USER A LANCE LE LOGICIEL (1ere fois)
+    # DEFINITION DU NBR DE FOIS QUE LE USR A LANCE LE LOGICIEL (1ere fois)
     usr_nbr = 1
     
     # DEFINITION DES DONNEES CONTENUES DS f_usr
-    usr = [[usr_langue, usr_nom, usr_son, f_son, usr_mdp, usr_nbr, usr_version, False, False, False, False, False]]
+    usr = [[usr_langue, usr_nom, usr_son, F_son, usr_mdp, usr_nbr, usr_version, False, False, False, False, False]]
+    outils.CSV.ecriture_encryptee_csv (usr, F_usr, cle)
     
-    Outils.CSV.ecriture_encryptee_csv (usr, f_usr, cle)
-    
-    print (f"   · {liste_langue[7][9]} ·\n")
-    print (liste_langue[7][10])
+    print (_("CONFIGURATION TERMINEE !"))
+    print (_("Si tu as besoin d'aide, tape aide !"))
     time.sleep (6)
     os.system ("cls")
-    logging.info (f"{liste_langue[1][0]} {usr_nom} !\n")
-    
+    logging.info (_("_Bienvenue nom_")+ usr_nom+ " ·\n")
+
 else:
     # GESTION ERREUR CLE (nouveau fichier data_cle)
-    if not os.path.exists(f_cle):
-        cle = Outils.Cle.ecriture_cle (f_cle)
+    if not os.path.exists(F_cle):
+        cle= outils.Cle.ecriture_cle (F_cle)
+        test_v1= True
     else:
-        cle = Outils.Cle.lecture_cle (f_cle)
+        cle= outils.Cle.lecture_cle (F_cle)
+        test_v1= False
     
-    # GESTION ERREUR v1 (nouveau fichier data_usr)
-    if os.path.exists (f_old_usr):
-        Autres.erreur_data_usr (f_old_usr, f_usr, cle, usr_version)
+    # GESTION TRANSITION DONNEES v1 VERS v2
+    if test_v1:
+        outils.Autres.erreur_data_usr (F_old_usr, F_usr, cle, usr_version)
     
-    usr = Outils.CSV.lecture_encryptee_csv (f_usr, cle)
+    usr= outils.CSV.lecture_encryptee_csv (F_usr, cle)
     
-    # GESTION AFFICHAGE DANS LA BONNE LANGUE + 
-    if usr[0][0] == "fr":
-        f_langue = "langues\\FRENCH-fr"
-    elif usr[0][0] == "en":
-        f_langue = "langues\\ENGLISH-en"
-    else:
-        print ("ERREUR: Choix Langue\n\nLangue non prise en charge par la Team MD !\nPassage automatique en Français\n")
-        f_langue = "langues\\FRENCH-fr"
-    liste_langue = Outils.lecture_langue (f_langue)
+    # GESTION AFFICHAGE DANS LA BONNE LANGUE
+    outils.Langues.modifier_langue (usr[0][0])
     
     # GESTION MDP
-    if usr[0][4] != False:
+    if usr[0][4]!= False:
         while True:
-            test_mdp = input (liste_langue[0][8])
-            if test_mdp != usr[0][4]:
+            test_mdp= input (_("Entre le mot de passe"))
+            if test_mdp!= usr[0][4]:
                 os.system ("cls")
-                print (f"{liste_langue[0][9]}\n")
+                print (_("Mot de passe incorrect"))
                 time.sleep (3)
             else:
                 os.system ("cls")
                 break
     
+    # GESTION MUSIQUE
+    if usr[0][2]== True:
+        if usr[0][3]== False:
+            usr[0][2]= False
+            outils.CSV.ecriture_encryptee_csv (usr, F_usr, cle)
+        elif os.path.exists (usr[0][3])== False:
+            usr[0][3]= False
+            usr[0][2]= False
+            outils.CSV.ecriture_encryptee_csv (usr, F_usr, cle)
+        else:
+            outils.Musiques.gestion_musique (usr[0][3], "lire_musique")
+    
     # GESTION MESSAGE DE BIENVENUE
     if date.hour <= 12:
-        print (f"{liste_langue[0][5]} {usr[0][1]} !\n")
+        print (_("Bonjour nom")+ f"{usr[0][1]} !\n")
     elif 12 < date.hour < 18:
-        print (f"{liste_langue[0][6]} {usr[0][1]} !\n")
+        print (_("Bonsoir nom")+ f"{usr[0][1]} !\n")
     else:
-        print (f"{liste_langue[0][7]} {usr[0][1]} !\n")
+        print (_("Bonne nuit nom")+ f"{usr[0][1]} !\n")
     
     usr[0][5] += 1
-    Outils.CSV.ecriture_encryptee_csv (usr, f_usr, cle)
-    usr = Outils.CSV.lecture_encryptee_csv (f_usr, cle)
-
-logging.info (f"{liste_langue[1][1]}: {liste_langue[1][8]}\n")
+    outils.CSV.ecriture_encryptee_csv (usr, F_usr, cle)
+    
+logging.info (_("_OUVERTURE_")+ _("_Centre MD_")+ "\n")
 
 while True: # Lancement boucle Centre MD
-    usr = Outils.CSV.lecture_encryptee_csv (f_usr, cle)
-    print (f" -- {liste_langue[8][0]} --\n")
+    usr = outils.CSV.lecture_encryptee_csv (F_usr, cle)
+    print (_("-Centre MD-"))
     
-    print (f"  0. {liste_langue[8][1]}")
-    if usr[0][7]: print (f"  1. {liste_langue[10][0]}")
-    if usr[0][8]: print (f"  2. {liste_langue[11][0]}")
-    if usr[0][9]: print (f"  3. {liste_langue[12][0]}")
-    if usr[0][10]: print (f"  4. {liste_langue[13][0]}")
-    print (f"\n  5. {liste_langue[9][0]}\n")
-    if usr[0][11]: print (f"  13. {liste_langue[14][0]}\n")
+    print (_("Arrêter"))
+    if usr[0][7]: print (_("Rep MD"))
+    if usr[0][8]: print (_("Manager MD"))
+    if usr[0][9]: print (_("Pass MD"))
+    if usr[0][10]: print (_("Jeux MD"))
+    print (_("Options"))
+    if usr[0][11]: print (_("Fonctions MD"))
     
-    choix = input (liste_langue[0][3]).lower ()
+    choix= input (_("Choix")).lower ()
     
-    if choix == "0":
-        logging.info (f"{liste_langue[1][2]}: {liste_langue[1][8]}\n")
-        sys.exit (0)
-        
-    elif choix == "1":
-        if usr[0][7]:
-            from apps.rep_md.main import rep_md
-            logging.info (f"  {liste_langue[1][1]}: {liste_langue[2][0]}\n")
-            os.system ("cls")
-            rep_md ()
-            os.system ("cls")
-            logging.info (f"  {liste_langue[1][2]}: {liste_langue[2][0]}\n")
-        else:
-            os.system ("cls")
-            print (f"{liste_langue[0][10]}\n")
-        
-    elif choix == "2":
-        if usr[0][8]:
-            from apps.manager_md.main import manager_md
-            logging.info (f"  {liste_langue[1][1]}: {liste_langue[3][0]}\n")
-            os.system ("cls")
-            manager_md ()
-            os.system ("cls")
-            logging.info (f"  {liste_langue[1][2]}: {liste_langue[3][0]}\n")
-        else:
-            os.system ("cls")
-            print (f"{liste_langue[0][10]}\n")
-        
-    elif choix == "3":
-        if usr[0][9]:
-            from apps.pass_md.main import pass_md
-            logging.info (f"  {liste_langue[1][1]}: {liste_langue[4][0]}\n")
-            os.system ("cls")
-            pass_md ()
-            os.system ("cls")
-            logging.info (f"  {liste_langue[1][2]}: {liste_langue[4][0]}\n")
-        else:
-            os.system ("cls")
-            print (f"{liste_langue[0][10]}\n")
-        
-    elif choix == "4":
-        if usr[0][10]:
-            from apps.jeux_md.main import jeux_md
-            logging.info (f"  {liste_langue[1][1]}: {liste_langue[5][0]}\n")
-            os.system ("cls")
-            jeux_md ()
-            os.system ("cls")
-            logging.info (f"  {liste_langue[1][2]}: {liste_langue[5][0]}\n")
-        else:
-            os.system ("cls")
-            print (f"{liste_langue[0][10]}\n")
-        
-    elif choix == "13":
-        if usr[0][11]:
-            from apps.fonctions_md.main import fonctions_md
-            logging.info (f"  {liste_langue[1][1]}: {liste_langue[6][0]}\n")
-            os.system ("cls")
-            fonctions_md ()
-            os.system ("cls")
-            logging.info (f"  {liste_langue[1][2]}: {liste_langue[6][0]}\n")
-        else:
-            os.system ("cls")
-            print (f"{liste_langue[0][10]}\n")
-        
-    elif choix == "5":
-        logging.info (f"  {liste_langue[1][1]}: {liste_langue[1][9]}\n")
+    if choix== "0":
+        outils.Musiques.gestion_musique (usr[0][3], "couper_musique")
+        logging.info (_("_FERMETURE_")+ _("_Centre MD_")+ "\n")
+        break
+    
+    elif choix== "1" and usr[0][7]:
+        from apps.rep_md.main import rep_md
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Rep MD_")+ "\n")
         os.system ("cls")
-        Options.main (liste_langue, usr, f_usr, f_log, usr_version, cle, f_cle, gestionnaire_log)
+        rep_md ()
         os.system ("cls")
-        logging.info (f"  {liste_langue[1][2]}: {liste_langue[1][9]}\n")
-        
-    elif choix == f"{liste_langue[0][4]}":
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Rep MD_")+ "\n")
+    
+    elif choix== "2" and usr[0][8]:
+        from apps.manager_md.main import manager_md
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Manager MD_")+ "\n")
         os.system ("cls")
-        print (liste_langue[15][0])
-        print (liste_langue[15][1] + "\n")
-        
+        manager_md ()
+        os.system ("cls")
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Manager MD_")+ "\n")
+    
+    elif choix== "3" and usr[0][9]:
+        from apps.pass_md.main import pass_md
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Pass MD_")+ "\n")
+        os.system ("cls")
+        pass_md ()
+        os.system ("cls")
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Pass MD_")+ "\n")
+    
+    elif choix== "4" and usr[0][10]:
+        from apps.jeux_md.main import jeux_md
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Jeux MD_")+ "\n")
+        os.system ("cls")
+        jeux_md ()
+        os.system ("cls")
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Jeux MD_")+ "\n")
+
+    elif choix== "5":
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Options_")+ "\n")
+        os.system ("cls")
+        outils.Options.main (usr, F_usr, F_log, usr_version, cle, F_cle, gestionnaire_log)
+        os.system ("cls")
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Options_")+ "\n")
+    
+    elif choix== "13" and usr[0][11]:
+        from apps.fonctions_md.main import fonctions_md
+        logging.info ("  "+ _("_OUVERTURE_")+ _("_Fonctions MD_")+ "\n")
+        os.system ("cls")
+        fonctions_md ()
+        os.system ("cls")
+        logging.info ("  "+ _("_FERMETURE_")+ _("_Fonctions MD_")+ "\n")
+    
+    elif choix== _("aide"):
+        os.system ("cls")
+        print (_("aide_centre_md"))
+    
     else:
         os.system ("cls")
-        print (f"{liste_langue[0][10]}\n")
+        print (_("Choix impossible"))
