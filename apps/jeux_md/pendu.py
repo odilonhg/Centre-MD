@@ -1,4 +1,4 @@
-from outils import Outils
+from outils import lecture_csv
 from apps.rep_md.main import f_rep
 from random import choice
 from os import system
@@ -53,7 +53,7 @@ def affichage_mot(mot, lettres_trouvees):
 def le_pendu_lancement():
     system ("cls")
     prenoms_contacts_liste = []
-    dico = Outils.CSV.lecture_csv (f_rep)
+    dico = lecture_csv (f_rep)
     
     for contacts in dico:
         
@@ -95,7 +95,7 @@ def le_pendu_lancement():
             
             elif choice_str.upper() in mot.upper():
                 system ("cls")
-                print (f"Bien joué, tu as trouvé la lettre \"{choice_str.upper ()}\" !\n")
+                print (f"Bien joué, tu as trouvé la lettre \"{choice}\" !\n")
                 lettres_trouvees.append(choice_str)
             
             else:
