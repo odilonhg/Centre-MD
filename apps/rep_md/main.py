@@ -1,53 +1,60 @@
-from os import system
+import outils
+import os
 
-f_rep = "data_rep.csv" # NE PAS MODIFIER LE NOM DE LA VARIABLE (liée à ttes les autres fonctions)
 F_rep = "data_rep.csv"
 
-def rep_md ():
-     
-    print ("   · Rep MD ·\n")
-    
-    print (" 0. Retour")
-    print (" 1. Contacts")
-    print (" 2. Favoris")
-    print (" 3. Groupes")
-    print (" 4. Annivs\n")
-    
-    choice = input ("Choix : ")
-    
-    match choice:
+def main(usr):
+    while True:
+        if os.path.exists(F_rep):
+            L_rep = outils.lecture_CSV(F_rep)
+        else:
+            L_rep = []
+            print(" Bienvenue dans le Rep MD !\n",
+                  "\n Ici, vous pouvez créer des contacts, des groupes.",
+                  "\n Vous pouvez aussi consulter les anniversaires de vos contacts !\n",
+                  "\n Pour créer votre premier contact, tapez \"1\" pour \"Ajouter\" un contact !\n")
+        print("   · Rep MD ·\n",
+              "\n 0. Retour",
+              "\n 1. Ajouter",
+              "\n 2. Rechercher",
+              "\n 3. Afficher",
+              "\n 4. Modifier",
+              "\n 5. Supprimer")
         
-        case "0": return ""
+        choix = input ("\nChoix : ")
+        os.system ("cls")
         
-        case "1":
-            from apps.rep_md.contacts.main import contacts
-            system ("cls")
-            contacts ()
-            system ("cls")
-            return rep_md ()
+        if choix == "0": return
         
-        case "2":
-            from apps.rep_md.favoris.main import favoris
-            system ("cls")
-            favoris ()
-            system ("cls")
-            return rep_md ()
+        elif choix == "1":
+            print("   · Ajouter ·\n",
+                  "\n 1. Contacts",
+                  "\n 2. Groupes")
+            choix = input("\nChoix : ")
+            os.system("cls")
+            from apps.rep_md.ajouter import main
+            if choix == "1":
+                main("contacts", L_rep, usr)
+            elif choix == "2":
+                main("groupes", L_rep, usr)
+            else: print(" Choix impossible...\n")
+        elif choix == "2":
+            from apps.rep_md.rechercher import main
+            main(L_rep, usr)
+        elif choix == "3":
+            from apps.rep_md.afficher import main
+            main(L_rep, usr)
+        elif choix == "4":
+            from apps.rep_md.modifier import main
+            main(L_rep, usr)
+        elif choix == "5":
+            from apps.rep_md.supprimer import main
+            main(L_rep, usr)
         
-        case "3":
-            from apps.rep_md.groupes.main import groupes
-            system ("cls")
-            groupes ()
-            system ("cls")
-            return rep_md ()
-        
-        case "4":
-            from apps.rep_md.anniversaires.main import anniversaires
-            system ("cls")
-            anniversaires ()
-            system ("cls")
-            return rep_md ()
-        
-        case _:
-            system ("cls")
-            print ("Choix impossible...\n")
-            return rep_md ()
+        elif choix == "13":
+            print(" Bienvenue dans le Rep MD !\n",
+                  "\n Ici, vous pouvez créer des contacts, des groupes.",
+                  "\n Vous pouvez aussi consulter les anniversaires de vos contacts !\n",
+                  "\n Pour créer votre premier contact, tapez \"1\" pour \"Ajouter\" un contact !\n")
+        else:
+            print(" Choix impossible...\n")

@@ -5,13 +5,13 @@
 Le Centre MD est un projet émanant premièrement d'un projet étudiant:
 Le Répertoire MD
 
-Il s'agissait initialement d'un répertoire de contacts,
+Il s'agissait initialement d'un répertoire de contacts (Rep MD),
 gérant la création de contacts, de favoris et pouvant contenir
 différentes informations tel que la date de naissance ou encore
 le numéro de téléphone du contact.
 
 Le Centre MD, lui, est simplement une application me permettant
-de partager l'ensemble de mes projets (en plus du Répertoire MD).
+de partager l'ensemble de mes projets (en plus du Rep MD).
 
 ### Contenu
 
@@ -21,10 +21,11 @@ dès son 1er lancement:
 * Musique
 * Mot de passe
 * Logs
+* 2 Emplacements Utilisateur
 * etc...
 
 Le Centre MD contient un total de
-5 applications entièrement fonctionnelles:
+6 applications entièrement fonctionnelles:
 
 - Rep MD:
 
@@ -32,18 +33,18 @@ Le Centre MD contient un total de
 	contenant un système de groupes
 	et de favoris.
 
-- Jeux MD:
-
-	Un répertoire de l'ensemble
-	des jeux que j'ai conçu.
-
-- GDT MD:
-
+- Manager MD:
+	
 	Un logiciel permettant de suivre
 	ses tâches, il intègre également
 	un système de datation des tâches.
 
-- MDP MD:
+- Fonds MD:
+
+	Un logiciel permettant
+	de gérer son argent
+
+- Pass MD:
 
 	Un simple créateur de mot de passe
 	utilisant l'aléatoire pour créer
@@ -51,15 +52,20 @@ Le Centre MD contient un total de
 	Il permet aussi de les copier
 	dans le presse papier.
 
-- Fonds MD (BETA):
+- Musiques MD:
 
-	Un logiciel tout nouveau, il permet
-	de gérer des comptes pour organiser
-	son argent
+	Un simple lecteur MP3 et OGG,
+	Il contient un système de sauvegarde
+	des musiques que vous aimez.
+
+- Jeux MD
+
+	Un répertoire de l'ensemble
+	des jeux que j'ai conçu.
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v1.3.0/CentreMD_v1.3.0_Installer.exe)
+- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v2.0.0/CentreMD_Installer.exe)
 
 - Lancez le fichier une fois téléchargé
 
@@ -69,20 +75,20 @@ Le Centre MD contient un total de
 
 ## Fabriqué avec
 
-Les différents modules python:
+Les différents modules python utilisés dans le Centre MD:
 
 * os
 * logging
 * datetime
-* pickle
 * pygame
-* PySide2
+* pickle
 * random
-* string
-* sys
+* shutil
+* requests
+* tkinter
 
 ## Versions
-**Dernière version :** [1.3.0](https://github.com/odilonhg/Centre-MD/releases/tag/v1.3.0)
+**Dernière version :** [2.0.0](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0)
 
 Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
 

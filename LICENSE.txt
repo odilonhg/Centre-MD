@@ -1,4 +1,4 @@
-        Version 1.3.0, Septembre 2024
+        Version 2.0.0, Octobre 2024
 
 Licence du Logiciel Open Source "Centre MD"
 Droit d'Auteur 2024 Team MD. Tous droits réservés.

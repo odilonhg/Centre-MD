@@ -1,237 +1,343 @@
-from apps.rep_md.main import F_rep
 import outils
 import os
-import logging
 
-def ajouter (choix):
-    if choix== "contacts":
-        nom= ""
-        prenom= ""
-        jour= ""
-        mois= ""
-        annee= ""
-        num= ""
-        email= ""
-        L= outils.CSV.lecture_csv (F_rep)
-        nbr= {
-            "1": "01",
-            "2": "02",
-            "3": "03",
-            "4": "04",
-            "5": "05",
-            "6": "06",
-            "7": "07",
-            "8": "08",
-            "9": "09"
-        }
+def main(choix, L_rep, usr):
+    if choix == "contacts":
+        usr_id = usr["id"]
+        id = str(int(usr["rep_md"]) + 1)
+        nom = ""
+        prenom = ""
+        jour = ""
+        mois = ""
+        annee = ""
+        date = ""
+        num = ""
+        email = ""
+        adresse = ""
+        note = ""
         
         while True:
-            print (_("-AJOUTER : Contacts-"))
-            if nom== "" or prenom== "":
-                print (_("Retour"))
-                print (_("-OBLIGATOIRE-"))
-                print (_("NOM"))
-                print (_("PRENOM"))
-            elif nom != "" and prenom != "":
-                print (_("-FACULTATIF-"))
-                print (_("DATE DE NAISSANCE"))
-                print (_("NUMERO DE TELEPHONE"))
-                print (_("ADRESSE EMAIL"))
-                print (_("FIN CONTACT"))
-            
-            choix_ajouter= input (_("Choix")).lower ()
-            os.system ("cls")
-
-            if choix_ajouter== "0":
-                if nom== "" or prenom== "":
-                    break
-                else: print (_("Choix impossible"))
-            
-            elif choix_ajouter== "1":
-                if nom== "" or prenom== "":
-                    if nom== "":
-                        nom= input (_("SAISIR NOM")).upper ()
-                        os.system ("cls")
-                        print (_("Nom de famille ajouté"))
-                    else: print (_("Nom déjà ajouté"))
-                else: print (_("Choix impossible"))
-
-            elif choix_ajouter== "2":
-                if nom== "" or prenom== "":
-                    if prenom== "":
-                        prenom= input (_("SAISIR PRENOM")).capitalize ()
-                        os.system ("cls")
-                        print (_("Prénom ajouté"))
-                    else: print (_("Prénom déjà ajouté"))
-                else: print (_("Choix impossible"))
-            
-            elif choix_ajouter== "3":
-                if nom!= "" and prenom!= "":
-                    if jour== "":
-                        while True:
-                            jour= input (_("SAISIR JOUR")+ f"{nom} {prenom} : ")
-                            if int (jour)> 31 or int (jour)< 1:
-                                os.system ("cls")
-                                print (_("Valeur impossible"))
-                                jour= ""
-                            else:
-                                os.system ("cls")
-                                print (_("Jour ajouté"))
-                                for nbrV1, nbrV2 in nbr.items ():
-                                    if jour== nbrV1:
-                                        jour= nbrV2
-                                        break
-                                break
-                    if mois== "":
-                        while True:
-                            mois= input (_("SAISIR MOIS")+ f"{nom} {prenom} : ")
-                            if int (mois)> 12 or int (mois)< 1:
-                                os.system ("cls")
-                                print (_("Valeur impossible"))
-                                mois= ""
-                            else:
-                                os.system ("cls")
-                                print (_("Mois ajouté"))
-                                for nbrV1, nbrV2 in nbr.items ():
-                                    if mois== nbrV1:
-                                        mois= nbrV2
-                                        break
-                                break
-                    if annee== "":
-                        while True:
-                            annee= input (_("SAISIR ANNEE")+ f"{nom} {prenom} : ")
-                            if int (annee)> 2100 or int (annee)< 1900:
-                                os.system ("cls")
-                                print (_("Valeur impossible"))
-                                annee= ""
-                            else:
-                                os.system ("cls")
-                                print (_("Année ajoutée"))
-                                break
-                    else:
-                        print (_("Date de naissance déjà ajoutée"))
-                else: print (_("Choix impossible"))
-            
-            elif choix_ajouter== "4":
-                if nom!= "" and prenom!= "":
-                    if num== "":
-                        num= input (_("SAISIR NUM")+ f"{nom} {prenom} : ")
-                        if len (num)!= 9 and len (num)!= 10:
-                            os.system ("cls")
-                            print (_("Valeur impossible"))
-                            num= ""
-                        elif num.isdigit ()== False:
-                            os.system ("cls")
-                            print (_("Valeur impossible"))
-                            num= ""
-                        else:
-                            if len (num)== 9: num= "0"+ num
-                            os.system ("cls")
-                            print (_("Numéro de téléphone ajouté"))
-                    else:
-                        print (_("Numéro de téléphone déjà ajouté"))
-                else: print (_("Choix impossible"))
-            
-            elif choix_ajouter== "5":
-                if nom!= "" and prenom!= "":
-                    if email== "":
-                        email= input (_("SAISIR EMAIL")+ f"{nom} {prenom} : ")
-                        os.system ("cls")
-                        print (_("Adresse email ajoutée"))
-                    else:
-                        print (_("Adresse email déjà ajoutée"))
-                else: print (_("Choix impossible"))
-            
-            elif choix_ajouter== "6":
-                if nom!= "" and prenom!= "":
-                    if annee== "":
-                        date= ""
-                    else:
-                        date= f"{jour}.{mois}.{annee}"
-                    choix_favori= input (_("Mettre")+ f"{nom} {prenom}"+ _("en favori : ")).upper ()
-                    if choix_favori== _("OUI"):
-                        favori= "True"
-                    else:
-                        favori= "False"
-                    nouveau_contact= {"nom": nom, "prenom": prenom, "date": date, "num": num, "email": email, "favori": favori, "groupe": "", "nom_groupe": "", "num_groupe": "", "mbr_groupe": ""}
-                    L.append (nouveau_contact)
-                    outils.CSV.ecriture_csv (L, F_rep)
-                    os.system ("cls")
-                    print (nom, prenom+ _("a été crée (contact)"))
-                    if favori== "True":
-                        print (nom, prenom+ _("est maintenant en favori !"))
-                    logging.info (_("_AJOUTER CONTACTS_")+ f"{nom} {prenom}\n")
-                    break
-                else: print (_("Choix impossible"))
-            
-            else: print (_("Choix impossible"))
-    
-    elif choix== "groupes":
-        num= 1
-        nom= ""
-        nbr_mbr= 0
-        
-        while True:
-            L= outils.CSV.lecture_csv (F_rep)
-            num_existant= [int(groupe["num_groupe"]) for groupe in L if groupe["num_groupe"].isdigit()]
-            while num in num_existant:
-                num+= 1
-            
-            print (_("-AJOUTER : Groupes-"))
-            if nom== "":
-                print (_("Retour"))
-                print (_("-OBLIGATOIRE-"))
-                print (_("NOM GROUPES"))
+            print("   · Ajouter: Contacts ·\n",
+                  "\n 0. Retour")
+            if nom == "" or prenom == "":
+                print("\n   - OBLIGATOIRE -\n",
+                      "\n 1. Nom de Famille",
+                      "\n 2. Prénom")
             else:
-                print (_("-FACULTATIF-"))
-                print (_("MEMBRES GROUPES"))
-                print (_("FIN GROUPES"))
+                print("\n   - FACULTATIF -\n",
+                      "\n 3. Date de Naissance",
+                      "\n 4. Numéro de Téléphone",
+                      "\n 5. Adresse Email",
+                      "\n 6. Adresse de Domicile",
+                      "\n 7. Notes Additionnelles\n",
+                      "\n8. Finaliser le contact !")
             
-            choix_ajouter= input (_("Choix")).lower ()
-            os.system ("cls")
+            choix = input("\nChoix : ")
+            os.system("cls")
             
-            if choix_ajouter== "0":
-                if nom== "": break
-                else: print (_("Choix impossible"))
+            if choix == "0":
+                if nom != "" and prenom != "":
+                    while True:
+                        print(" Souhaitez-vous quitter ? (les données seront perdues)\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
+                        if choix == "1":
+                            test = True
+                            break
+                        elif choix == "2":
+                            break
+                        else:
+                            print(" Choix impossible...\n")
+                if test:
+                    print (" Action annulée...\n")
+                    return
             
-            elif choix_ajouter== "1":
-                if nom== "":
-                    nom= input (_("Saisir nom groupe"))
-                    if nom!= "":
+            if nom == "" or prenom == "":
+                if choix == "1":
+                    if nom == "":
+                        print ("   · Ajouter: Contacts ·\n")
+                        nom = input ("Saisissez le nom de famille du contact : ").upper ()
                         os.system ("cls")
-                        print (_("Nom groupe ajouté"))
-                        logging.info (_("_AJOUTER GROUPES_")+ nom+ "\n")
-                else: print (_("Choix impossible"))
+                        if nom == "":
+                            print(" Action annulée...\n")
+                        else:
+                            print (f" Le nom de famille \"{nom}\" à été ajouté au contact !\n")
+                    else:
+                        print (" Nom de famille déjà renseigné...\n")
+                elif choix == "2":
+                    if prenom == "":
+                        print("   · Ajouter: Contacts ·\n")
+                        prenom = input("Saisissez le prénom du contact : ").capitalize ()
+                        os.system("cls")
+                        if prenom == "":
+                            print(" Action annulée...\n")
+                        else:
+                            print(f" Le prénom \"{prenom}\" à été ajouté au contact !\n")
+                    else:
+                        print(" Prénom déjà renseigné...\n")
+                
+                elif choix == "13":
+                    print(" Bienvenue dans l'onglet de création de contacts !\n"
+                          "\n Ici, vous pouvez créer des contacts afin d'enrichir votre répertoire.",
+                          "\n Pour commencer, vous devez obligatoirement ajouter :\n"
+                          "\n - Le nom de famille du contact (en tapant \"1\")",
+                          "\n - Le prénom du contact (en tapant \"2\")\n",
+                          "\n Je vous laisse essayer par vous même !\n")
+                else:
+                    print (" Choix impossible...\n")
             
-            elif choix_ajouter== "2":
-                if nom!= "":
-                    nbr_recherche= False
-                    contact= input (_("Saisir le nom ou le prénom du contact à ajouter au groupe")).upper ()
+            else:
+                if choix == "3":
+                    if jour == "" or mois == "" or annee == "":
+                        if jour == "":
+                            print("   · Ajouter: Contacts ·\n")
+                            while True:
+                                jour = input(f"Saisissez le jour de naissance de {nom} {prenom} : ")
+                                os.system("cls")
+                                if jour.isdigit() and 0 < len(jour) <= 2 and 0 < int(jour) <= 31:
+                                    if len(jour) == 1:
+                                        jour = "0" + jour
+                                    print(f" Le jour de naissance \"{jour}\" à été ajouté au contact !\n")
+                                    break
+                                print (" Format incorrect !\n")
+                        if mois == "":
+                            print("   · Ajouter: Contacts ·\n")
+                            while True:
+                                mois = input(f"Saisissez le mois de naissance de {nom} {prenom} : ")
+                                os.system("cls")
+                                if mois.isdigit() and 0 < len(mois) <= 2 and 0 < int(mois) <= 12:
+                                    if len(mois) == 1:
+                                        mois = "0" + jour
+                                    print(f" Le mois de naissance \"{mois}\" à été ajouté au contact !\n")
+                                    break
+                                print (" Format incorrect !\n")
+                        if annee == "":
+                            print ("   · Ajouter: Contacts ·\n")
+                            while True:
+                                annee = input(f"Saisissez l'année de naissance de {nom} {prenom} : ")
+                                os.system("cls")
+                                if annee.isdigit() and len(annee) == 4 and 1900 <= int(annee) <= 2100:
+                                    date = f"{jour}/{mois}/{annee}"
+                                    print(f" La date de naissance \"{date}\" à été ajouté au contact !\n")
+                                    break
+                                print(" Format incorrect !\n")
+                        else:
+                            print(" Date de naissance déjà renseignée...\n")
+                elif choix == "4":
+                    if num == "":
+                        print("   · Ajouter: Contacts ·\n")
+                        while True:
+                            num = input(f"Saisissez le numéro de téléphone de {nom} {prenom} : ")
+                            os.system("cls")
+                            if num.isdigit() and 0 < len(num) >= 10:
+                                if len (num) == 9:
+                                    num = "0" + num
+                                print (f" Le numéro de téléphone \"{num}\" à été ajouté au contact !\n")
+                                break
+                            print(" Format incorrect !\n")
+                    else:
+                        print(" Numéro de téléphone déjà renseigné...\n")
+                elif choix == "5":
+                    if email == "":
+                        print("   · Ajouter: Contacts ·\n")
+                        while True:
+                            email = input(f"Saisissez l'adresse email de {nom} {prenom} : ")
+                            os.system("cls")
+                            if "@" in email:
+                                print(f" L'adresse email \"{email}\" à été ajouté au contact !\n")
+                                break
+                            print(" Format incorrect !\n")
+                    else:
+                        print(" Adresse email déjà renseignée...\n")
+                elif choix == "6":
+                    if adresse == "":
+                        print("   · Ajouter: Contacts ·\n")
+                        while True:
+                            rue = input(f"Saisissez le numéro ainsi que le nom de la rue dans laquelle réside {nom} {prenom} : ")
+                            os.system("cls")
+                            if rue == "":
+                                print(" Format incorrect !\n")
+                            else:
+                                break
+                        print("   · Ajouter: Contacts ·\n")
+                        while True:
+                            code_postal = input(f"Saisissez le code postal dans lequel réside {nom} {prenom} : ")
+                            os.system("cls")
+                            if code_postal.isdigit() and 0< len(code_postal) <= 5:
+                                break
+                            print(" Format incorrect !\n")
+                        print("   · Ajouter: Contacts ·\n")
+                        while True:
+                            ville = input(f"Saisissez le nom de la ville dans laquelle réside {nom} {prenom} : ")
+                            os.system("cls")
+                            if ville == "":
+                                print(" Format incorrect !\n")
+                            else:
+                                break
+                        adresse = f"{rue} {code_postal} {ville}"
+                        print(f" L'adresse de domicile \"{adresse}\" à été ajouté au contact !\n")
+                    else:
+                        print(" Adresse de domicile déjà renseignée...\n")
+                elif choix == "7":
+                    print("   · Ajouter: Contacts ·\n")
+                    if note == "":
+                        note = input(f"Saisissez une note à conserver à propos de {nom} {prenom} : ")
+                    else:
+                        note += "|" + input (f"Saisissez une note supplémentaire à conserver à propos de {nom} {prenom} : ")
                     os.system ("cls")
-                    for contacts in L:
-                        nom_c= contacts["nom"]
-                        prenom_c= contacts["prenom"].upper ()
-                        if contact== nom_c or contact== prenom_c:
-                            nbr_recherche= True
-                            confirmation_ajouter= input (_("_Ajouter_")+ f" {nom_c} {prenom_c.capitalize()} : ").upper ()
-                            if confirmation_ajouter== _("OUI"):
-                                nbr_mbr+= 1
-                                contacts["groupe"]+= str (num)
-                                outils.CSV.ecriture_csv (L, F_rep)
-                                logging.info (_("_AJOUTER CONTACT DANS GROUPE_")+ f"{nom_c} {prenom_c.capitalize()}\n")
-                                os.system ("cls")
-                                print (nom_c, prenom_c.capitalize ()+ _("a été ajouté au groupe")+ nom+ " !\n")
-                            else: os.system ("cls")
-                    if nbr_recherche== False: print (_("Aucun contact trouvé")+ "\n")
-                else: print (_("Choix impossible"))
+                    if note == "":
+                        print(" Action annulée...\n")
+                    else:
+                        print (f" La note à été ajouté au contact !\n")
+                elif choix == "8":
+                    while True:
+                        print("   · Ajouter: Contacts ·\n",
+                             f"\n Souhaitez-vous ajouter {nom} {prenom} aux favoris ?\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
+                        if choix == "1":
+                            favori = "True"
+                            break
+                        elif choix == "2":
+                            favori = "False"
+                            break
+                        print (" Choix impossible...\n")
+                    
+                    usr["rep_md"] = str(int(usr["rep_md"]) + 1)
+                    contact = {"usr_id": usr_id, "id": id, "favori": favori, "nom": nom, "prenom": prenom, "date": date, "num": num, "email": email, "adresse": adresse, "notes": note, "groupes": "", "nom_groupe": "", "nbr_groupe": ""}
+                    L_rep.append (contact)
+                    outils.ecriture_usr(usr)
+                    outils.ecriture_rep(L_rep)
+                    
+                    print(f"{nom} {prenom} a été ajouté à la liste des contacts !\n")
+                    outils.ecriture_log(f"    AJOUTER CONTACTS : {nom} {prenom}\n")
+                    return
+                elif choix == "13":
+                    print(" Vous arrivez au terme de la création de votre contact...",
+                          "\n On aura vécu de bonnes aventures,"
+                          "\n mais toutes les aventures ont une fin...\n")
+                else:
+                    print(" Choix impossible...\n")
+    
+    elif choix == "groupes":
+        usr_id = usr["id"]
+        id = str(int(usr["rep_md"]) + 1) 
+        nom = ""
+        nbr = 0
+        
+        while True:
+            print("   · Ajouter: Contacts ·\n",
+                  "\n 0. Retour")
+            if nom == "":
+                print("\n   - OBLIGATOIRE -\n",
+                      "\n 1. Nom du Groupe")
+            else:
+                print("\n   - FACULTATIF -\n",
+                      "\n 2. Ajout de contacts",
+                      "\n\n3. Finaliser le groupe !")
             
-            elif choix_ajouter== "3":
-                if nom!= "":
-                    g_new = {"nom": "", "prenom": "", "date": "", "num": "", "email": "", "favori": "", "groupe": "", "nom_groupe": nom, "num_groupe": str (num), "mbr_groupe": str (nbr_mbr)}
-                    L.append (g_new)
-                    outils.CSV.ecriture_csv (L, F_rep)
-                    print (_("Le groupe")+ nom+ _("a été crée (groupe)"))
-                    break
-                else: print (_("Choix impossible"))
+            choix = input("\nChoix : ")
+            os.system("cls")
             
-            else: print (_("Choix impossible"))
+            if choix == "0":
+                if nom != "":
+                    while True:
+                        print(" Souhaitez-vous quitter ? (les données seront perdues)\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
+                        if choix == "1":
+                            test = True
+                        elif choix == "2":
+                            break
+                        else:
+                            print(" Choix impossible...\n")
+                if test:
+                    print (" Action annulée...\n")
+                    return
+            
+            if nom == "":
+                if choix == "1":
+                    print ("   · Ajouter: Groupes ·\n")
+                    nom = input ("Saisissez le nom du groupe : ")
+                    os.system ("cls")
+                    if nom:
+                        print (f" Le nom de famille \"{nom}\" à été ajouté au contact !\n")
+                    else:
+                        print(" Action annulée...\n")
+                elif choix == "13":
+                    print(" Bienvenue dans la création de groupes !",
+                          "\n C'est ici que vous allez pouvoir mettre en relation différents contacts.",
+                          "\n\n Pour commencer, tapez 1 !\n")
+                else:
+                    print(" Choix impossible...\n")
+            
+            else:
+                if choix == "2":
+                    print("   · Ajouter: Groupes ·\n")
+                    contact = input(" Saisissez une information à propos du contact à ajouter : ")
+                    contacts = outils.recherche(L_rep, usr, contact)
+                    if contacts == []:
+                        os.system("cls")
+                        print(" Aucun contact trouvé !\n")
+                    for contact in contacts:
+                        if id in contact["groupes"]:
+                            break
+                        if contact["prenom"] == "None":
+                            break
+                        os.system("cls")
+                        while True:
+                            print(f" Souhaitez-vous ajouter {contact['nom']} {contact['prenom']} au groupe ?\n",
+                                   "\n 1. Oui",
+                                   "\n 2. Non")
+                            choix = input("\nChoix : ")
+                            os.system("cls")
+                            if choix == "1":
+                                contact["groupes"] += id
+                                nbr += 1
+                                print(f" Le contact {contact['nom']} {contact['prenom']} à été ajouté au groupe !\n")
+                                break
+                            elif choix == "2":
+                                break
+                            elif choix == "13":
+                                print(" Vous pensez vraiment que c'est utile ici ???\n")
+                            else:
+                                print(" Choix impossible...\n")
+                elif choix == "3":
+                    while True:
+                        print("   · Ajouter: Groupes ·\n",
+                             f"\n Souhaitez-vous ajouter le groupe {nom} aux favoris ?\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
+                        if choix == "1":
+                            favori = "True"
+                            break
+                        elif choix == "2":
+                            favori = "False"
+                            break
+                        print (" Choix impossible...\n")
+                    usr["rep_md"] = str(int(usr["rep_md"]) + 1)
+                    contact = {"usr_id": usr_id, "id": id, "favori": favori, "nom": "", "prenom": "", "date": "", "num": "", "email": "", "adresse": "", "notes": "", "groupes": "", "nom_groupe": nom, "nbr_groupe": str(nbr)}
+                    L_rep.append (contact)
+                    outils.ecriture_usr(usr)
+                    outils.ecriture_rep(L_rep)
+                    
+                    print(f"Le groupe \"{nom}\" a été ajouté à la liste des groupes !\n")
+                    outils.ecriture_log(f"    AJOUTER GROUPES : {nom}\n")
+                    return
+                elif choix == "13":
+                    print(" Tu y est presque !",
+                          "\n Maintenant vous n'avez plus qu'à ajouter des contacts au nouveau groupe ou à le finaliser.",
+                          "\n\n Pour terminer la création de ton groupe, tapez 3 !\n")
+                else:
+                    print(" Choix impossible...\n")
+    
+    else:
+        print("ERREUR : Choix impossible.\n")

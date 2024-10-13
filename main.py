@@ -1,263 +1,337 @@
-# MODULES NECESSAIRES: pygame, PySide2
+# MODULES NECESSAIRES : pygame, requests
 
 import outils
 import os
-import logging
 import datetime
 
+F_usr = "data_usr.csv"
+F_usr_v1 = "data_usr"
 F_log = "data_log.txt"
-F_usr = "data_usr"
-usr_version = "1.3.0"
 
-logging.basicConfig(filename = F_log, level = logging.INFO, format = "%(asctime)s %(message)s", datefmt = "%d/%m/%Y %H:%M:%S")
-gestionnaire_log = logging.getLogger().handlers[0]
-date = datetime.datetime.now()
-
-os.system ("cls")
-if os.path.exists (F_usr) == False:
-    lgc_infos = [True, True, True, True, True]
-    usr_nom = os.getenv ("username")
-    
-    print (f" Bienvenue {usr_nom} !\n")
-    print (f" Déjà, vous appelez-vous réellement {usr_nom} ?\n")
-    
+if os.path.exists(F_usr):
+    outils.comparer_version()
+    try:
+        os.remove("CentreMD_Installer.exe")
+    except:
+        pass
+    L_usr = outils.lecture_usr()
+elif os.path.exists(F_usr_v1):
+    L_usr = outils.transition_v1(outils.lecture_pickle(F_usr_v1), F_usr)
+    os.remove(F_usr_v1)
+else:
+    nom = os.getenv("username")
     while True:
-        print (" 1. Oui")
-        print (" 2. Non")
-        choix_nom = input ("\nChoix : ")
-        if choix_nom == "1": break
-        elif choix_nom == "2":
+        print(" -- Bienvenue ! --\n",
+              "\n J'ai une question pour vous.",
+              f"\n Vous appelez-vous {nom} ?\n",
+              "\n 1. Oui",
+              "\n 2. Non")
+        choix = input("\nChoix : ")
+        os.system("cls")
+        
+        if choix == "1":
+            break
+        elif choix == "2":
+            print(" Ah, mince alors, rectifions cela !\n")
             while True:
-                os.system ("cls")
-                usr_nom = input ("Veuillez saisir votre prénom : ")
-                os.system ("cls")
-                print (f" Vous vous appelez donc {usr_nom} ?\n")
-                print (" 1. Oui")
-                print (" 2. Non")
-                choix_nom = input ("\nChoix : ")
-                if choix_nom == "1": break
+                nom = input("Renseignez votre nom ici : ")
+                os.system("cls")
+                while True:
+                    print(f" Donc vous vous appelez {nom}.",
+                          "\n C'est bien ça ?\n",
+                          "\n 1. Oui",
+                          "\n 2. Non")
+                    choix = input("\nChoix : ")
+                    os.system("cls")
+                    if choix == "1":
+                        break
+                    elif choix == "2":
+                        break
+                    else:
+                        print(" Choix impossible...\n")
+                if choix == "1":
+                    break
+            if choix == "1":
+                break
         else:
+            print(" Choix impossible...\n")
+    print(f" C'est Super !\n\n Je suis enchanté de vous rencontrer {nom} !\n")
+    
+    print(f" -- Bienvenue {nom} ! --\n",
+          "\n J'ai une autre question pour vous.",
+          "\n Voulez-vous mettre en place un mot de passe ?\n",
+          "\n Ce mot de passe sera demandé à chaque fois que",
+          "\n vous vous connecterez à votre compte MD",
+          "\n\n Alors, voulez-vous le créer ?\n",
+          "\n 1. Oui",
+          "\n 2. Non")
+    choix = input("\nChoix : ")
+    os.system("cls")
+    
+    if choix == "1":
+        while True:
+            mdp = input ("Saisissez votre futur mot de passe : ")
             os.system ("cls")
-            print (" Choix impossible...\n")
-            print (f" Vous appelez-vous réellement {usr_nom} ?")
-        
-        if choix_nom == "1": break
-        
-    os.system ("cls")
+            
+            while True:
+                print (" Pour vous connecter à votre compte,",
+                       f"\n vous devrez donc taper \"{mdp}\"\n",
+                       "\n Vous confirmez ?\n",
+                       "\n 1. Oui"
+                       "\n 2. Non")
+                choix = input ("\nChoix : ")
+                os.system("cls")
+            
+                if choix == "1":
+                    print (" Mot de passe crée !\n")
+                    break
+                elif choix == "2":
+                    break
+                print(" Choix impossible...\n")
+            if choix == "1":
+                break
+    else:
+        mdp = ""
+    
+    usr = {"id": "1",
+           "nom": nom,
+           "mdp": mdp,
+           "nbr": "0",
+           "version": "2.0.0",
+           "rep_md": "0",
+           "manager_md": "0",
+           "pass_md": "0",
+           "musiques_md": "0"}
+    
+    L_usr = [usr]
+    outils.ecriture_CSV(L_usr, F_usr)
+    print(" Voilà, j'ai fini mon petit questionnaire...\n",
+          "\n Profitez bien du Centre MD !\n",
+          "\n Et si vous avez besoin d'aide, essayez de taper \"13\".",
+          "\n Si je le peux, je vous aiderez !\n")
+
+if __name__ == "__main__":
     while True:
-        print (f" {usr_nom}, voulez-vous une ambiance sonore ?\n")
-        print (" 1. Oui")
-        print (" 2. Non")
-        choix_son = input ("\nChoix : ")
+        print(" -- Bienvenue ! --\n")
+        if len(L_usr) == 1:
+            print(f" {L_usr[0]['id']}. {L_usr[0]['nom']}",
+                  "\n 2. Créer un utilisateur")
+        else:
+            for usr in L_usr:
+                print(f" {usr['id']}. {usr['nom']}")
+        choix = input("\nChoix : ")
+        os.system("cls")
         
-        if choix_son == "1":
-            usr_son = True
-            os.system ("cls")
-            usr_son, F_son = outils.selection_son ()
-            if usr_son:
-                outils.lancer_son (F_son)
+        if len(L_usr) == 1:
+            if choix == "1":
+                usr = L_usr[0]
+                break
+            elif choix == "2":
+                print(" -- Bienvenue ! --\n")
+                
+                while True:
+                    nom = input("Saisissez votre nom : ")
+                    os.system("cls")
+                    while True:
+                        print(f" Donc vous vous appelez {nom}.",
+                              "\n C'est bien ça ?\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
+                        if choix == "1":
+                            break
+                        elif choix == "2":
+                            break
+                        else:
+                            print(" Choix impossible...\n")
+                    if choix == "1":
+                        break
+                
+                print(" Voulez-vous mettre en place un mot de passe ?\n",
+                      "\n Ce mot de passe sera demandé à chaque fois que",
+                      "\n vous vous connecterez à votre compte MD",
+                      "\n\n Alors, voulez-vous le créer ?\n",
+                      "\n 1. Oui",
+                      "\n 2. Non")
+                choix = input("\nChoix : ")
+                os.system("cls")
+                
+                if choix == "1":
+                    while True:
+                        mdp = input ("Saisissez votre futur mot de passe : ")
+                        os.system ("cls")
+                        
+                        while True:
+                            print (" Pour vous connecter à votre compte,",
+                                   f"\n vous devrez donc taper \"{mdp}\"\n",
+                                   "\n Vous confirmez ?\n",
+                                   "\n 1. Oui"
+                                   "\n 2. Non")
+                            choix = input ("\nChoix : ")
+                            os.system("cls")
+                        
+                            if choix == "1":
+                                print (" Mot de passe crée !\n")
+                                break
+                            elif choix == "2":
+                                break
+                            print(" Choix impossible...\n")
+                        if choix == "1":
+                            break
+                else:
+                    mdp = ""
+                
+                nbr = "1"
+                version = "2.0.0"
+                
+                usr = {"id": "2",
+                       "nom": nom,
+                       "mdp": mdp,
+                       "nbr": "0",
+                       "version": "2.0.0",
+                       "rep_md": "0",
+                       "manager_md": "0",
+                       "pass_md": "0",
+                       "musiques_md": "0"}
+                L_usr.append(usr)
+                outils.ecriture_CSV(L_usr, F_usr)
+                outils.ecriture_log(f"NOUVEAU COMPTE UTILISATEUR CREE : {nom}\n")
+            else:
+                print(" Choix impossible...\n")
+        
+        else:
+            test = False
+            for usr in L_usr:
+                if choix == usr["id"]:
+                    test = True
+                    break
+            if choix == "13":
+                print(" Salut, comment allez-vous aujourd'hui ?\n")
+            elif test:
                 break
             else:
-                os.system ("cls")
-                print (" Le chemin d'accès est incorrect ! Désolé...\n")
-        elif choix_son == "2":
-            usr_son = False
-            F_son = None
-            break
-        else:
-            os.system ("cls")
-            print (" Choix impossible...\n")
+                print(" Choix impossible...\n")
     
-    os.system ("cls")
-    while True:
-        print (" Enfin, souhaitez-vous mettre en place un mot de passe ?\n")
-        print (" 1. Oui")
-        print (" 2. Non")
-        choix_mdp = input ("\nChoix : ")
-        if choix_mdp == "1":
-            while True:
-                os.system ("cls")
-                usr_mdp = input ("Veuillez saisir votre mot de passe : ")
-                os.system ("cls")
-                print (f" Votre mot de passe requis à l'ouverture du logiciel sera \"{usr_mdp}\", vous confirmez ?\n")
-                print (" 1. Oui")
-                print (" 2. Non")
-                choix_mdp = input ("\nChoix : ")
-                if choix_mdp == "1": break
-            break
-        
-        elif choix_mdp == "2":
-            usr_mdp = False
-            break
-        
-        else:
-            os.system ("cls")
-            print (" Choix impossible...\n")
+    if usr["mdp"] != "":
+        test = ""
+        while test != usr["mdp"]:
+            test = input("Saisissez votre mot de passe : ")
+            os.system("cls")
+            if test != usr["mdp"]:
+                print(" Mot de passe incorrect !\n")
     
-    usr_nbr = 1
-    usr_infos = [usr_nom, usr_son, F_son, usr_mdp, usr_nbr, usr_version]
-    usr = [usr_infos, lgc_infos]
-    outils.ecriture_pickle (usr, F_usr)
+    usr["nbr"] = int(usr["nbr"])
+    usr["nbr"] += 1
+    usr["nbr"] = str(usr["nbr"])
+    outils.ecriture_usr(usr)
+    outils.ecriture_log(f"OUVERTURE: Centre MD (pour la {usr['nbr']}ème fois)\n")
     
-    os.system ("cls")
-    logging.info (f"BIENVENUE: {usr_nom} !\n")
-    print (f" Bienvenue à vous {usr_nom} dans le Centre MD !\n")
-
-
-else:
-    usr = outils.lecture_pickle (F_usr)
+    from apps.musiques_md.main import F_mus
+    L_mus = outils.lecture_CSV(F_mus)
+    for musique in L_mus:
+        if musique["usr_id"] == usr["id"] and musique["etat"] == "True":
+            if os.path.exists(musique["chemin"]):
+                from apps.musiques_md.lancer_arreter import lancer_arreter
+                lancer_arreter(L_mus, musique)
+            else:
+                musique["etat"] = "False"
+                outils.ecriture_mus(L_mus)
+                outils.ecriture_log(f"ARRET FORCE MUSIQUE : {musique['chemin']} (musique introuvable)\n")
     
-    if len(usr[0]) == 4:
-        usr_nom = usr[0][0]
-        usr_son = usr[0][1]
-        usr_mdp = usr[0][2]
-        usr_nbr = usr[0][3]
-        
-        if usr_son:
-            usr_son, F_son = outils.selection_son ()
-        else: F_son = None
-        
-        usr_infos = [usr_nom, usr_son, F_son, usr_mdp, usr_nbr, usr_version]
-        usr = [usr_infos, usr[1]]
-        outils.ecriture_pickle (usr, F_usr)
-        os.system ("cls")
-        print (" Bienvenue dans la version 1.3.0 du Centre MD !")
-        print ("\n Tu vas pouvoir découvrir la nouvelle application : Fonds MD")
-        print ("\n J'espère que tu te plairas à tester\n les quelques modifications qu'apportent la v1.3.0 du Centre MD !\n")
-        confirmation = input ("Appuyer sur Entrée pour continuer...")
-        os.system ("cls")
-    
-    if usr[0][3] != False:
-        while True:
-            test_mdp = input ("Entrer votre mot de passe : ")
-            os.system ("cls")
-            if test_mdp != usr[0][3]: print (" Mot de passe incorrect...\n")
-            else: break
-    
-    if usr[0][2] != usr[0][-1]: usr[0][4] += 1
+    heure = datetime.datetime.now().hour
+    if heure < 12:
+        print(f" Bonjour {usr['nom']} !\n")
+    elif 12 <= heure < 18:
+        print(f" Bonsoir {usr['nom']} !\n")
     else:
-        usr_nom = usr[0][0]
-        usr_son = usr[0][1]
-        if usr_son:
-            usr_son, F_son = outils.selection_son ()
-        else:
-            os.system ("cls")
-            print (" Le chemin d'accès est incorrect ! Désolé...\n")
-        usr_mdp = usr[0][3]
-        usr_nbr = 1
-        
-        usr_infos = [usr_nom, usr_son, F_son, usr_mdp, usr_nbr, usr_version]
-        lgc_infos = usr[1]
-        usr = [usr_infos, lgc_infos]
-    outils.ecriture_pickle (usr, F_usr)
-    
-    if usr[0][1]:
-        test = outils.lancer_son (usr[0][2])
-        if test == "ERREUR":
-            usr[0][1] = False
-            usr[0][2] = None
-            outils.ecriture_pickle (usr, F_usr)
-    
-    # INTEGRATION DE L'APPLICATION REP MD (annonce lors de l'anniversaire d'un contact !)
-    logging.info (f"OUVERTURE: Centre MD ({usr[0][4]}ème fois)\n")
-    if date.hour < 12:
-        print (f" Bonjour {usr[0][0]} !\n")
-    elif date.hour > 12 and date.hour < 18:
-        print (f" Bonsoir {usr[0][0]} !\n")
-    else:
-        print (f" Bonne nuit {usr[0][0]} !\n")
+        print(f" Bonne nuit {usr['nom']} !\n")
     
     from apps.rep_md.main import F_rep
     if os.path.exists (F_rep):
-        rep = outils.lecture_csv (F_rep)
-        date = [date.day, date.month]
+        L_rep = outils.lecture_CSV(F_rep)
+        date = [datetime.datetime.now().day, datetime.datetime.now().month]
         
-        for i in range (len (rep)):
-            date_c = rep[i]["date"]
-            date_c = date_c.split (".")
-            if date_c != [""]:
-                for y in range (2):
-                    date_c[y] = int (date_c[y])
+        for contact in L_rep:
+            date_c = contact["date"]
+            if date_c != "":
+                date_c = date_c.split("/")
+                for i in range (2):
+                    date_c[i] = int(date_c[i])
                 del date_c[-1]
             if date == date_c:
-                nom_c = rep[i]["nom"]
-                prenom_c = rep[i]["prenom"]
-                print (f" N'oubliez pas, aujourd'hui,\n c'est l'anniversaire de {nom_c} {prenom_c} !\n")
+                nom_c = contact["nom"]
+                prenom_c = contact["prenom"]
+                print (f" N'oubliez pas qu'aujourd'hui,\n c'est l'anniversaire de {nom_c} {prenom_c} !\n")
+    
+    from apps.manager_md.main import F_manager
+    if os.path.exists (F_manager):
+        L_manager = outils.lecture_CSV(F_manager)
+        L_manager = outils.recherche(L_manager, usr, "True")
         
+        for tache in L_manager:
+            if tache["date"] != "None":
+                tps_annee, tps_mois, tps_jour = outils.tps_restant(tache["date"])
+                if tps_annee <= 0:
+                    nom = tache["nom"]
+                    print(f" Avez-vous terminé votre tâche \"{nom}\" ?\n")
     
-while True:
-    print (" --- Centre MD ---\n")
-    
-    print ("  0. Arrêter")
-    if usr[1][0] == True: print ("  1. Rep MD")
-    if usr[1][1] == True: print ("  2. Jeux MD")
-    if usr[1][2] == True: print ("  3. GDT MD")
-    if usr[1][3] == True: print ("  4. MDP MD")
-    if usr[1][4] == True: print ("  5. Fonds MD (BETA !)")
-    print ("\n  6. Options")
-    
-    choix = input ("\nChoix : ")
-    
-    match choix:
+    while True:
+        print(" -- Centre MD --\n",
+              "\n 0. Arrêter\n",
+              "\n 1. Rep MD",
+              "\n 2. Manager MD",
+              "\n 3. Fonds MD",
+              "\n 4. Pass MD",
+              "\n 5. Musiques MD",
+              "\n 6. Jeux MD",
+              "\n\n 7. Options")
+        choix = input("\nChoix : ")
+        os.system("cls")
         
-        case "0":
-            logging.info ("FERMETURE: Centre MD\n")
+        if choix == "0":
             break
+        elif choix == "1":
+            outils.ecriture_log("  OUVERTURE : Rep MD\n")
+            from apps.rep_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Rep MD\n")
+        elif choix == "2":
+            outils.ecriture_log("  OUVERTURE : Manager MD\n")
+            from apps.manager_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Manager MD\n")
+        elif choix == "3":
+            outils.ecriture_log("  OUVERTURE : Fonds MD\n")
+            from apps.fonds_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Fonds MD\n")
+        elif choix == "4":
+            outils.ecriture_log("  OUVERTURE : Pass MD\n")
+            from apps.pass_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Pass MD\n")
+        elif choix == "5":
+            outils.ecriture_log("  OUVERTURE : Musiques MD\n")
+            from apps.musiques_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Musiques MD\n")
+        elif choix == "6":
+            outils.ecriture_log("  OUVERTURE : Jeux MD\n")
+            from apps.jeux_md.main import main
+            main(usr)
+            outils.ecriture_log("  FERMETURE : Jeux MD\n")
+        elif choix == "7":
+            outils.ecriture_log("  OUVERTURE : Options\n")
+            outils.options(usr)
+            outils.ecriture_log("  FERMETURE : Options\n")
         
-        case "1":
-            if usr[1][0] == True:
-                os.system ("cls")
-                from apps.rep_md.main import rep_md
-                logging.info ("  OUVERTURE: Rep MD\n")
-                rep_md ()
-                logging.info ("  FERMETURE: Rep MD\n")
-                os.system ("cls")
-        
-        case "2":
-            if usr[1][1] == True:
-                os.system ("cls")
-                from apps.jeux_md.main import jeux_md
-                logging.info ("  OUVERTURE: Jeux MD\n")
-                jeux_md ()
-                logging.info ("  FERMETURE: Jeux MD\n")
-                os.system ("cls")
-            
-        case "3":
-            if usr[1][2] == True:
-                os.system ("cls")
-                logging.info ("  OUVERTURE: GDT MD\n")
-                from apps.gdt_md.main import gdt_md
-                gdt_md ()
-                logging.info ("  FERMETURE: GDT MD\n")
-                os.system ("cls")
-        
-        case "4":
-            if usr[1][3] == True:
-                os.system ("cls")
-                from apps.mdp_md.main import mdp_md
-                logging.info ("  OUVERTURE: MDP MD\n")
-                mdp_md ()
-                logging.info ("  FERMETURE: MDP MD\n")
-                os.system ("cls")
-        
-        case "5":
-            if usr[1][4] == True:
-                os.system ("cls")
-                from apps.fonds_md.main import fonds_md
-                logging.info ("  OUVERTURE: Fonds MD\n")
-                fonds_md ()
-                logging.info ("  FERMETURE: Fonds MD\n")
-                os.system ("cls")
-        
-        case "6":
-            os.system ("cls")
-            logging.info ("  OUVERTURE: Options\n")
-            test = outils.options (usr, F_usr, F_log, gestionnaire_log)
-            if test != "6":
-                logging.info ("  FERMETURE: Options\n")
-                os.system ("cls")
-            else: break
-                
-        case _:
-            os.system ("cls")
-            print (" Choix impossible...\n")
+        elif choix == "13":
+            print(" Bonsoiir !\n",
+                  "\n Te voici dans la version 2.0.0 du Centre MD.",
+                  "\n Ici tu vas pouvoir créer des contacts,",
+                  "\n écouter de la musique,",
+                  "\n jouer à des jeux et bien d'autres choses !\n",
+                  "\n Pour commencer, sélectionnez une application en tapant son numéro !\n")
+        else:
+            print(" Choix impossible...\n")

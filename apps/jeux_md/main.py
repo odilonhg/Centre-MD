@@ -1,60 +1,50 @@
-from logging import info
-from os import system
+import outils
+import os
 
-def jeux_md ():
-    
-    print ("   · Jeux MD ·\n")
-    
-    print (" 0. Retour")
-    print (" 1. Chiffre Juste")
-    print (" 2. Pendu")
-    print (" 3. Puissance 4")
-    print (" 4. Morpion")
-    print (" 5. Mots Mêlés\n")
-    
-    choice = input ("Choix : ")
-    
-    match choice:
+def main(usr):
+    from apps.rep_md.main import F_rep
+    L_rep = outils.lecture_CSV(F_rep)
+    nom = usr["nom"]
+    while True:
+        print("   · Jeux MD ·\n",
+              "\n 0. Retour",
+              "\n 1. Le Chiffre Juste",
+              "\n 2. Le Pendu")
         
-        case "0": return
+        choix = input ("\nChoix : ")
+        os.system ("cls")
         
-        case "1":
-            from apps.jeux_md.chiffre_juste import chiffre_juste
-            system ("cls")
-            info ("    OUVERTURE JEU: Chiffre Juste\n")
-            chiffre_juste ()
-            info ("    FERMETURE JEU: Chiffre Juste\n")
-            return jeux_md ()
+        if choix == "0":
+            return
         
-        case "2":
-            from apps.jeux_md.pendu import pendu
-            system ("cls")
-            info("    OUVERTURE JEU: Pendu\n")
-            pendu ()
-            info("    FERMETURE JEU: Pendu\n")
-            return jeux_md ()
+        elif choix == "1":
+            from apps.jeux_md.chiffre_juste import main
+            main(nom)
+        elif choix == "2":
+            from apps.jeux_md.pendu import main
+            main(nom, L_rep, usr)
+#         elif choix == "3":
+#             from apps.jeux_md.puissance4 import main
+#             main(nom, L_rep, usr)
+#         elif choix == "4":
+#             from apps.jeux_md.morpion import main
+#             main(nom, L_rep, usr)
+#         elif choix == "5":
+#             from apps.jeux_md.mots_meles import main
+#             main(nom)
+#         elif choix == "6":
+#             from apps.jeux_md.colonisation_md import main
+#             main(usr, L_rep)
         
-        case "3":
-            from apps.jeux_md.puissance_4 import puissance_4
-            system ("cls")
-            puissance_4 () # GESTION LOGGING INTEGREE
-            return jeux_md ()
-        
-        case "4":
-            from apps.jeux_md.morpion import morpion
-            system ("cls")
-            morpion () # GESTION LOGGING INTEGREE
-            return jeux_md ()
-        
-        case "5":
-            from apps.jeux_md.mots_meles import mots_meles
-            system ("cls")
-            info ("    OUVERTURE JEU: Mots Mêlés\n")
-            mots_meles (4, 8) # CREER 4 MOTS DE LONGUEUR MAXI 8
-            info ("    FERMETURE JEU: Mots Mêlés\n")
-            return jeux_md ()
-        
-        case _:
-            system ("cls")
-            print ("Choix impossible...\n")
-            return jeux_md ()
+        elif choix == "13":
+            print(" Bienvenue dans les Jeux MD !\n",
+                  "\n Ici, vous allez pouvoir jouer à des jeux.",
+                  "\n N'hésitez pas à essayer nos jeux !\n",
+                  "\n  - Le Chiffre Juste : Un jeu dans lequel tu dois trouver un nombre entre 0 et 100",
+                  "\n  - Le Pendu : Un classique, je le présente pas !\n",)
+#                   "\n  - Le Puissance 4 : Vous voulez vraiment que je vous explique ? (à deux)",
+#                   "\n  - Le Morpion : Un jeu de stratégie olala (à deux)",
+#                   "\n  - Mots Mêlés : Retrouve les mots cachés !",
+#                   "\n  - Colinisation MD : Mon jeu à moi !\n")
+        else:
+            print(" Choix impossible...\n")

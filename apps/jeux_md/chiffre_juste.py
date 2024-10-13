@@ -1,26 +1,35 @@
-from random import randint
-from os import system
+import outils
+import os
+import random
 
-def chiffre_juste():
-    nombre_a_trouver = randint (0, 100)
+def main(nom):
+    nbr = random.randint(0, 100)
     tentatives = 0
+    while True:
+        print("   · Le Chiffre Juste ·\n")
+        mon_nbr = input(f"{nom}, saisissez un nombre entre 0 et 100 : ")
+        os.system("cls")
+        if mon_nbr.isdigit():
+            mon_nbr = int(mon_nbr)
+            break
+        print(" Format incorrect !\n")
     
-    mon_nombre = int (input ("Saisir ton nombre : ") )
+    while mon_nbr != nbr:
+        if mon_nbr < nbr:
+            print(f" {str(mon_nbr)} est trop petit !\n")
+        elif mon_nbr > nbr:
+            print(f" {str(mon_nbr)} est trop grand !\n")
+        
+        tentatives += 1
+        
+        while True:
+            mon_nbr = input("Saisissez un autre nombre : ")
+            os.system("cls")
+            if mon_nbr.isdigit():
+                mon_nbr = int(mon_nbr)
+                break
+            print(" Format incorrect !\n")
     
-    while mon_nombre != nombre_a_trouver:
-        
-        if mon_nombre < nombre_a_trouver:
-            system ("cls")
-            print ("Trop petit !")
-        
-        elif mon_nombre > nombre_a_trouver:
-            system ("cls")
-            print ("Trop grand !")
-        
-        tentatives +=1
-        
-        mon_nombre = int (input ("\nSaisir un autre nombre : ") )
-    
-    system ("cls")
-    print (f"Bien joué, tu as trouvé mon nombre ({nombre_a_trouver}) en {tentatives} tentatives !\n")
+    print(f" Félicitations {nom} !\n\n Tu as trouvé le nombre {str(nbr)} en {tentatives} tentatives !\n")
+    outils.ecriture_log(f"    LE CHIFFRE JUSTE : {nom} a trouvé \"{str(nbr)}\" en {tentatives} tentatives !\n")
     return

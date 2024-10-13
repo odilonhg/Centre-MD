@@ -1,313 +1,304 @@
-from apps.rep_md.main import F_rep
 import outils
 import os
-import logging
 
-def modifier (choix):
-    if choix== "contacts":
-        nbr_choice = "0"
+def main(L_rep, usr):
+    print("   · Modifier ·\n")
+    contact = input("Saisissez une information sur le contact / groupe à modifier : ")
+    os.system("cls")
+    if contact == "":
+        print(" Action annulée...\n")
+        return
+    L_rep_recherche = outils.recherche(L_rep, usr, contact)
+    for contact in L_rep_recherche:
+        test = False
+        if contact["nom"]:
+            while True:
+                print(f" Voulez-vous modifier {contact['nom']} {contact['prenom']} ?\n",
+                      "\n 1. Oui",
+                      "\n 2. Non")
+                choix = input("\nChoix : ")
+                os.system("cls")
+                if choix == "1":
+                    test = True
+                    break
+                elif choix == "2":
+                    break
+                else:
+                    print(" Choix impossible...\n")
+            if test:
+                return modifier_contact(contact, L_rep, usr)
+        else:
+            while True:
+                print(f" Voulez-vous modifier {contact['nom_groupe']} ?\n",
+                      "\n 1. Oui",
+                      "\n 2. Non")
+                choix = input("\nChoix : ")
+                os.system("cls")
+                if choix == "1":
+                    test = True
+                    break
+                elif choix == "2":
+                    break
+                else:
+                    print(" Choix impossible...\n")
+            if test:
+                return modifier_groupe(contact, L_rep, usr)
+
+def modifier_contact(contact, L_rep, usr):
+    while True:
+        print(f"   · Modifier: {contact['nom']} {contact['prenom']} ·\n",
+              "\n 0. Retour\n",
+              "\n 1. Nom de Famille",
+              "\n 2. Prénom",
+              "\n 3. Date de Naissance",
+              "\n 4. Numéro de Téléphone",
+              "\n 5. Adresse Email",
+              "\n 6. Adresse de Domicile",
+              "\n 7. Notes Additionnelles")
+        choix = input("\nChoix : ")
+        os.system("cls")
         
-        while True:
-            L= outils.CSV.lecture_csv (F_rep)
-            
-            print (_("-MODIFIER : Contacts-"))
-            print (_("Retour"))
-            print (_("NOM"))
-            print (_("PRENOM"))
-            print (_("DATE DE NAISSANCE"))
-            print (_("NUMERO DE TELEPHONE"))
-            print (_("ADRESSE EMAIL"))
-            
-            choix_modifier= input (_("Choix"))
-            
-            if choix_modifier== "0":
-                os.system ("cls")
-                break
-            
-            os.system ("cls")
-            nbr_recherche= False
-            contact= input (_("Renseigner le nom ou le prénom du contact à modifier")).upper ()
-            if contact== "":
-                os.system ("cls")
-                break
-            os.system ("cls")
-            for i in range (len (L)):
-                nom= L[i]["nom"]
-                prenom= L[i]["prenom"].upper ()
-                if contact== nom or contact== prenom:
-                    nbr_recherche= True
+        if choix == "0":
+            outils.ecriture_rep(L_rep)
+            print(" Contact mis à jour avec succès !\n")
+            return
+        
+        elif choix == "1":
+            new_nom = input(f"Saisissez le nouveau nom de famille de {contact['nom']} {contact['prenom']} : ").upper()
+            os.system("cls")
+            print(" Nom de famille mis à jour !\n")
+            outils.ecriture_log(f"    MODIFIER CONTACT : {contact['nom']} -> {new_nom} | {contact['nom']} {contact['prenom']}\n")
+            contact["nom"] = new_nom
+        elif choix == "2":
+            new_prenom = input(f"Saisissez le nouveau prénom de {contact['nom']} {contact['prenom']} : ").capitalize()
+            os.system("cls")
+            print(" Prénom mis à jour !\n")
+            outils.ecriture_log(f"    MODIFIER CONTACT : {contact['prenom']} -> {new_prenom} | {contact['nom']} {contact['prenom']}\n")
+            contact["prenom"] = new_prenom
+        elif choix == "3":
+            while True:
+                new_jour = input(f"Saisissez le nouveau jour de naissance de {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_jour.isdigit() and 0 < len(new_jour) <= 2 and 0 < int(new_jour) <= 31:
+                    if len(new_jour) == 1:
+                        new_jour = "0" + new_jour
+                    break
+                print(" Format incorrect !\n")
+            while True:
+                new_mois = input(f"Saisissez le nouveau mois de naissance de {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_mois.isdigit() and 0 < len(new_mois) <= 2 and 0 < int(new_mois) <= 12:
+                    if len(new_mois) == 1:
+                        new_mois = "0" + new_mois
+                    break
+                print(" Format incorrect !\n")
+            while True:
+                new_annee = input(f"Saisissez la nouvelle année de naissance de {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_annee.isdigit() and len(new_annee) == 4 and 1900 < int(new_annee) <= 2100:
+                    print(" Date de naissance mise à jour !\n")
+                    new_date = f"{new_jour}/{new_mois}/{new_annee}"
+                    outils.ecriture_log(f"    MODIFIER CONTACT : {contact['date']} -> {new_date} | {contact['nom']} {contact['prenom']}\n")
+                    contact["date"] = new_date
+                    break
+                print(" Format incorrect !\n")
+        elif choix == "4":
+            while True:
+                new_num = input(f"Saisissez le nouveau numéro de téléphone de {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_num.isdigit() and 0 < len(new_num) <= 10:
+                    if len(new_num) == 9:
+                        new_num = "0" + new_num
+                    print(" Nom de famille mis à jour !\n")
+                    outils.ecriture_log(f"    MODIFIER CONTACT : {contact['num']} -> {new_num} | {contact['nom']} {contact['prenom']}\n")
+                    contact["num"] = new_num
+                    break
+                print(" Format incorrect !\n")
+        elif choix == "5":
+            while True:
+                new_email = input(f"Saisissez la nouvelle adresse email de {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if "@" in new_email:
+                    print(" Adresse email mise à jour !\n")
+                    outils.ecriture_log(f"    MODIFIER CONTACT : {contact['email']} -> {new_email} | {contact['nom']} {contact['prenom']}\n")
+                    contact["email"] = new_email
+                    break
+                print(" Format incorrect !\n")
+        elif choix == "6":
+            while True:
+                new_rue = input(f"Saisissez le nouveau numéro ainsi que le nom de la rue dans laquelle réside {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_rue == "":
+                    print(" Format incorrect !\n")
+                else:
+                    break
+            while True:
+                new_code_postal = input(f"Saisissez le nouveau code postal dans lequel réside {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_code_postal.isdigit() and 0< len(new_code_postal) <= 5:
+                    break
+                print(" Format incorrect !\n")
+            while True:
+                new_ville = input(f"Saisissez le nom de la nouvelle ville dans laquelle réside {contact['nom']} {contact['prenom']} : ")
+                os.system("cls")
+                if new_ville == "":
+                    print(" Format incorrect !\n")
+                else:
+                    break
+            new_adresse = f"{new_rue} {new_code_postal} {new_ville}"
+            print(f" Adresse de domicile mise à jour !\n")
+            outils.ecriture_log(f"    MODIFIER CONTACT : {contact['adresse']} -> {new_adresse} | {contact['nom']} {contact['prenom']}\n")
+            contact["adresse"] = new_adresse
+        elif choix == "7":
+            if contact["notes"] != "":
+                i = 0
+                L_note = contact["notes"].split("|")
+                for note in L_note:
+                    i += 1
+                    print(f" {i}. {note}")
+                while True:
+                    choix = input("Entrez le numéro de la note à supprimer : ")
+                    os.system("cls")
+                    if choix.isdigit() and 0 <= int(choix) - 1 < len(L_note):
+                        del_note = L_note[int(choix)-1]
+                        del L_note[int(choix)-1]
+                        break
+                    print(" Format incorrect !\n")
+                contenu = ""
+                for note in L_note:
+                    if contenu == "":
+                        contenu += note
+                    else:
+                        contenu += "|" + note
+                print(f" Notes mise à jour !\n")
+                outils.ecriture_log(f"    MODIFIER CONTACT : SUPPRESSION DE LA NOTE \"{del_note}\" | {contact['nom']} {contact['prenom']}\n")
+                contact["notes"] = contenu
+            else:
+                while True:
+                    new_note = input(f"Saisissez la note qui sera attribuée à {contact['nom']} {contact['prenom']} : ")
+                    os.system("cls")
+                    if new_note != "":
+                        contact["notes"] = new_note
+                        print(f" Notes mise à jour !\n")
+                        outils.ecriture_log(f"    MODIFIER CONTACT : AJOUT DE LA NOTE \"{new_note}\" | {contact['nom']} {contact['prenom']}\n")
+                        break
+                    print(" Format incorrect !\n")
+        elif choix == "8":
+            print(" Euh, tu t'es cru dans la fonction \"Ajouter\" ?",
+                  "\n Ici si tu veux arrêter tu dois simplement retourner en arrière avec 0 !")
+        elif choix == "13":
+            print(" Franchement je sais pas quoi te dire, essaies de taper 8 pour voir...\n")
+        else:
+            print(" Choix impossible...\n")
+
+def modifier_groupe(groupe, L_rep, usr):
+    while True:
+        print(f"   · Modifier: {groupe['nom_groupe']} ·\n",
+              "\n 0. Retour\n",
+              "\n 1. Nom du Groupe",
+              "\n 2. Ajouter un membre dans le Groupe",
+              "\n 3. Supprimer un membre du Groupe")
+        choix = input("\nChoix : ")
+        os.system("cls")
+        
+        if choix == "0":
+            outils.ecriture_rep(L_rep)
+            print(" Groupe mis à jour avec succès !\n")
+            return
+        
+        elif choix == "1":
+            new_nom = input(f"Saisissez le nouveau nom du groupe \"{groupe['nom_groupe']}\" : ")
+            os.system("cls")
+            print(" Nom du groupe mis à jour !\n")
+            outils.ecriture_log(f"    MODIFIER GROUPE : {groupe['nom_groupe']} -> {new_nom} | {groupe['nom_groupe']}\n")
+            groupe["nom_groupe"] = new_nom
+        elif choix == "2":
+            contact = input(f"Saisissez une information sur le contact à ajouter au groupe \"{groupe['nom_groupe']}\" : ")
+            os.system("cls")
+            if contact == "":
+                print(" Action annulée...\n")
+                return
+            L_contact = outils.recherche(L_rep, usr, contact)
+            for contact in L_contact:
+                if contact["nom"] != "" and groupe["id"] not in contact["groupes"]:
+                    test = False
                     while True:
-                        confirmation_modifier= input (_("_Modifier_")+ f" {nom} {prenom.capitalize()} : ").upper ()
-                        if confirmation_modifier== _("OUI"):
-                            logging.info ("  "+ _("_AJOUTER CONTACT DANS GROUPE_")+ f"{nom} {prenom.capitalize()}\n")
-                            
-                            if choix_modifier== "1":
-                                os.system ("cls")
-                                while True:
-                                    new_nom= input (_("SAISIR NOM")).upper ()
-                                    os.system ("cls")
-                                    while True:
-                                        confirmation_modifier= input (_("_Modifier_")+ f" {nom} -> {new_nom} : ").upper ()
-                                        if confirmation_modifier== _("OUI"):
-                                            L[i]["nom"]= new_nom
-                                            outils.CSV.ecriture_csv (L, F_rep)
-                                            logging.info (_("_MODIFIER CONTACTS_")+ f"{nom} -> {new_nom}\n")
-                                            os.system ("cls")
-                                            print (_("Le contact")+ nom, prenom.capitalize ()+ _("a été modifié"))
-                                            break
-                                        elif confirmation_modifier== _("NON"):
-                                            os.system ("cls")
-                                            break
-                                        else:
-                                            os.system ("cls")
-                                            print (_("Tu dois répondre oui ou non"))
-                                    
-                                    if confirmation_modifier== _("OUI"): break
-                            
-                            elif choix_modifier== "2":
-                                os.system ("cls")
-                                while True:
-                                    new_prenom= input (_("SAISIR PRENOM")).capitalize ()
-                                    os.system ("cls")
-                                    while True:
-                                        confirmation_modifier= input (_("_Modifier_")+ f" {prenom.capitalize ()} -> {new_prenom} : ").upper ()
-                                        if confirmation_modifier== _("OUI"):
-                                            L[i]["prenom"]= new_prenom
-                                            outils.CSV.ecriture_csv (L, F_rep)
-                                            logging.info (_("_MODIFIER CONTACTS_")+ f"{prenom.capitalize ()} -> {new_prenom}\n")
-                                            os.system ("cls")
-                                            print (_("Le contact")+ nom, prenom.capitalize ()+ _("a été modifié"))
-                                            break
-                                        elif confirmation_modifier== _("NON"):
-                                            os.system ("cls")
-                                            break
-                                        else:
-                                            os.system ("cls")
-                                            print (_("Tu dois répondre oui ou non"))
-                                    
-                                    if confirmation_modifier== _("OUI"): break
-                            
-                            elif choix_modifier== "3":
-                                os.system ("cls")
-                                date= L[i]["date"]
-                                while True:
-                                    while True:
-                                        new_jour= input (_("SAISIR JOUR")+ f"{nom} {prenom.capitalize ()} : ")
-                                        if int (jour)> 31 or int (jour)< 1:
-                                            os.system ("cls")
-                                            print (_("Valeur impossible"))
-                                            jour= ""
-                                        else: break
-                                    os.system ("cls")
-                                    while True:
-                                        new_mois= input (_("SAISIR MOIS")+ f"{nom} {prenom.capitalize ()} : ")
-                                        if int (mois)> 12 or int (mois)< 1:
-                                            os.system ("cls")
-                                            print (_("Valeur impossible"))
-                                            mois= ""
-                                        else: break
-                                    os.system ("cls")
-                                    while True:
-                                        new_annee= input (_("SAISIR ANNEE")+ f"{nom} {prenom.capitalize ()} : ")
-                                        if int (annee)> 2100 or int (annee)< 1900:
-                                            os.system ("cls")
-                                            print (_("Valeur impossible"))
-                                            annee= ""
-                                        else: break
-                                    os.system ("cls")
-                                    new_date= f"{new_jour}.{new_mois}.{new_annee}"
-                                    while True:
-                                        confirmation_modifier= input (_("_Modifier_")+ f" {date} -> {new_date} : ").upper ()
-                                        if confirmation_modifier== _("OUI"):
-                                            L[i]["date"]= new_date
-                                            outils.CSV.ecriture_csv (L, F_rep)
-                                            logging.info (_("_MODIFIER CONTACTS_")+ f"{date} -> {new_date}\n")
-                                            os.system ("cls")
-                                            print (_("Le contact")+ nom, prenom.capitalize ()+ _("a été modifié"))
-                                            break
-                                        elif confirmation_modifier== _("NON"):
-                                            os.system ("cls")
-                                            break
-                                        else:
-                                            os.system ("cls")
-                                            print (_("Tu dois répondre oui ou non"))                                    
-                                    
-                                    if confirmation_modifier== _("OUI"): break
-                            
-                            elif choix_modifier== "4":
-                                os.system ("cls")
-                                num= L[i]["num"]
-                                while True:
-                                    while True:
-                                        new_num= input (_("SAISIR NUM")+ f"{nom} {prenom.capitalize ()} : ")
-                                        if len (new_num)!= 9 and len (new_num)!= 10:
-                                            os.system ("cls")
-                                            print (_("Valeur impossible"))
-                                            new_num= ""
-                                        elif new_num.isdigit ()== False:
-                                            os.system ("cls")
-                                            print (_("Valeur impossible"))
-                                            new_num= ""
-                                        else:
-                                            if len (new_num)== 9: new_num= "0"+ new_num
-                                            break
-                                    os.system ("cls")
-                                    while True:
-                                        confirmation_modifier= input (_("_Modifier_")+ f" {num} -> {new_num} : ").upper ()
-                                        if confirmation_modifier== _("OUI"):
-                                            L[i]["num"]= new_num
-                                            outils.CSV.ecriture_csv (L, F_rep)
-                                            logging.info (_("_MODIFIER CONTACTS_")+ f"{num} -> {new_num}\n")
-                                            os.system ("cls")
-                                            print (_("Le contact")+ nom, prenom.capitalize ()+ _("a été modifié"))
-                                            break
-                                        elif confirmation_modifier== _("NON"):
-                                            os.system ("cls")
-                                            break
-                                        else:
-                                            os.system ("cls")
-                                            print (_("Tu dois répondre oui ou non"))                                    
-                                    
-                                    if confirmation_modifier== _("OUI"): break
-                            
-                            elif choix_modifier== "5":
-                                os.system ("cls")
-                                email= L[i]["email"]
-                                while True:
-                                    new_email= input (_("SAISIR EMAIL")+ f"{nom} {prenom.capitalize ()} : ")
-                                    os.system ("cls")
-                                    while True:
-                                        confirmation_modifier= input (_("_Modifier_")+ f" {email} -> {new_email} : ").upper ()
-                                        if confirmation_modifier== _("OUI"):
-                                            L[i]["email"]= new_email
-                                            outils.CSV.ecriture_csv (L, F_rep)
-                                            logging.info (_("_MODIFIER CONTACTS_")+ f"{email} -> {new_email}\n")
-                                            os.system ("cls")
-                                            print (_("Le contact")+ nom, prenom.capitalize ()+ _("a été modifié"))
-                                            break
-                                        elif confirmation_modifier== _("NON"):
-                                            os.system ("cls")
-                                            break
-                                        else:
-                                            os.system ("cls")
-                                            print (_("Tu dois répondre oui ou non"))                                    
-                                    
-                                    if confirmation_modifier== _("OUI"): break
-                            
-                            else:
-                                os.system ("cls")
-                                print (_("Choix impossible"))
-                            
-                            break
+                        print(f" Souhaitez-vous ajouter {contact['nom']} {contact['prenom']} au groupe \"{groupe['nom_groupe']}\" ?\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
                         
-                        elif confirmation_modifier== _("NON"):
-                            os.system ("cls")
+                        if choix == "1":
+                            test = True
                             break
-                        
+                        elif choix == "2":
+                            break
+                        elif choix == "13":
+                            print(" Qu'est ce que je fais là moi...\n")
                         else:
-                            os.system ("cls")
-                            print (_("Tu dois répondre oui ou non"))
+                            print(" Choix impossible...\n")
+                    if test:
+                        for contact2 in L_rep:
+                            if contact == contact2:
+                                contact2["groupes"] += groupe["id"]
+                                groupe["nbr_groupe"] = str(int(groupe["nbr_groupe"]) + 1)
+                                print(f" Le contact {contact['nom']} {contact['prenom']} a été ajouté au groupe \"{groupe['nom_groupe']}\" !\n")
+                                outils.ecriture_log(f"    MODIFIER GROUPE : AJOUT DU MEMBRE \"{contact['nom']} {contact['prenom']}\" | {groupe['nom_groupe']}\n")
+        elif choix == "3":
+            for contact in L_rep:
+                if contact["usr_id"] == usr["id"] and contact["nom"] != "" and groupe["id"] in contact["groupes"]:
+                    test = False
+                    while True:
+                        print(f" Souhaitez-vous supprimer {contact['nom']} {contact['prenom']} du groupe \"{groupe['nom_groupe']}\" ?\n",
+                              "\n 1. Oui",
+                              "\n 2. Non")
+                        choix = input("\nChoix : ")
+                        os.system("cls")
                         
-            if nbr_recherche== False: print (_("Aucun contact trouvé"))
-    
-    elif choix== "groupes":
-        nbr_choice = "0"
-        
-        while True:
-            L= outils.CSV.lecture_csv (F_rep)
-            
-            print (_("-MODIFIER : Groupes-"))
-            print (_("Retour"))
-            print (_("Ajouter un membre"))
-            print (_("Supprimer un membre"))
-            print (_("Modifier le nom du groupe"))
-            
-            choix_modifier= input (_("Choix"))
-            
-            if choix_modifier== "0":
-                os.system ("cls")
-                break
-            
-            os.system ("cls")
-            nbr_recherche= False
-            groupe= input (_("Renseigner le nom du groupe à modifier")).upper ()
-            if groupe== "":
-                os.system ("cls")
-                break
-            os.system ("cls")
-            for i in range (len (L)):
-                nom_groupe= L[i]["nom_groupe"]
-                num_groupe= L[i]["num_groupe"]
-                nbr_mbr_groupe= L[i]["mbr_groupe"]
-                
-                if nom_groupe.upper ()== groupe:
-                    nbr_mbr_groupe= int (nbr_mbr_groupe)
-                    nbr_recherche= True
-                    confirmation_modifier= input (_("_Modifier_")+ f" {nom_groupe} : ").upper ()
-                    if confirmation_modifier== _("OUI"):
-                        os.system ("cls")
+                        if choix == "1":
+                            test = True
+                            break
+                        elif choix == "2":
+                            break
+                        elif choix == "13":
+                            print(" Qu'est ce que je fais là moi...\n")
+                        else:
+                            print(" Choix impossible...\n")
+                    if test:
+                        test10 = False
+                        test100 = False
+                        new_groupes = ""
+                        if len(groupe["id"]) == 2:
+                            test10 = True
+                        elif len(groupe["id"]) == 3:
+                            test100 = True
+                            
+                        i = 0
+                        if test10:
+                            while i < len(contact["groupes"]) - 1:
+                                if contact["groupes"][i]+contact["groupes"][i+1] != groupe["id"]:
+                                    new_groupes += contact["groupes"][i]
+                                    if i + 1 == len(contact["groupes"]) - 1:
+                                        new_groupes += contact["groupes"][i+1]
+                                else:
+                                    i += 1
+                                i += 1
+                        elif test100:
+                            while i < len(contact["groupes"]) - 2:
+                                if contact["groupes"][i]+contact["groupes"][i+1]+contact["groupes"][i+2] != groupe["id"]:
+                                    new_groupes += contact["groupes"][i]
+                                    if i + 2 == len(contact["groupes"]) - 2:
+                                        new_groupes += contact["groupes"][i+1]+contact["groupes"][i+2]
+                                else:
+                                    i += 2
+                                i += 1
+                        else:
+                            for elm in contact["groupes"]:
+                                if elm != groupe["id"]:
+                                    new_groupes += elm
                         
-                        if choix_modifier== "1":
-                            nbr_recherche2= False
-                            contact= input (_("Renseigner une information sur le contact à trouver")).lower ()
-                            for y in range (len (L)):
-                                nom= L[y]["nom"].lower ()
-                                prenom= L[y]["prenom"].lower ()
-                                date_naissance= L[y]["date"]
-                                num= L[y]["num"]
-                                email= L[y]["email"].lower ()
-                                favori= L[y]["favori"]
-                                
-                                if date_naissance != "": jour, mois, annee = date_naissance.split('.')
-                                else: jour, mois, annee= None, None, None
-                                
-                                if contact== nom or contact== prenom or contact== date_naissance or contact== jour or contact== mois or contact== annee or contact== num or contact== email:
-                                    nbr_recherche2= True
-                                    confirmation_ajouter= input (_("_Ajouter_")+ f" {nom.upper ()} {prenom.capitalize()} : ").upper ()
-                                    if confirmation_ajouter== _("OUI"):
-                                        nbr_mbr_groupe+= 1
-                                        L[i]["mbr_groupe"]= str (nbr_mbr_groupe)
-                                        L[y]["groupe"]+= str(num_groupe)
-                                        outils.CSV.ecriture_csv (L, F_rep)
-                                        logging.info (_("_AJOUTER CONTACT DANS GROUPE_")+ f"{nom.upper ()} {prenom.capitalize()}\n")
-                                        os.system ("cls")
-                                        print (nom.upper (), prenom.capitalize ()+ _("a été ajouté au groupe")+ nom_groupe+ " !\n")
-                                    else: os.system ("cls")
-                                
-                            if nbr_recherche2== False: print (_("Aucun contact trouvé"))
-                        
-                        elif choix_modifier== "2":
-                            nbr_recherche2= False
-                            contact= input (_("Renseigner une information sur le contact à trouver")).lower ()
-                            for y in range (len (L)):
-                                nom= L[y]["nom"].lower ()
-                                prenom= L[y]["prenom"].lower ()
-                                date_naissance= L[y]["date"]
-                                num= L[y]["num"]
-                                email= L[y]["email"].lower ()
-                                favori= L[y]["favori"]
-                                
-                                if date_naissance != "": jour, mois, annee = date_naissance.split('.')
-                                else: jour, mois, annee= None, None, None
-                                
-                                if contact== nom or contact== prenom or contact== date_naissance or contact== jour or contact== mois or contact== annee or contact== num or contact== email:
-                                    nbr_recherche2= True
-                                    confirmation_ajouter= input (_("_Supprimer_")+ f" {nom.upper ()} {prenom.capitalize()} : ").upper ()
-                                    if confirmation_ajouter== _("OUI"):
-                                        nbr_mbr_groupe-= 1
-                                        L[i]["mbr_groupe"]= str (nbr_mbr_groupe)
-                                        L[y]["groupe"]= L[y]["groupe"].replace (num_groupe, "")
-                                        outils.CSV.ecriture_csv (L, F_rep)
-                                        logging.info (_("_SUPPRIMER CONTACT DANS GROUPE_")+ f"{nom.upper ()} {prenom.capitalize()}\n")
-                                        os.system ("cls")
-                                        print (nom.upper (), prenom.capitalize ()+ _("a été supprimé du groupe")+ nom_groupe+ " !\n")
-                                    else: os.system ("cls")
-                                
-                            if nbr_recherche2== False: print (_("Aucun contact trouvé"))
-                        
-                        elif choix_modifier== "3":
-                            new_nom= input (_("Saisir nom groupe"))
-                            L[i]["nom_groupe"]= new_nom
-                            outils.CSV.ecriture_csv (L, F_rep)
-                            logging.info (_("_MODIFIER GROUPES_")+ f"{nom_groupe} -> {new_nom}\n")
-                            print (nom_groupe+ _("a été modifié"))
+                        contact["groupes"] = new_groupes
+                        groupe["nbr_groupe"] = str(int(groupe["nbr_groupe"]) - 1)
+                        print(f" Le contact {contact['nom']} {contact['prenom']} a été supprimé du groupe \"{groupe['nom_groupe']}\" !\n")
+                        outils.ecriture_log(f"    MODIFIER GROUPE : SUPPRESSION DU MEMBRE \"{contact['nom']} {contact['prenom']}\" | {groupe['nom_groupe']}\n")
