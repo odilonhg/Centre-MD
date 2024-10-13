@@ -73,6 +73,10 @@ Le Centre MD contient un total de
   du Menu Démarrer ou de votre bureau
   si vous avez créer un raccourci
 
+- Si vous avez des problèmes de crash, c'est normal.
+  C'est un problème récurant qui sera corrigé dans une prochaine MàJ.
+  Pour éviter ce problème, lancer le Centre MD en tant qu'administrateur.
+
 ## Fabriqué avec
 
 Les différents modules python utilisés dans le Centre MD:
