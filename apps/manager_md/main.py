@@ -1,8 +1,10 @@
 import outils
 import os
 
-F_manager = "data_manager.csv"
+base = os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD")
 F_manager_v1 = "data_gdt"
+F_manager = os.path.join(base, "data_manager.csv")
+
 
 def main(usr):
     while True:

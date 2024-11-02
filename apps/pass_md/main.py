@@ -1,7 +1,8 @@
 import outils
 import os
 
-F_pass = "data_pass.csv"
+base = os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD")
+F_pass = os.path.join(base, "data_pass.csv")
 
 def main(usr):
     while True:

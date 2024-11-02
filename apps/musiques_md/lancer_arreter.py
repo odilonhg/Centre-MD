@@ -1,3 +1,4 @@
+from apps.musiques_md.ajouter import base
 import outils
 import os
 import pygame
@@ -20,12 +21,19 @@ def main(L_mus, usr):
             choix = input("Choix : ")
             os.system("cls")
             
+            test = True
             for musique in L_mus:
                 if choix == musique["id"] and musique["usr_id"] == usr["id"]:
-                    musique["etat"] = "True"
-                    outils.ecriture_mus(L_mus)
-                    outils.ecriture_log(f"    LANCER : {musique['nom']}\n")
-                    lancer_arreter(L_mus, musique)
+                    if os.path.exists(musique["chemin"]):
+                        musique["etat"] = "True"
+                        outils.ecriture_mus(L_mus)
+                        outils.ecriture_log(f"    LANCER : {musique['nom']}\n")
+                        lancer_arreter(L_mus, musique)
+                        test = False
+                    else:
+                        print(" Choix impossible...\n La musique est introuvable...\n")
+            if test:
+                print(" Choix impossible...\n")
         else:
             print(" Vous n'avez ajouté aucune musique pour le moment !\n")
     else:
@@ -39,6 +47,7 @@ def main(L_mus, usr):
 def lancer_arreter(L_mus, musique = {"etat": "False"}):
     global stop_mp3
     if musique["etat"] == "True":
+        
         stop_mp3 = False
         pygame.mixer.init ()
         pygame.mixer.music.load (musique["chemin"])

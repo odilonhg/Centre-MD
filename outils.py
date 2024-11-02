@@ -1,6 +1,7 @@
 import os
 import logging
 import datetime
+import random
 import pickle
 import shutil
 import requests
@@ -54,10 +55,18 @@ def ecriture_log(contenu):
 
 def ecriture_usr(usr):
     from main import L_usr, F_usr
-    if usr["id"] == "1":
-        L_usr[0] = usr
-    elif usr["id"] == "2":
-        L_usr[1] = usr
+    if len(L_usr) == 0:
+        L_usr.append(usr)
+    elif len(L_usr) == 1:
+        if usr["id"] == "1":
+            L_usr[0] = usr
+        elif usr["id"] == "2":
+            L_usr.append(usr)
+    elif len(L_usr) == 2:
+        if usr["id"] == "1":
+            L_usr[0] = usr
+        elif usr["id"] == "2":
+            L_usr[1] = usr
     else:
         return False
     return ecriture_CSV(L_usr, F_usr)
@@ -84,16 +93,245 @@ def recherche(L, usr, elm_a_trouver):
                     L_recherche.append(elm)
     return L_recherche
 
+def demarrage():
+    ''' Permet le lancement des intégrations etc en fonction de l'utilisateur '''
+    def choix_usr():
+        ''' Définit l'utilisateur actuel '''
+        L_usr = lecture_usr()
+        while True:
+            print(" -- Bienvenue ! --\n")
+            if len(L_usr) == 1:
+                print(f" {L_usr[0]['id']}. {L_usr[0]['nom']}",
+                      "\n 2. Créer un utilisateur")
+            else:
+                for usr in L_usr:
+                    print(f" {usr['id']}. {usr['nom']}")
+            choix = input("\nChoix : ")
+            os.system("cls")
+            
+            if len(L_usr) == 1:
+                if choix == "1":
+                    usr = L_usr[0]
+                    return usr
+                elif choix == "2":
+                    from main import F_usr
+                    print(" -- Bienvenue ! --\n")
+                    
+                    while True:
+                        nom = input("Saisissez votre nom : ")
+                        os.system("cls")
+                        while True:
+                            print(f" Donc vous vous appelez {nom}.",
+                                  "\n C'est bien ça ?\n",
+                                  "\n 1. Oui",
+                                  "\n 2. Non")
+                            choix = input("\nChoix : ")
+                            os.system("cls")
+                            if choix == "1":
+                                break
+                            elif choix == "2":
+                                break
+                            else:
+                                print(" Choix impossible...\n")
+                        if choix == "1":
+                            break
+                    
+                    print(" Voulez-vous mettre en place un mot de passe ?\n",
+                          "\n Ce mot de passe sera demandé à chaque fois que",
+                          "\n vous vous connecterez à votre compte MD",
+                          "\n\n Alors, voulez-vous le créer ?\n",
+                          "\n 1. Oui",
+                          "\n 2. Non")
+                    choix = input("\nChoix : ")
+                    os.system("cls")
+                    
+                    if choix == "1":
+                        while True:
+                            mdp = input ("Saisissez votre futur mot de passe : ")
+                            os.system ("cls")
+                            
+                            while True:
+                                print (" Pour vous connecter à votre compte,",
+                                       f"\n vous devrez donc taper \"{mdp}\"\n",
+                                       "\n Vous confirmez ?\n",
+                                       "\n 1. Oui"
+                                       "\n 2. Non")
+                                choix = input ("\nChoix : ")
+                                os.system("cls")
+                            
+                                if choix == "1":
+                                    print (" Mot de passe crée !\n")
+                                    break
+                                elif choix == "2":
+                                    break
+                                print(" Choix impossible...\n")
+                            if choix == "1":
+                                break
+                    else:
+                        mdp = ""
+                    
+                    nbr = "1"
+                    version = "2.0.1"
+                    
+                    usr = {"id": "2",
+                           "nom": nom,
+                           "mdp": mdp,
+                           "nbr": "0",
+                           "version": version,
+                           "rep_md": "0",
+                           "manager_md": "0",
+                           "pass_md": "0",
+                           "musiques_md": "0"}
+                    L_usr.append(usr)
+                    ecriture_CSV(L_usr, F_usr)
+                    ecriture_log(f"NOUVEAU COMPTE UTILISATEUR CREE : {nom}\n")
+                else:
+                    print(" Choix impossible...\n")
+            
+            else:
+                for usr in L_usr:
+                    if choix == usr["id"]:
+                        return usr
+                if choix == "13":
+                    print(" Salut, comment allez-vous aujourd'hui ?\n")
+                else:
+                    print(" Choix impossible...\n")
+    
+    usr = choix_usr()
+    # TEST MDP #
+    if usr["mdp"]:
+        test = ""
+        while test != usr["mdp"]:
+            test = input("Saisissez votre mot de passe : ")
+            os.system("cls")
+            if test != usr["mdp"]:
+                print(" Mot de passe incorrect !\n")
+    
+    usr["nbr"] = int(usr["nbr"])
+    usr["nbr"] += 1
+    usr["nbr"] = str(usr["nbr"])
+    ecriture_usr(usr)
+    ecriture_log(f"OUVERTURE: Centre MD (pour la {usr['nbr']}ème fois)\n")
+    
+    integrations = []
+    urgences = []
+    
+    # INTEGRATION MUSIQUES MD #
+    from apps.musiques_md.main import F_mus
+    if os.path.exists (F_mus):
+        L_mus = lecture_CSV(F_mus)
+        if L_mus != []:
+            tab_mus = []
+            for musique in L_mus:
+                if musique["usr_id"] == usr["id"]:
+                    if musique["etat"] == "True":
+                        if os.path.exists(musique["chemin"]):
+                            from apps.musiques_md.lancer_arreter import lancer_arreter
+                            lancer_arreter(L_mus, musique)
+                        else:
+                            musique["etat"] = "False"
+                            ecriture_mus(L_mus)
+                            ecriture_log(f"ARRET FORCE MUSIQUE : {musique['chemin']} (musique introuvable)\n")
+                    else:
+                        tab_mus.append(musique["nom"])
+            if tab_mus != []:
+                choix_mus = random.choice(tab_mus)
+                integrations.append(f" Pourquoi ne pas écouter \"{choix_mus}\" aujourd'hui ?\n Si vous souhaitez l'écouter, lancez la depuis Musiques MD !\n")
+    
+    # AFFICHAGE MOT DE BIENVENUE #
+    heure = datetime.datetime.now().hour
+    if heure < 12:
+        print(f" Bonjour {usr['nom']} !\n")
+    elif 12 <= heure < 18:
+        print(f" Bonsoir {usr['nom']} !\n")
+    else:
+        print(f" Bonne nuit {usr['nom']} !\n")
+    
+    # INTEGRATION REP MD #
+    from apps.rep_md.main import F_rep
+    if os.path.exists (F_rep):
+        L_rep = lecture_CSV(F_rep)
+        date = [datetime.datetime.now().day, datetime.datetime.now().month]
+        
+        for contact in L_rep:
+            if contact["usr_id"] == usr["id"]:
+                nom_c = contact["nom"]
+                prenom_c = contact["prenom"]
+                
+                date_c = contact["date"]
+                if contact["nom_groupe"] == "":
+                    if date_c != "":
+                        date_c = date_c.split("/")
+                        for i in range (2):
+                            date_c[i] = int(date_c[i])
+                        del date_c[-1]
+                        if date == date_c:
+                            urgences.append(f" N'oubliez pas qu'aujourd'hui,\n c'est l'anniversaire de {nom_c} {prenom_c} !")
+                    
+                    else:
+                        integrations.append(f" Hey, vous n'avez pas ajouté la date de naissance de {nom_c} {prenom_c}, pensez à le faire !\n Pour l'ajouter, allez dans le Rep MD, puis dans Modifier.\n")
+                    
+                    if contact["num"] == "":
+                        integrations.append(f" Hey, vous n'avez pas ajouté le numéro de téléphone de {nom_c} {prenom_c} !\n Pour l'ajouter, allez dans le Rep MD, puis dans Modifier.\n")
+                    if contact["email"] == "":
+                        integrations.append(f" Hey, vous n'avez pas ajouté l'adresse email de {nom_c} {prenom_c} !\n Pour l'ajouter, allez dans le Rep MD, puis dans Modifier.\n")
+                    if contact["adresse"] == "":
+                        integrations.append(f" Connaissez-vous l'adresse postale de {nom_c} {prenom_c} ?\n Si vous souhaitez l'ajouter, allez dans le Rep MD, puis dans Modifier.\n")
+    
+    # INTEGRATIONS MANAGER MD #
+    from apps.manager_md.main import F_manager
+    if os.path.exists (F_manager):
+        L_manager = lecture_CSV(F_manager)
+        for tache in L_manager:
+            if tache["etat"] == "True":
+                nom = tache["nom"]
+                if tache["date"] != "None":
+                    tps_annee, tps_mois, tps_jour = tps_restant(tache["date"])
+                    if tps_annee < 0:
+                        urgences.append(f" Avez-vous terminé votre tâche \"{nom}\" ?")
+                    elif tps_annee == 0 and tps_mois == 0 and tps_jour == 0:
+                        urgences.append(f" Avez-vous terminé votre tâche \"{nom}\" ?")
+                    else:
+                        integrations.append(f" N'oubliez pas votre tache \"{nom}\" !\n\n Si vous l'avez terminé, vous pouvez la noter\n comme étant finie depuis Manager MD.\n")
+                else:
+                    integrations.append(f" N'oubliez pas votre tache \"{nom}\" !\n\n Si vous l'avez terminé, vous pouvez la noter\n comme étant finie depuis Manager MD.\n")
+    
+    # INTEGRATIONS FONDS MD #
+    from apps.fonds_md.main import F_fonds
+    if os.path.exists (F_fonds):
+        L_fonds = lecture_fonds(F_fonds)
+        date_fonds = ""
+        for action in L_fonds:
+            if action[0] == usr["id"]:
+                date_fonds = L_fonds[-1][3].split(" ")[0]
+        if date_fonds != "":
+            integrations.append(f" Votre solde actuel à changé depuis le {date_fonds} ?\n Si c'est le cas vous pouvez le modifier depuis Fonds MD.\n")
+    
+    # INTEGRATIONS JEUX MD #
+    liste_jeux = ["Pendu", "Chiffre Juste"]
+    for jeu in liste_jeux:
+        integrations.append(f" Pourquoi ne pas s'essayer 2 minutes au {jeu} ?\n\n Si vous souhaitez y jouer,\n il vous suffit de vous rendre dans Jeux MD !\n")
+    
+    if urgences:
+        print(" --- ACTIONS URGENTES ---\n")
+        for urgence in urgences:
+            print(urgence + "\n")
+    
+    print(" --- SUGGESTIONS ---\n\n" + random.choice(integrations))
+    
+    return usr
+
 def options(usr):
     while True:
         print("   · Options ·\n",
               f"\n Version actuelle : v{usr['version']}\n",
               "\n 0. Retour\n")
-        if usr["mdp"] == "":
-            print(" 1. Mettre en place un mot de passe")
-        else:
+        if usr["mdp"]:
             print(" 1. Supprimer le mot de passe")
-        print(" 2. Afficher vos Infos Utilisateur")
+        else:
+            print(" 1. Mettre en place un mot de passe")
+        print(" 2. Afficher vos Infos Utilisateur",
+              "\n 3. Rechercher une MàJ")
         choix = input("\nChoix : ")
         os.system("cls")
         
@@ -142,11 +380,17 @@ def options(usr):
             ecriture_log("    AFFICHER : Infos Utilisateur\n")
             from apps.rep_md.main import F_rep
             L_rep = lecture_CSV(F_rep)
-            for contact in L_rep:
-                if contact["usr_id"] == usr["id"] and contact["prenom"].lower() == usr["nom"].lower():
-                    nom, prenom = contact["nom"], contact["prenom"]
-                else:
+            if L_rep:
+                test = True
+                for contact in L_rep:
+                    if contact["usr_id"] == usr["id"] and contact["prenom"].lower() == usr["nom"].lower():
+                        nom, prenom = contact["nom"], contact["prenom"]
+                        test = False
+                        break
+                if test:
                     nom, prenom = usr["nom"], ""
+            else:
+                nom, prenom = usr["nom"], ""
             print(f" {usr['id']}. | {nom} {prenom}",
                   "\n    |")
             if usr["mdp"] == "":
@@ -154,7 +398,16 @@ def options(usr):
             else:
                 print(f"    | Mdp | A un mot de passe (il est secret)")
             print(f"    | Nbr | A lancé le Centre MD {usr['nbr']} fois !\n")
-                
+        
+        elif choix == "3":
+            print(" Recherche de MàJ...")
+            if comparer_version():
+                os.system("cls")
+                print(" MàJ annulée...\n")
+            else:
+                os.system("cls")
+                print(" Aucune MàJ disponible...\n")
+        
         elif choix == "13":
             print(" Bienvenue aux Options !\n",
                   "\n Franchement c'est un peu vide ici...",
@@ -272,27 +525,75 @@ def affiche_rep(L_rep, usr):
                             
                             if contact_groupe_date:
                                 date_affiche = affiche_date(contact_groupe_date)
-                                if test100:
-                                    if test100_2:
-                                        contenu += f"        | Date   | {date_affiche}\n"
-                                    elif test10_2:
-                                        contenu += f"        | Date  | {date_affiche}\n"
+                                tab_date = contact_groupe_date.split("/")
+                                tps_annee, tps_mois, tps_jour = tps_restant(f"{tab_date[2]}-{tab_date[1]}-{tab_date[0]}")
+                                total_jour_restant = tps_jour + 30 * tps_mois
+                                if total_jour_restant == 0:
+                                    if test100:
+                                        if test100_2:
+                                            contenu += f"        | Date   | {date_affiche}\n        | Anniv  | C'EST AUJOURD'HUI !\n"
+                                        elif test10_2:
+                                            contenu += f"        | Date  | {date_affiche}\n        | Anniv | C'EST AUJOURD'HUI !\n"
+                                        else:
+                                            contenu += f"        | Date | {date_affiche}\n        | Anniv| C'EST AUJOURD'HUI !\n"
+                                    elif test10:
+                                        if test100_2:
+                                            contenu += f"       | Date   | {date_affiche}\n       | Anniv  | C'EST AUJOURD'HUI !\n"
+                                        elif test10_2:
+                                            contenu += f"       | Date  | {date_affiche}\n       | Anniv | C'EST AUJOURD'HUI !\n"
+                                        else:
+                                            contenu += f"       | Date | {date_affiche}\n       | Anniv| C'EST AUJOURD'HUI !\n"
                                     else:
-                                        contenu += f"        | Date | {date_affiche}\n"
-                                elif test10:
-                                    if test100_2:
-                                        contenu += f"       | Date   | {date_affiche}\n"
-                                    elif test10_2:
-                                        contenu += f"       | Date  | {date_affiche}\n"
+                                        if test100_2:
+                                            contenu += f"      | Date   | {date_affiche}\n      | Anniv  | C'EST AUJOURD'HUI !\n"
+                                        elif test10_2:
+                                            contenu += f"      | Date  | {date_affiche}\n      | Anniv | C'EST AUJOURD'HUI !\n"
+                                        else:
+                                            contenu += f"      | Date | {date_affiche}\n      | Anniv| C'EST AUJOURD'HUI !\n"
+                                elif total_jour_restant == 1:
+                                    if test100:
+                                        if test100_2:
+                                            contenu += f"        | Date   | {date_affiche}\n        | Anniv  | Dans {total_jour_restant} jour.\n"
+                                        elif test10_2:
+                                            contenu += f"        | Date  | {date_affiche}\n        | Anniv | Dans {total_jour_restant} jour.\n"
+                                        else:
+                                            contenu += f"        | Date | {date_affiche}\n        | Anniv| Dans {total_jour_restant} jour.\n"
+                                    elif test10:
+                                        if test100_2:
+                                            contenu += f"       | Date   | {date_affiche}\n       | Anniv  | Dans {total_jour_restant} jour.\n"
+                                        elif test10_2:
+                                            contenu += f"       | Date  | {date_affiche}\n       | Anniv | Dans {total_jour_restant} jour.\n"
+                                        else:
+                                            contenu += f"       | Date | {date_affiche}\n       | Anniv| Dans {total_jour_restant} jour.\n"
                                     else:
-                                        contenu += f"       | Date | {date_affiche}\n"
+                                        if test100_2:
+                                            contenu += f"      | Date   | {date_affiche}\n      | Anniv  | Dans {total_jour_restant} jour.\n"
+                                        elif test10_2:
+                                            contenu += f"      | Date  | {date_affiche}\n      | Anniv | Dans {total_jour_restant} jour.\n"
+                                        else:
+                                            contenu += f"      | Date | {date_affiche}\n      | Anniv| Dans {total_jour_restant} jour.\n"
                                 else:
-                                    if test100_2:
-                                        contenu += f"      | Date   | {date_affiche}\n"
-                                    elif test10_2:
-                                        contenu += f"      | Date  | {date_affiche}\n"
+                                    if test100:
+                                        if test100_2:
+                                            contenu += f"        | Date   | {date_affiche}\n        | Anniv  | Dans {total_jour_restant} jours.\n"
+                                        elif test10_2:
+                                            contenu += f"        | Date  | {date_affiche}\n        | Anniv | Dans {total_jour_restant} jours.\n"
+                                        else:
+                                            contenu += f"        | Date | {date_affiche}\n        | Anniv| Dans {total_jour_restant} jours.\n"
+                                    elif test10:
+                                        if test100_2:
+                                            contenu += f"       | Date   | {date_affiche}\n       | Anniv  | Dans {total_jour_restant} jours.\n"
+                                        elif test10_2:
+                                            contenu += f"       | Date  | {date_affiche}\n       | Anniv | Dans {total_jour_restant} jours.\n"
+                                        else:
+                                            contenu += f"       | Date | {date_affiche}\n       | Anniv| Dans {total_jour_restant} jours.\n"
                                     else:
-                                        contenu += f"      | Date | {date_affiche}\n"
+                                        if test100_2:
+                                            contenu += f"      | Date   | {date_affiche}\n      | Anniv  | Dans {total_jour_restant} jours.\n"
+                                        elif test10_2:
+                                            contenu += f"      | Date  | {date_affiche}\n      | Anniv | Dans {total_jour_restant} jours.\n"
+                                        else:
+                                            contenu += f"      | Date | {date_affiche}\n      | Anniv| Dans {total_jour_restant} jours.\n"
                             
                             if contact_groupe_num:
                                 if test100:
@@ -406,12 +707,30 @@ def affiche_rep(L_rep, usr):
                     
                     if contact_date:
                         date_affiche = affiche_date(contact_date)
-                        if test100:
-                            contenu += f" Date   | {date_affiche}\n"
-                        elif test10:
-                            contenu += f" Date  | {date_affiche}\n"
+                        tab_date = contact_date.split("/")
+                        tps_annee, tps_mois, tps_jour = tps_restant(f"{tab_date[2]}-{tab_date[1]}-{tab_date[0]}")
+                        total_jour_restant = tps_jour + 30 * tps_mois
+                        if total_jour_restant == 0:
+                            if test100:
+                                contenu += f" Date   | {date_affiche}\n Anniv  | C'EST AUJOURD'HUI !\n"
+                            elif test10:
+                                contenu += f" Date  | {date_affiche}\n Anniv | C'EST AUJOURD'HUI !\n"
+                            else:
+                                contenu += f" Date | {date_affiche}\n Anniv| C'EST AUJOURD'HUI !\n"
+                        elif total_jour_restant == 1:
+                            if test100:
+                                contenu += f" Date   | {date_affiche}\n Anniv  | Dans {total_jour_restant} jour.\n"
+                            elif test10:
+                                contenu += f" Date  | {date_affiche}\n Anniv | Dans {total_jour_restant} jour.\n"
+                            else:
+                                contenu += f" Date | {date_affiche}\n Anniv| Dans {total_jour_restant} jour.\n"
                         else:
-                            contenu += f" Date | {date_affiche}\n"
+                            if test100:
+                                contenu += f" Date   | {date_affiche}\n Anniv  | Dans {total_jour_restant} jours.\n"
+                            elif test10:
+                                contenu += f" Date  | {date_affiche}\n Anniv | Dans {total_jour_restant} jours.\n"
+                            else:
+                                contenu += f" Date | {date_affiche}\n Anniv| Dans {total_jour_restant} jours.\n"
                     
                     if contact_num:
                         if test100:
@@ -464,13 +783,12 @@ def tps_restant(date):
     date_aujourdhui_annee, date_aujourdhui_mois, date_aujourdhui_jour = date_aujourdhui.split("-")
     date_annee, date_mois, date_jour = date.strip().split("-")
     tps_annee, tps_mois, tps_jour = int(date_annee) - int(date_aujourdhui_annee), int(date_mois) - int(date_aujourdhui_mois), int(date_jour) - int(date_aujourdhui_jour)
-    if tps_annee > 0 or tps_mois > 0 or tps_jour > 0:
-        if tps_jour < 0:
-            tps_mois -= 1
-            tps_jour += 31
-        if tps_mois < 0:
-            tps_annee -= 1
-            tps_mois += 12
+    if tps_jour < 0:
+        tps_mois -= 1
+        tps_jour += 31
+    if tps_mois < 0:
+        tps_annee -= 1
+        tps_mois += 12
     return tps_annee, tps_mois, tps_jour
 
 def affiche_manager(L_manager, usr):
@@ -503,65 +821,65 @@ def affiche_manager(L_manager, usr):
                 
                 if tache_date != "None":
                     tps_annee, tps_mois, tps_jour = tps_restant(tache_date)
-                    if tps_annee >= 0:
-                        if tps_mois > 0 or tps_mois > 0:
-                            if test_100:
-                                contenu += "        | Temps restant\n"
-                            elif test_10:
-                                contenu += "       | Temps restant\n"
-                            else:
-                                contenu += "      | Temps restant\n"
-                            
-                            if tps_annee == 1:
-                                if test_100:
-                                    contenu += f"        | {tps_annee} année \n"
-                                elif test_10:
-                                    contenu += f"       | {tps_annee} année \n"
-                                else:
-                                    contenu += f"      | {tps_annee} année \n"
-                            elif tps_annee > 1:
-                                if test_100:
-                                    contenu += f"        | {tps_annee} années \n"
-                                elif test_10:
-                                    contenu += f"       | {tps_annee} années \n"
-                                else:
-                                    contenu += f"      | {tps_annee} années \n"
-                            if tps_mois > 0:
-                                if test_100:
-                                    contenu += f"        | {tps_mois} mois \n"
-                                elif test_10:
-                                    contenu += f"       | {tps_mois} mois \n"
-                                else:
-                                    contenu += f"      | {tps_mois} mois \n"
-                            if tps_jour == 1:
-                                if test_100:
-                                    contenu += f"        | {tps_jour} jour \n"
-                                elif test_10:
-                                    contenu += f"       | {tps_jour} jour \n"
-                                else:
-                                    contenu += f"      | {tps_jour} jour \n"
-                            elif tps_jour > 1:
-                                if test_100:
-                                    contenu += f"        | {tps_jour} jours \n"
-                                elif test_10:
-                                    contenu += f"       | {tps_jour} jours \n"
-                                else:
-                                    contenu += f"      | {tps_jour} jours \n"
-                        else:
-                            if test_100:
-                                contenu += "        | C'EST L'HEURE !!!\n"
-                            elif test_10:
-                                contenu += "       | C'EST L'HEURE !!!\n"
-                            else:
-                                contenu += "      | C'EST L'HEURE !!!\n"
-                    
-                    else:
+                    if tps_annee < 0:
                         if test_100:
                             contenu += "        | C'EST L'HEURE !!!\n"
                         elif test_10:
                             contenu += "       | C'EST L'HEURE !!!\n"
                         else:
                             contenu += "      | C'EST L'HEURE !!!\n"
+                    
+                    elif tps_annee == 0 and tps_mois == 0 and tps_jour == 0:
+                        if test_100:
+                            contenu += "        | C'EST L'HEURE !!!\n"
+                        elif test_10:
+                            contenu += "       | C'EST L'HEURE !!!\n"
+                        else:
+                            contenu += "      | C'EST L'HEURE !!!\n"
+                    
+                    else:
+                        if test_100:
+                            contenu += "        | Temps restant\n"
+                        elif test_10:
+                            contenu += "       | Temps restant\n"
+                        else:
+                            contenu += "      | Temps restant\n"
+                        
+                        if tps_annee == 1:
+                            if test_100:
+                                contenu += f"        | {tps_annee} année \n"
+                            elif test_10:
+                                contenu += f"       | {tps_annee} année \n"
+                            else:
+                                contenu += f"      | {tps_annee} année \n"
+                        elif tps_annee > 1:
+                            if test_100:
+                                contenu += f"        | {tps_annee} années \n"
+                            elif test_10:
+                                contenu += f"       | {tps_annee} années \n"
+                            else:
+                                contenu += f"      | {tps_annee} années \n"
+                        if tps_mois > 0:
+                            if test_100:
+                                contenu += f"        | {tps_mois} mois \n"
+                            elif test_10:
+                                contenu += f"       | {tps_mois} mois \n"
+                            else:
+                                contenu += f"      | {tps_mois} mois \n"
+                        if tps_jour == 1:
+                            if test_100:
+                                contenu += f"        | {tps_jour} jour \n"
+                            elif test_10:
+                                contenu += f"       | {tps_jour} jour \n"
+                            else:
+                                contenu += f"      | {tps_jour} jour \n"
+                        elif tps_jour > 1:
+                            if test_100:
+                                contenu += f"        | {tps_jour} jours \n"
+                            elif test_10:
+                                contenu += f"       | {tps_jour} jours \n"
+                            else:
+                                contenu += f"      | {tps_jour} jours \n"
     return contenu
 
 ### FONCTIONS UTILES POUR "FONDS MD" ###
@@ -676,7 +994,7 @@ def transition_v1(L_usr_v1, F_usr):
            "nom": nom,
            "mdp": mdp,
            "nbr": nbr,
-           "version": "2.0.0",
+           "version": "2.0.1",
            "rep_md": "0",
            "manager_md": "0",
            "pass_md": "0",
@@ -753,14 +1071,78 @@ def transition_v1(L_usr_v1, F_usr):
           "\n Profitez bien de votre expérience !\n")
     return L_usr
 
-# v2.0.0 -> LA SUITE:
+# v2.0.0 -> v2.0.1:
+
+def transition_v2_0_0():
+    # Chemin du dossier AppData/Local/TeamMD/CentreMD
+    dossier_final = os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD")
+
+    fichiers_a_ignorer = {"CentreMD.exe", "unins000.dat", "unins001.dat", "unins000.exe", "unins001.exe", "main.py", "outils.py", "apps", "LICENSE.txt", "README.md"}
+
+    # Parcourt les éléments du répertoire courant
+    for item_name in os.listdir():
+        # Ignorer les fichiers spécifiés
+        if item_name in fichiers_a_ignorer:
+            continue
+
+        src_path = os.path.join(os.getcwd(), item_name)  # Chemin complet de la source
+        dest_path = os.path.join(dossier_final, item_name)  # Chemin de destination
+        
+        # Déplacer les fichiers individuels
+        if os.path.isfile(src_path):
+            shutil.move(src_path, dest_path)
+
+        # Copier le dossier "audios" et tout son contenu
+        elif os.path.isdir(src_path):
+            shutil.copytree(src_path, dest_path, dirs_exist_ok=True)  # Copie récursive
+            shutil.rmtree(src_path)  # Supprime le dossier original une fois copié
+    
+    # VERIFICATION USR SUR v2.0.1 #
+    L_usr = lecture_usr()
+    for usr in L_usr:
+        if usr["version"] != "2.0.1":
+            usr["version"] = "2.0.1"
+            ecriture_usr(usr)
+    
+    # TRANSITION MUSIQUES MD (changement emplacement musiques)
+    from apps.musiques_md.main import F_mus, base
+    L_mus = lecture_CSV(F_mus)
+    for musique in L_mus:
+        musique["chemin"] = os.path.join(base, f"audios\{musique['nom']}")
+    if L_mus:
+        ecriture_mus(L_mus)
+    
+    print(" Bienvenue dans la v2.0.1 du Centre MD !\n",
+          "\n Au programme, de nouvelles intégrations.",
+          "\n Une amélioration du Centre MD.",
+          "\n Et des corrections de bugs !!!\n",
+          "\n Profitez bien de cette nouvelle expérience !\n")
+
+# LA SUITE:
 
 def telecharger(version):
+    
+    def version_tuple(version):
+        return tuple(map(int, version.strip("v").split(".")))
+    
+    def version_maxi(L_usr):
+        maxi = version_tuple(L_usr[0]["version"])
+        version = L_usr[0]["version"]
+        for usr in L_usr:
+            if version_tuple(usr["version"]) > maxi:
+                maxi = version_tuple(usr["version"])
+                version = usr["version"]
+        return version
+    
     url = f"https://github.com/odilonhg/Centre-MD/releases/download/{version}/CentreMD_Installer.exe"
     response = requests.get(url)
-    with open('CentreMD_Installer.exe', 'wb') as f:
+    with open(os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD\CentreMD_Installer.exe"), "wb") as f:
         f.write(response.content)
     print("Mise à jour téléchargée.")
+    
+    L_usr = lecture_usr()
+    version_actuelle = version_maxi(L_usr)
+    ecriture_log(f"MAJ EFFECTUEE : v{version_actuelle} -> {version}\n")
     os.system("start CentreMD_Installer.exe")
     return
 
@@ -769,8 +1151,8 @@ def obtenir_derniere_version():
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        if 'tag_name' in data:
-            return data['tag_name']
+        if "tag_name" in data:
+            return data["tag_name"]
         else:
             return None
     else:
@@ -779,7 +1161,7 @@ def obtenir_derniere_version():
 def comparer_version():
     
     def version_tuple(version):
-        return tuple(map(int, version.strip("v").split('.')))
+        return tuple(map(int, version.strip("v").split(".")))
         
     def connexion_internet():
         try:
@@ -814,15 +1196,14 @@ def comparer_version():
                     if choix == "1":
                         telecharger(derniere_version)
                         derniere_version = derniere_version.strip("v")
-                        if len(L_usr) == 1:
-                            L_usr[0]["version"] = derniere_version
-                        else:
-                            L_usr[0]["version"] = derniere_version
-                            L_usr[1]["version"] = derniere_version
-                        from main import F_usr
-                        ecriture_CSV(L_usr, F_usr)
+                        for usr in L_usr:
+                            usr["version"] = derniere_version
+                            ecriture_usr(usr)
                         exit()
                     elif choix == "2":
-                        return
+                        return True
                     else:
                         print(" Choix impossible...\n")
+        
+        else:
+            return False

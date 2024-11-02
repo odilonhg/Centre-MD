@@ -1,7 +1,8 @@
 import outils
 import os
 
-F_fonds = "data_fonds.csv"
+base = os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD")
+F_fonds = os.path.join(base, "data_fonds.csv")
 
 def main(usr):
     while True:

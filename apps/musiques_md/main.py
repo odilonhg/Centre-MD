@@ -1,7 +1,8 @@
 import outils
 import os
 
-F_mus = "data_mus.csv"
+base = os.path.join(os.path.expanduser("~\\AppData\\"), "Local\TeamMD\CentreMD")
+F_mus = os.path.join(base, "data_mus.csv")
 
 def main(usr):
     while True:
@@ -11,16 +12,16 @@ def main(usr):
             print(" Bienvenue dans Musiques MD !\n"
                   "\n Ici, vous pourrez lancer des musiques et enregistrer des morceaux à jouer plus tard.",
                   "\n Tapez \"1\" pour ajouter votre 1ère musique !\n")
-            if not os.path.exists("audios"):
-                os.mkdir("audios")
             L_mus = []
         print("   · Musiques MD ·\n",
               "\n 0. Retour",
               "\n 1. Ajouter une musique")
+        
         test = False
         for musique in L_mus:
             if musique["usr_id"] == usr["id"] and musique.get("etat") == "True":
                 test = True
+        
         if test:
             print(" 2. Arrêter la musique")
         else:

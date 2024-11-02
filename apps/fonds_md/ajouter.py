@@ -24,5 +24,5 @@ def main(L_fonds, usr):
     operation = [usr_id, nom, argent, date]
     L_fonds.append(operation)
     outils.ecriture_fonds(L_fonds)
-    outils.ecriture_log(f"    AJOUTER : {argent}\n")
+    outils.ecriture_log(f"    AJOUTER : {argent}€\n")
     print(" Compte mis à jour !\n")

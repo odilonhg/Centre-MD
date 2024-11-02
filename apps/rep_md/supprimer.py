@@ -31,7 +31,7 @@ def main(L_rep, usr):
                     print(" Choix impossible...\n")
         else:
             while True:
-                print(f" Voulez-vous supprimer {contact['nom_groupe']} ?\n",
+                print(f" Voulez-vous supprimer le groupe \"{contact['nom_groupe']}\" ?\n",
                       "\n 1. Oui",
                       "\n 2. Non")
                 choix = input("\nChoix : ")

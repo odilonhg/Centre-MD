@@ -16,9 +16,9 @@ def main(nom):
     
     while mon_nbr != nbr:
         if mon_nbr < nbr:
-            print(f" {str(mon_nbr)} est trop petit !\n")
+            print(" C'EST PLUS !\n")
         elif mon_nbr > nbr:
-            print(f" {str(mon_nbr)} est trop grand !\n")
+            print(" C'EST MOINS !\n")
         
         tentatives += 1
         

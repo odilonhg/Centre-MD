@@ -1,7 +1,10 @@
+from apps.musiques_md.main import base
 import outils
 import os
 from tkinter import filedialog
 import shutil
+
+base = os.path.join (base, "audios")
 
 def main(L_mus, usr):
     id = str(int(usr["musiques_md"]) + 1)
@@ -13,7 +16,7 @@ def main(L_mus, usr):
                                                      ("Tous les fichiers audio", "*.mp3 *.ogg *.wav")])
     if F_chemin != "":
         nom_fichier = os.path.basename (F_chemin)
-        chemin_final = os.path.join (os.getcwd (), "audios")
+        chemin_final = base
         chemin_final = os.path.join (chemin_final, nom_fichier)
         test = True
         for mus in L_mus:
@@ -29,6 +32,8 @@ def main(L_mus, usr):
                 choix = input("\nChoix : ")
                 os.system("cls")
                 if choix == "1":
+                    if not os.path.exists(base):
+                        os.mkdir(base)
                     shutil.copy(F_chemin, chemin_final)
                     break
                 elif choix == "2":

@@ -49,12 +49,10 @@ Le Centre MD contient un total de
 	Un simple créateur de mot de passe
 	utilisant l'aléatoire pour créer
 	ces mots de passe.
-	Il permet aussi de les copier
-	dans le presse papier.
 
 - Musiques MD:
 
-	Un simple lecteur MP3 et OGG,
+	Un simple lecteur MP3, OGG et WAV.
 	Il contient un système de sauvegarde
 	des musiques que vous aimez.
 
@@ -65,17 +63,13 @@ Le Centre MD contient un total de
 
 ### Installation / Démarrage
 
-- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v2.0.0/CentreMD_Installer.exe)
+- Téléchargez notre dernière _release_ [ici](https://github.com/odilonhg/Centre-MD/releases/download/v2.0.1/CentreMD_Installer.exe)
 
 - Lancez le fichier une fois téléchargé
 
 - Exécutez ensuite le Centre MD à partir
   du Menu Démarrer ou de votre bureau
   si vous avez créer un raccourci
-
-- Si vous avez des problèmes de crash, c'est normal.
-  C'est un problème récurant qui sera corrigé dans une prochaine MàJ.
-  Pour éviter ce problème, lancer le Centre MD en tant qu'administrateur.
 
 ## Fabriqué avec
 
@@ -92,13 +86,13 @@ Les différents modules python utilisés dans le Centre MD:
 * tkinter
 
 ## Versions
-**Dernière version :** [2.0.0](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.0)
+**Dernière version :** [2.0.1](https://github.com/odilonhg/Centre-MD/releases/tag/v2.0.1)
 
-Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/tags)
+Liste des versions : [Cliquer pour afficher](https://github.com/odilonhg/Centre-MD/releases/)
 
 ## Créateurs
 * **MESNAGE Dylan** _alias_ [@odilonhg](https://github.com/odilonhg)
 
 ## License
 
-Ce projet est sous notre licence, une variante de la license ``GNU`` - voir le fichier [LICENSE](LICENSE.txt) pour plus d'informations
+Ce projet est sous notre licence, voir le fichier [LICENSE](LICENSE.txt) pour plus d'informations

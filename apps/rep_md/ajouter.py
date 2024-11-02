@@ -109,7 +109,8 @@ def main(choix, L_rep, usr):
                                 os.system("cls")
                                 if mois.isdigit() and 0 < len(mois) <= 2 and 0 < int(mois) <= 12:
                                     if len(mois) == 1:
-                                        mois = "0" + jour
+                                        print(mois)
+                                        mois = "0" + mois
                                     print(f" Le mois de naissance \"{mois}\" à été ajouté au contact !\n")
                                     break
                                 print (" Format incorrect !\n")
